@@ -1,0 +1,1606 @@
+<!DOCTYPE html>
+<html lang="pt-PT"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Quiz Mês de Maria — descobre o teu perfil devocional e recebe a tua Oferta de Fátima personalizada com orações marianas diárias.">
+<meta name="theme-color" content="#0a1a3d">
+<link rel="icon" href="data:,">
+  <link rel="preload" as="image" href="assets/gender-homem.webp" fetchpriority="high">
+  <link rel="preload" as="image" href="assets/gender-mulher.webp" fetchpriority="low">
+
+<title>Quiz Fátima — Mês de Maria</title>
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  :root {
+    --navy: #0a1a3d;
+    --gold: #c9a86a;
+    --gold-soft: #e6d5ab;
+    --bg: #f5f1e6;
+    --card: #ffffff;
+    --text: #1a1a1a;
+    --muted: #6b6b6b;
+    --border: #e8dfc9;
+    --red: #c8322b;
+  }
+  html, body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+  .app {
+    max-width: 480px;
+    margin: 0 auto;
+    min-height: 100vh;
+    background: var(--bg);
+    position: relative;
+    padding-bottom: 40px;
+  }
+  /* Progress bar */
+  .progress-wrap {
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: rgba(10,26,61,0.08);
+    z-index: 50;
+  }
+  .progress-bar {
+    height: 100%;
+    background: var(--gold);
+    width: 0%;
+    transition: width 400ms ease;
+  }
+  .screen {
+    padding: 28px 22px 40px;
+    opacity: 0;
+    animation: fadeIn 300ms ease forwards;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 600;
+    margin-bottom: 14px;
+  }
+  h1, h2 {
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.2;
+    text-wrap: pretty;
+  }
+  h1 { font-size: 26px; margin-bottom: 10px; }
+  h2 { font-size: 22px; margin-bottom: 10px; }
+  .subtitle {
+    color: var(--muted);
+    font-size: 15px;
+    margin-bottom: 26px;
+  }
+  /* Option card */
+  .options { display: flex; flex-direction: column; gap: 12px; margin-top: 18px; }
+  .opt {
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: 16px;
+    padding: 18px 20px;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--navy);
+    text-align: left;
+    cursor: pointer;
+    transition: all 200ms ease;
+    box-shadow: 0 2px 8px rgba(10,26,61,0.04);
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .opt:hover { border-color: var(--gold-soft); }
+  .opt.selected {
+    border-color: var(--gold);
+    transform: scale(1.02);
+    box-shadow: 0 6px 18px rgba(201,168,106,0.25);
+    background: #fffdf7;
+  }
+  .opt .check {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 200ms ease;
+  }
+  .opt.selected .check {
+    background: var(--gold);
+    border-color: var(--gold);
+  }
+  .opt.selected .check::after {
+    content: "✓";
+    color: white;
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .opt.check-box .check { border-radius: 6px; }
+  /* Big gender buttons */
+  .gender-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 22px; padding: 0; }
+  .gender-card {
+    position: relative;
+    background: #fff;
+    border: 2px solid transparent;
+    border-radius: 16px;
+    height: 380px;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+    transition: transform 200ms ease, border-color 200ms ease, box-shadow 200ms ease;
+    padding: 0;
+    font-family: inherit;
+    display: block;
+  }
+  .gender-card:hover { transform: translateY(-2px); }
+  .gender-card.selected {
+    border-color: var(--gold);
+    transform: scale(1.02);
+    box-shadow: 0 10px 30px rgba(201,168,106,0.35);
+  }
+  .gender-card img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
+  .gender-card .caption {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    background: rgba(10,26,61,0.85);
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #fff;
+  }
+  .gender-card .caption .lbl {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+  }
+  .gender-card .caption .arrow {
+    font-size: 22px;
+    color: var(--gold);
+    font-weight: 700;
+    line-height: 1;
+  }
+  .gender-card.selected .caption .arrow::before { content: "\2713"; }
+  .gender-card:not(.selected) .caption .arrow::before { content: "\2192"; }
+  @media (min-width: 600px) {
+    .gender-card { height: 420px; }
+  }
+  /* Buttons */
+  .btn-primary {
+    width: 100%;
+    background: var(--navy);
+    color: #fff;
+    border: 2px solid var(--gold);
+    border-radius: 14px;
+    padding: 18px 20px;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    margin-top: 24px;
+    letter-spacing: 0.02em;
+    transition: all 200ms ease;
+  }
+  .btn-primary:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+  .btn-primary:not(:disabled):hover {
+    background: #11285a;
+  }
+  /* Scale 1-5 */
+  .scale {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-top: 24px;
+  }
+  .scale-btn {
+    aspect-ratio: 1;
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 28px;
+    color: var(--navy);
+    cursor: pointer;
+    transition: all 200ms ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .scale-btn:hover { border-color: var(--gold-soft); }
+  .scale-btn.selected {
+    border-color: var(--gold);
+    background: var(--gold);
+    color: #fff;
+    transform: scale(1.06);
+  }
+  .scale-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 10px;
+    padding: 0 4px;
+  }
+  /* Interstitial */
+  .interstitial {
+    text-align: center;
+    padding-top: 40px;
+  }
+  .interstitial .emblem {
+    width: 72px;
+    height: 72px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    background: var(--navy);
+    color: var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+  }
+  /* Profile card */
+  .profile-card {
+    background: var(--navy);
+    color: #fff;
+    border-radius: 20px;
+    padding: 28px 22px;
+    margin-top: 12px;
+    box-shadow: 0 16px 40px rgba(10,26,61,0.18);
+  }
+  .profile-card .label {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 600;
+  }
+  .profile-card h2 {
+    color: #fff;
+    font-size: 26px;
+    margin: 8px 0 18px;
+  }
+  .levels {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    margin-bottom: 22px;
+  }
+  .level-chunk {
+    height: 8px;
+    border-radius: 4px;
+    background: rgba(255,255,255,0.12);
+  }
+  .level-chunk.active { background: var(--gold); }
+  .level-names {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    font-size: 9px;
+    color: rgba(255,255,255,0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    text-align: center;
+    margin-top: -14px;
+    margin-bottom: 22px;
+  }
+  .level-names span.active { color: var(--gold); font-weight: 600; }
+  .profile-row {
+    padding: 14px 0;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+  .profile-row:first-of-type { border-top: none; padding-top: 0; }
+  .profile-row .k {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .profile-row .v {
+    font-size: 15px;
+    color: #fff;
+    font-weight: 500;
+  }
+  /* Loading */
+  .loading-bars { margin: 28px 0 20px; display: flex; flex-direction: column; gap: 18px; }
+  .loading-item .lbl { display: flex; justify-content: space-between; font-size: 13px; color: var(--navy); font-weight: 500; margin-bottom: 6px; }
+  .loading-item .lbl .pct { color: var(--gold); font-weight: 700; font-variant-numeric: tabular-nums; }
+  .loading-track {
+    height: 8px;
+    border-radius: 4px;
+    background: rgba(10,26,61,0.08);
+    overflow: hidden;
+  }
+  .loading-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--gold), #d9bd84);
+    border-radius: 4px;
+    transition: width 2s ease;
+  }
+  .commit-modal {
+    background: #fff;
+    border: 2px solid var(--gold);
+    border-radius: 16px;
+    padding: 22px;
+    margin: 20px 0;
+    text-align: center;
+    box-shadow: 0 12px 32px rgba(10,26,61,0.12);
+  }
+  .commit-modal h3 {
+    color: var(--navy);
+    font-size: 18px;
+    margin-bottom: 16px;
+    font-weight: 700;
+  }
+  .commit-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .commit-btns button {
+    padding: 14px;
+    border-radius: 12px;
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+    border: 2px solid var(--border);
+    background: #fff;
+    color: var(--navy);
+    transition: all 200ms ease;
+  }
+  .commit-btns .yes {
+    background: var(--navy);
+    color: #fff;
+    border-color: var(--gold);
+  }
+  .commit-btns .yes:hover { background: #11285a; }
+  .commit-btns .no:hover { border-color: var(--muted); }
+  .testimonial-rotator {
+    background: #fff;
+    border-radius: 14px;
+    padding: 16px 18px;
+    margin-top: 18px;
+    border: 1px solid var(--border);
+    min-height: 92px;
+  }
+  .testimonial-rotator .quote { font-size: 14px; color: var(--navy); font-style: italic; line-height: 1.5; }
+  .testimonial-rotator .author { font-size: 12px; color: var(--muted); margin-top: 8px; font-weight: 600; }
+  .stars { color: var(--gold); letter-spacing: 2px; font-size: 13px; margin-bottom: 6px; }
+  /* Offer screen */
+  .timer-bar {
+    background: var(--red);
+    color: #fff;
+    padding: 12px 14px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 600;
+    position: sticky;
+    top: 0;
+    z-index: 40;
+  }
+  .timer-bar strong { font-variant-numeric: tabular-nums; font-size: 15px; letter-spacing: 0.02em; }
+  .offer-hero {
+    padding: 28px 22px 10px;
+    text-align: center;
+  }
+  .offer-hero .eyebrow { margin-bottom: 8px; }
+  .offer-hero h1 { font-size: 26px; line-height: 1.2; }
+  .offer-hero .dek { color: var(--muted); font-size: 14px; margin-top: 12px; }
+  .product-image-wrap { text-align: center; margin: 20px auto 10px; }
+  .product-image {
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 280px;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.45);
+    transform: rotate(-2deg);
+  }
+  @media (min-width: 600px) {
+    .product-image { max-width: 340px; }
+  }
+  .product-image-caption {
+    color: var(--gold);
+    font-style: italic;
+    font-size: 12px;
+    margin-top: 14px;
+    letter-spacing: 0.02em;
+  }
+  .perso-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+    margin: 20px 22px;
+    box-shadow: 0 4px 14px rgba(10,26,61,0.05);
+  }
+  .perso-card h3 {
+    color: var(--navy);
+    font-size: 16px;
+    margin-bottom: 14px;
+    font-weight: 700;
+  }
+  .perso-row {
+    display: flex;
+    gap: 12px;
+    padding: 10px 0;
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+  }
+  .perso-row:first-of-type { border-top: none; padding-top: 0; }
+  .perso-row .pk { color: var(--muted); min-width: 90px; text-transform: uppercase; font-size: 11px; letter-spacing: 0.08em; font-weight: 600; }
+  .perso-row .pv { color: var(--navy); font-weight: 600; flex: 1; }
+  .benefits {
+    margin: 22px 22px;
+    list-style: none;
+  }
+  .benefits li {
+    display: flex;
+    gap: 14px;
+    padding: 12px 0;
+    border-top: 1px solid var(--border);
+    font-size: 14px;
+    color: var(--navy);
+    line-height: 1.5;
+  }
+  .benefits li:first-child { border-top: none; }
+  .benefits .tick {
+    color: var(--gold);
+    font-weight: 700;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .anchor-block {
+    background: var(--navy);
+    border-radius: 18px;
+    padding: 22px 18px;
+    margin: 22px;
+    color: #fff;
+    box-shadow: 0 16px 40px rgba(10,26,61,0.18);
+  }
+  .anchor-title {
+    color: var(--gold);
+    text-align: center;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 18px;
+    letter-spacing: 0.02em;
+  }
+  .anchor-main {
+    background: rgba(255,255,255,0.04);
+    border: 2px solid var(--gold);
+    border-radius: 14px;
+    padding: 18px 16px;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+  .anchor-main-title { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 10px; line-height: 1.3; }
+  .anchor-prices { display: flex; justify-content: center; align-items: baseline; gap: 10px; flex-wrap: wrap; margin-bottom: 8px; }
+  .a-was { color: #9aa3b5; text-decoration: line-through; font-size: 14px; font-weight: 500; }
+  .a-arrow { color: var(--gold); font-weight: 700; }
+  .a-now { color: var(--gold); font-size: 22px; font-weight: 800; letter-spacing: 0.01em; }
+  .anchor-desc { color: rgba(255,255,255,0.65); font-size: 12px; font-style: italic; }
+  .a-emoji { font-size: 18px; margin-right: 6px; }
+  .anchor-bonus {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(201,168,106,0.3);
+    border-radius: 12px;
+    padding: 14px 14px;
+    margin-bottom: 12px;
+  }
+  .ab-head { font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 8px; line-height: 1.35; }
+  .ab-foot { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .ab-prices { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+  .ab-prices .a-now { font-size: 18px; }
+  .a-free {
+    background: #2d7a2d;
+    color: #fff;
+    padding: 5px 12px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    flex-shrink: 0;
+  }
+  .anchor-total {
+    background: var(--gold);
+    color: var(--navy);
+    border-radius: 12px;
+    padding: 16px 14px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 700;
+    margin-top: 16px;
+    line-height: 1.4;
+  }
+  .anchor-total .at-was { text-decoration: line-through; opacity: 0.6; font-weight: 600; margin: 0 4px; }
+  .anchor-total strong { font-size: 20px; font-weight: 800; }
+  .price-card {
+    background: #fff;
+    border: 2px solid var(--gold);
+    border-radius: 16px;
+    padding: 24px 20px;
+    margin: 22px;
+    text-align: center;
+  }
+  .cta-big {
+    display: block;
+    background: var(--navy);
+    color: #fff;
+    border: 3px solid var(--gold);
+    border-radius: 16px;
+    padding: 22px 20px;
+    margin: 10px 22px 20px;
+    text-align: center;
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 16px;
+    letter-spacing: 0.03em;
+    line-height: 1.3;
+    box-shadow: 0 12px 32px rgba(10,26,61,0.25);
+    animation: pulse 2.2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); box-shadow: 0 12px 32px rgba(10,26,61,0.25); }
+    50% { transform: scale(1.015); box-shadow: 0 16px 42px rgba(201,168,106,0.4); }
+  }
+  .testimonials-block { padding: 10px 22px; }
+  .testimonials-block h3 {
+    color: var(--navy);
+    font-size: 18px;
+    margin-bottom: 14px;
+    text-align: center;
+    font-weight: 700;
+  }
+  .testimonial {
+    background: #fff;
+    border-radius: 14px;
+    padding: 18px;
+    margin-bottom: 14px;
+    border: 1px solid var(--border);
+  }
+  .testimonial .stars { font-size: 14px; }
+  .testimonial .text { font-size: 14px; color: var(--navy); font-style: italic; line-height: 1.55; margin: 6px 0 10px; }
+  .testimonial .name { font-size: 13px; color: var(--muted); font-weight: 600; }
+  .guarantee {
+    background: var(--navy);
+    color: #fff;
+    border-radius: 16px;
+    padding: 22px;
+    margin: 22px;
+    text-align: center;
+  }
+  .guarantee .seal {
+    width: 56px; height: 56px; margin: 0 auto 12px;
+    border-radius: 50%;
+    border: 2px solid var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--gold); font-weight: 800; font-size: 14px; letter-spacing: 0.05em;
+  }
+  .guarantee h4 { color: var(--gold); font-size: 16px; margin-bottom: 8px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
+  .guarantee p { font-size: 13px; line-height: 1.5; color: rgba(255,255,255,0.85); }
+  .lead-form { margin-top: 18px; }
+  .lead-label { display:block; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; color:var(--navy); font-weight:600; margin-bottom:6px; }
+  .lead-input {
+    width: 100%;
+    background: #fff;
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 16px 18px;
+    font-size: 16px;
+    font-family: inherit;
+    color: var(--navy);
+    transition: border-color 200ms ease;
+    outline: none;
+  }
+  .lead-input:focus { border-color: var(--gold); }
+  .lead-legal { font-size: 9px; color: #999; text-align: center; margin-top: 14px; }
+  .promo-applied {
+    background: #d4edda;
+    border-left: 4px solid #28a745;
+    border-radius: 12px;
+    padding: 16px;
+    margin: 16px 22px 0;
+  }
+  .promo-applied .pa-line1 { font-weight: 700; color: #155724; font-size: 14px; display: flex; align-items: center; gap: 8px; }
+  .promo-applied .pa-line1 .pa-tick { color: #28a745; font-weight: 800; font-size: 16px; }
+  .promo-applied .pa-line2 { color: #155724; font-size: 13px; margin-top: 6px; line-height: 1.5; }
+  .promo-applied .pa-line3 { color: #6c757d; font-size: 11px; margin-top: 8px; line-height: 1.4; }
+  .promo-code-card {
+    background: #fff;
+    border: 2px dashed var(--gold);
+    border-radius: 14px;
+    padding: 14px 16px;
+    margin: 16px 22px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .promo-code-card .code { font-weight: 800; color: var(--navy); font-size: 15px; letter-spacing: 0.02em; }
+  .promo-code-card .code .tick { color: var(--gold); margin-right: 6px; }
+  .promo-code-card .mini-timer { font-size: 12px; color: var(--red); font-weight: 700; font-variant-numeric: tabular-nums; }
+  .email-note { font-size: 12px; color: var(--muted); text-align: center; margin: 8px 22px 0; }
+  .legal {
+    font-size: 10px;
+    color: #999;
+    text-align: center;
+    padding: 16px 22px 30px;
+    line-height: 1.5;
+  }
+  .scale-hint {
+    background: #fff;
+    border-radius: 10px;
+    padding: 10px 12px;
+    margin-top: 16px;
+    font-size: 12px;
+    color: var(--muted);
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+  .brand-logo {
+    text-align: center;
+    margin-bottom: 16px;
+  }
+  .brand-logo img {
+    height: 56px;
+    width: auto;
+    max-width: 180px;
+    display: inline-block;
+  }
+  .brand-logo.offer-logo {
+    padding: 18px 22px 4px;
+    margin-bottom: 0;
+  }
+  @media (min-width: 600px) {
+    .brand-logo img { max-width: 220px; }
+  }
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<div class="app" id="app">
+  <div class="progress-wrap" id="progressWrap">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+  <div id="screen-container"></div>
+</div>
+
+<script>
+/* ============== STATE ============== */
+const state = {
+  screen: 0,
+  answers: {},
+};
+
+const TOTAL_SCREENS = 22; // 0..21 (lead at 20, loading at 21); 22 is offer
+const MONTHS_PT = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+function getFirstName() {
+  const n = (state.answers.name || '').trim();
+  return n ? n.split(/\s+/)[0] : '';
+}
+function getPromoCode() {
+  const fn = getFirstName() || 'Amigo';
+  return fn + '_Fatima_' + MONTHS_PT[new Date().getMonth()] + '26';
+}
+
+/* ============== DATA ============== */
+const Q = {
+  qFatima1: {
+    title: "És devoto/a de Nossa Senhora de Fátima?",
+    subtitle: "Conta-nos sobre a tua devoção mariana.",
+    options: [
+      "Sim, com toda a devoção",
+      "Sim, mas podia ser mais fiel",
+      "Estou a começar esta devoção",
+      "Ainda não, mas tenho curiosidade"
+    ]
+  },
+  qFatima2: {
+    title: "Vais à Fátima este ano na romaria de 13 de Maio?",
+    subtitle: "",
+    options: [
+      "Sim, já está planeado!",
+      "Gostava muito, mas ainda não sei",
+      "Não vou este ano, mas rezarei de coração",
+      "Nunca fui, mas é um sonho"
+    ]
+  },
+  q1: {
+    title: "Com que frequência consegues rezar?",
+    subtitle: "Sê honesto contigo mesmo.",
+    options: ["Todos os dias", "Algumas vezes por semana", "Raramente", "Quase nunca"]
+  },
+  q2: {
+    title: "Como te descreves espiritualmente?",
+    subtitle: "Escolhe o que mais se aproxima.",
+    options: [
+      "Próximo de Deus e da fé",
+      "Em caminho, mas com dúvidas",
+      "Afastado, mas com saudade",
+      "À procura de reencontro"
+    ]
+  },
+  q3: {
+    title: "Quando rezas, como te sentes?",
+    subtitle: "",
+    options: [
+      "Em paz e acolhido por Deus",
+      "Distraído, custa-me concentrar",
+      "Ansioso, sem saber o que dizer",
+      "Vazio, como se Deus não escutasse"
+    ]
+  },
+  q4: {
+    title: "O que mais te impede de rezar?",
+    subtitle: "",
+    options: [
+      "Falta de tempo no dia a dia",
+      "Distracções e preocupações",
+      "Não sei o que dizer a Deus",
+      "Cansaço e desânimo espiritual",
+      "Dúvidas sobre a fé"
+    ]
+  },
+  q5: {
+    title: "Até que ponto desejas aprofundar a oração?",
+    subtitle: "1 = pouco · 5 = muitíssimo",
+    isScale: true
+  },
+  q6: {
+    title: "Há alguém por quem desejas rezar?",
+    subtitle: "",
+    options: [
+      "Sim, a minha família",
+      "Sim, alguém doente ou em sofrimento",
+      "Sim, por mim mesmo",
+      "Por todas as almas"
+    ]
+  },
+  q7: {
+    title: "O que cria distância entre ti e Deus?",
+    subtitle: "",
+    options: [
+      "Rotina e correria",
+      "Tristezas e perdas",
+      "Dúvidas e medos",
+      "Culpa do passado",
+      "Ausência de comunidade"
+    ]
+  },
+  q8: {
+    title: "Que dificuldades espirituais sentes?",
+    subtitle: "Selecciona todas as que se aplicam.",
+    multi: true,
+    options: [
+      "Falta de concentração na oração",
+      "Sentir ausência de Deus",
+      "Desânimo ou tristeza",
+      "Medo do futuro",
+      "Solidão espiritual",
+      "Dificuldade em perdoar",
+      "Raiva ou ressentimento"
+    ]
+  },
+  q9: {
+    title: "O que desejas cultivar espiritualmente?",
+    subtitle: "Selecciona todas as que se aplicam.",
+    multi: true,
+    options: [
+      "Paz interior",
+      "Fé mais profunda",
+      "Gratidão diária",
+      "Humildade",
+      "Compaixão pelos outros",
+      "Confiança em Deus",
+      "Disciplina na oração"
+    ]
+  },
+  q10: {
+    title: "Que apoio espiritual te seria útil?",
+    subtitle: "Selecciona todas as que se aplicam.",
+    multi: true,
+    options: [
+      "Um guia de oração diária",
+      "Orações curtas para o dia a dia",
+      "Leituras bíblicas comentadas",
+      "Meditações guiadas",
+      "Uma comunidade de fé",
+      "Conselhos espirituais práticos"
+    ]
+  },
+  q11: {
+    title: "Qual área queres que Deus transforme?",
+    subtitle: "Selecciona todas as que se aplicam.",
+    multi: true,
+    options: [
+      "Família e relações",
+      "Saúde e bem-estar",
+      "Trabalho e propósito",
+      "Paz interior",
+      "Finanças e provisão",
+      "Vida espiritual"
+    ]
+  },
+  q12: {
+    title: "Como preferes viver a fé no dia a dia?",
+    subtitle: "",
+    options: [
+      "Com oração pessoal silenciosa",
+      "Lendo a Palavra todos os dias",
+      "Na comunidade e na missa",
+      "Pela ajuda ao próximo",
+      "Numa combinação de tudo"
+    ]
+  },
+  q13: {
+    title: "Em que momento do dia rezas?",
+    subtitle: "",
+    options: [
+      "Logo pela manhã",
+      "Durante o dia, em pausas",
+      "À noite, antes de dormir",
+      "Em momentos difíceis",
+      "Ainda não tenho rotina"
+    ]
+  },
+  q14: {
+    title: "Quantos minutos por dia podes dedicar à oração?",
+    subtitle: "Mesmo pouco tempo faz diferença.",
+    options: ["5 minutos", "10 minutos", "15–20 minutos", "30 minutos ou mais"]
+  }
+};
+
+const testimonials = [
+  { text: "Rezar com Nossa Senhora mudou o meu Mês de Maio completamente. Sinto-me tão mais próxima de Deus.", name: "Maria F., Fátima", stars: 5 },
+  { text: "Fui à romaria de 13 de Maio pela primeira vez. O Calendário foi o meu companheiro de preparação.", name: "Joaquim S., Porto", stars: 5 },
+  { text: "As orações marianas diárias trouxeram uma paz que nunca conhecera. Uma verdadeira graça!", name: "Ana R., Coimbra", stars: 5 },
+  { text: "Nossa Senhora de Fátima intercedeu pela minha família. Agora rezamos juntos todos os dias.", name: "Teresa M., Braga", stars: 5 },
+  { text: "O Mês de Maria foi o mais bonito da minha vida graças a este calendário de oração.", name: "Manuel C., Lisboa", stars: 5 },
+];
+
+function resURL(id, fallback) {
+  return fallback;
+}
+
+/* ============== ROUTER ============== */
+const container = document.getElementById('screen-container');
+const progressBar = document.getElementById('progressBar');
+const progressWrap = document.getElementById('progressWrap');
+
+function updateProgress() {
+  if (state.screen >= 22) {
+    progressWrap.style.display = 'none';
+    return;
+  }
+  progressWrap.style.display = 'block';
+  const pct = Math.round((state.screen / 21) * 100);
+  progressBar.style.width = pct + '%';
+}
+
+function go(n) {
+  state.screen = n;
+  render();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function next() { go(state.screen + 1); }
+
+function saveAndNext(key, value) {
+  state.answers[key] = value;
+  setTimeout(() => next(), 240);
+}
+
+/* ============== RENDER HELPERS ============== */
+function esc(s) { return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+function renderRadio(qKey, qData, idx) {
+  const picked = state.answers[qKey];
+  const optsHtml = qData.options.map((o, i) => `
+    <button class="opt ${picked === i ? 'selected' : ''}" data-i="${i}">
+      <span class="check"></span>
+      <span>${esc(o)}</span>
+    </button>
+  `).join('');
+  container.innerHTML = `
+    <div class="screen">
+      <div class="eyebrow">Pergunta ${idx} de 16</div>
+      <h1>${esc(qData.title)}</h1>
+      ${qData.subtitle ? `<p class="subtitle">${esc(qData.subtitle)}</p>` : ''}
+      <div class="options">${optsHtml}</div>
+    </div>
+  `;
+  container.querySelectorAll('.opt').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const i = parseInt(btn.dataset.i, 10);
+      container.querySelectorAll('.opt').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      saveAndNext(qKey, i);
+    });
+  });
+}
+
+function renderMulti(qKey, qData, idx) {
+  const picked = state.answers[qKey] || [];
+  const optsHtml = qData.options.map((o, i) => `
+    <button class="opt check-box ${picked.includes(i) ? 'selected' : ''}" data-i="${i}">
+      <span class="check"></span>
+      <span>${esc(o)}</span>
+    </button>
+  `).join('');
+  container.innerHTML = `
+    <div class="screen">
+      <div class="eyebrow">Pergunta ${idx} de 16</div>
+      <h1>${esc(qData.title)}</h1>
+      ${qData.subtitle ? `<p class="subtitle">${esc(qData.subtitle)}</p>` : ''}
+      <div class="options">${optsHtml}</div>
+      <button class="btn-primary" id="continueBtn" ${picked.length ? '' : 'disabled'}>Continuar →</button>
+    </div>
+  `;
+  const continueBtn = document.getElementById('continueBtn');
+  const updateBtn = () => {
+    const sel = state.answers[qKey] || [];
+    continueBtn.disabled = sel.length === 0;
+  };
+  container.querySelectorAll('.opt').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const i = parseInt(btn.dataset.i, 10);
+      let arr = state.answers[qKey] || [];
+      if (arr.includes(i)) arr = arr.filter(x => x !== i);
+      else arr = [...arr, i];
+      state.answers[qKey] = arr;
+      btn.classList.toggle('selected');
+      updateBtn();
+    });
+  });
+  continueBtn.addEventListener('click', () => {
+    if (!continueBtn.disabled) next();
+  });
+}
+
+function renderScale(qKey, qData, idx) {
+  const picked = state.answers[qKey];
+  const glyphs = ['①','②','③','④','⑤'];
+  const btns = glyphs.map((g, i) => `
+    <button class="scale-btn ${picked === i+1 ? 'selected' : ''}" data-v="${i+1}">${g}</button>
+  `).join('');
+  container.innerHTML = `
+    <div class="screen">
+      <div class="eyebrow">Pergunta ${idx} de 16</div>
+      <h1>${esc(qData.title)}</h1>
+      <p class="subtitle">${esc(qData.subtitle)}</p>
+      <div class="scale">${btns}</div>
+      <div class="scale-labels"><span>Pouco</span><span>Muitíssimo</span></div>
+      <div class="scale-hint">Escolhe o número que melhor te representa.</div>
+    </div>
+  `;
+  container.querySelectorAll('.scale-btn').forEach(b => {
+    b.addEventListener('click', () => {
+      const v = parseInt(b.dataset.v, 10);
+      container.querySelectorAll('.scale-btn').forEach(x => x.classList.remove('selected'));
+      b.classList.add('selected');
+      saveAndNext(qKey, v);
+    });
+  });
+}
+
+/* ============== PROFILE LOGIC ============== */
+function computeProfile() {
+  const q1 = state.answers.q1; // 0=todos, 1=algumas, 2=raramente, 3=quase nunca
+  const q5 = state.answers.q5; // 1..5
+
+  if (q1 === 3) return { name: "Fiel em Busca", level: 0 };
+  if (q1 === 0 && q5 === 5) return { name: "Fiel Enraizado", level: 3 };
+  if ((q1 === 0 || q1 === 1) && (q5 === 3 || q5 === 4)) return { name: "Fiel Aprofundado", level: 2 };
+  if ((q1 === 1 || q1 === 2) && (q5 === 1 || q5 === 2)) return { name: "Fiel em Crescimento", level: 1 };
+  if (q1 === 2) return { name: "Fiel em Crescimento", level: 1 };
+  if (q1 === 0) return { name: "Fiel Aprofundado", level: 2 };
+  return { name: "Fiel em Crescimento", level: 1 };
+}
+
+function getMainDesire() {
+  const picks = state.answers.q9 || [];
+  if (picks.length === 0) return "Paz interior";
+  return Q.q9.options[picks[0]];
+}
+
+function getMainBarrier() {
+  const idx = state.answers.q4;
+  if (idx == null) return "Distracções e preocupações";
+  return Q.q4.options[idx];
+}
+
+function getRecommendedPath(profile) {
+  switch (profile.name) {
+    case "Fiel em Busca":
+      return "Começar com as orações marianas de 5 minutos diários.";
+    case "Fiel em Crescimento":
+      return "Rotina matinal com o Rosário e as orações de Leão XIII.";
+    case "Fiel Aprofundado":
+      return "Oração estruturada em três momentos diários com Maria.";
+    case "Fiel Enraizado":
+      return "Aprofundar com meditação e oração contemplativa mariana.";
+    default:
+      return "Rotina diária de oração com Nossa Senhora como guia.";
+  }
+}
+
+/* ============== SCREENS ============== */
+function renderScreen0() {
+  const picked = state.answers.gender;
+  container.innerHTML = `
+    <div class="screen">
+      <div class="eyebrow">Mês de Maria · 13 de Maio</div>
+      <h1>Vive o Mês de Maria com oração diária</h1>
+      <p class="subtitle">Quiz de 2 minutos · descobre a tua devoção mariana</p>
+      <div class="gender-grid">
+        <button class="gender-card ${picked==='M'?'selected':''}" data-g="M" aria-label="Homem">
+          <img src="${resURL('genderHomem','assets/gender-homem.webp')}" fetchpriority="high" width="460" height="818" alt="Homem" />
+          <div class="caption">
+            <span class="lbl">Homem</span>
+            <span class="arrow"></span>
+          </div>
+        </button>
+        <button class="gender-card ${picked==='F'?'selected':''}" data-g="F" aria-label="Mulher">
+          <img src="${resURL('genderMulher','assets/gender-mulher.webp')}" width="460" height="818" decoding="async" alt="Mulher" />
+          <div class="caption">
+            <span class="lbl">Mulher</span>
+            <span class="arrow"></span>
+          </div>
+        </button>
+      </div>
+    </div>
+  `;
+  container.querySelectorAll('.gender-card').forEach(b => {
+    b.addEventListener('click', () => {
+      container.querySelectorAll('.gender-card').forEach(x => x.classList.remove('selected'));
+      b.classList.add('selected');
+      saveAndNext('gender', b.dataset.g);
+    });
+  });
+}
+
+function renderScreen1() {
+  const opts = ["18–34", "35–44", "45–54", "55+"];
+  const picked = state.answers.age;
+  container.innerHTML = `
+    <div class="screen">
+      <div class="eyebrow">Sobre ti</div>
+      <h1>Qual é a tua faixa etária?</h1>
+      <p class="subtitle">Vamos adaptar a tua oferta ao teu momento de vida.</p>
+      <div class="options">
+        ${opts.map((o,i)=>`<button class="opt ${picked===i?'selected':''}" data-i="${i}"><span class="check"></span><span>${o}</span></button>`).join('')}
+      </div>
+    </div>
+  `;
+  container.querySelectorAll('.opt').forEach(b => {
+    b.addEventListener('click', () => {
+      container.querySelectorAll('.opt').forEach(x => x.classList.remove('selected'));
+      b.classList.add('selected');
+      saveAndNext('age', parseInt(b.dataset.i,10));
+    });
+  });
+}
+
+function renderScreen2() {
+  container.innerHTML = `
+    <div class="screen interstitial">
+      <div class="emblem">🌹</div>
+      <h1>Ficamos felizes por estares aqui.</h1>
+      <p class="subtitle" style="max-width:380px;margin:16px auto 0;">
+        Nos próximos ecrãs, vamos descobrir o teu perfil devocional e preparar a tua
+        <strong>Oferta de Fátima</strong> — com orações marianas pensadas especialmente para o Mês de Maria.
+      </p>
+      <button class="btn-primary" id="contBtn">Continuar →</button>
+    </div>
+  `;
+  document.getElementById('contBtn').addEventListener('click', next);
+}
+
+function renderScreen17() {
+  const profile = computeProfile();
+  const desire = getMainDesire();
+  const barrier = getMainBarrier();
+  const path = getRecommendedPath(profile);
+  const levelNames = ["Em Busca", "Crescimento", "Aprofundado", "Enraizado"];
+
+  container.innerHTML = `
+    <div class="screen">
+      <div class="eyebrow">O teu perfil devocional</div>
+      <h1>Conhecemos a tua devoção agora.</h1>
+      <p class="subtitle">Com base nas tuas respostas, este é o teu perfil de fé.</p>
+
+      <div class="profile-card">
+        <div class="label">Perfil</div>
+        <h2>${esc(profile.name)}</h2>
+
+        <div class="levels">
+          ${[0,1,2,3].map(i => `<div class="level-chunk ${i<=profile.level?'active':''}"></div>`).join('')}
+        </div>
+        <div class="level-names">
+          ${levelNames.map((n,i) => `<span class="${i===profile.level?'active':''}">${n}</span>`).join('')}
+        </div>
+
+        <div class="profile-row">
+          <div class="k">Estado espiritual</div>
+          <div class="v">${esc(levelNames[profile.level])} — caminho aberto ao Espírito.</div>
+        </div>
+        <div class="profile-row">
+          <div class="k">Principal desejo</div>
+          <div class="v">${esc(desire)}</div>
+        </div>
+        <div class="profile-row">
+          <div class="k">Principal barreira</div>
+          <div class="v">${esc(barrier)}</div>
+        </div>
+        <div class="profile-row">
+          <div class="k">Caminho recomendado</div>
+          <div class="v">${esc(path)}</div>
+        </div>
+      </div>
+
+      <button class="btn-primary" id="contBtn">Continuar →</button>
+    </div>
+  `;
+  document.getElementById('contBtn').addEventListener('click', next);
+}
+
+/* ============== LEAD FORM ============== */
+function renderScreenLead() {
+  const name = state.answers.name || '';
+  const email = state.answers.email || '';
+  container.innerHTML = `
+    <div class="screen">
+      <div class="eyebrow">Último passo</div>
+      <h1>O teu Perfil está pronto — falta um último passo</h1>
+      <p class="subtitle">Introduz os teus dados para personalizarmos a tua Oferta de Fátima.</p>
+      <div class="lead-form">
+        <label class="lead-label">Nome</label>
+        <input type="text" id="leadName" class="lead-input" placeholder="O teu primeiro nome" value="${esc(name)}" autocomplete="given-name" required />
+        <label class="lead-label" style="margin-top:14px">E-mail</label>
+        <input type="email" id="leadEmail" class="lead-input" placeholder="O teu melhor e-mail" value="${esc(email)}" autocomplete="email" required />
+      </div>
+      <button class="btn-primary" id="leadSubmit" disabled>Criar a minha oferta de Fátima →</button>
+      <p class="lead-legal">Os teus dados estão seguros. Não fazemos spam.</p>
+    </div>
+  `;
+  const n = document.getElementById('leadName');
+  const e = document.getElementById('leadEmail');
+  const b = document.getElementById('leadSubmit');
+  const emailOk = s => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s.trim());
+  function check() {
+    b.disabled = !(n.value.trim().length > 1 && emailOk(e.value));
+  }
+  n.addEventListener('input', check);
+  e.addEventListener('input', check);
+  check();
+  b.addEventListener('click', () => {
+    if (b.disabled) return;
+    state.answers.name = n.value.trim();
+    state.answers.email = e.value.trim();
+    try {
+      const firstName = state.answers.name.split(/\s+/)[0] || '';
+      sessionStorage.setItem('quiz_name', firstName);
+      sessionStorage.setItem('quiz_email', state.answers.email);
+    } catch(err) {}
+    next();
+  });
+}
+
+/* ============== LOADING SCREEN ============== */
+function renderScreen18() {
+  container.innerHTML = `
+    <div class="screen">
+      <div class="eyebrow">Quase lá</div>
+      <h1>Estamos a preparar a tua Oferta de Fátima.</h1>
+      <p class="subtitle">Personalizando cada oração para o teu caminho com Maria.</p>
+
+      <div class="loading-bars" id="loadingBars">
+        <div class="loading-item">
+          <div class="lbl"><span>A reunir as orações marianas</span><span class="pct" id="pct1">0%</span></div>
+          <div class="loading-track"><div class="loading-fill" id="bar1"></div></div>
+        </div>
+        <div class="loading-item">
+          <div class="lbl"><span>A personalizar o teu caminho devocional</span><span class="pct" id="pct2">0%</span></div>
+          <div class="loading-track"><div class="loading-fill" id="bar2"></div></div>
+        </div>
+        <div class="loading-item">
+          <div class="lbl"><span>A preparar a tua oferta de Fátima</span><span class="pct" id="pct3">0%</span></div>
+          <div class="loading-track"><div class="loading-fill" id="bar3"></div></div>
+        </div>
+      </div>
+
+      <div id="commitArea"></div>
+
+      <div class="testimonial-rotator" id="testRotator">
+        <div class="stars">★★★★★</div>
+        <div class="quote" id="tQuote"></div>
+        <div class="author" id="tAuthor"></div>
+      </div>
+    </div>
+  `;
+
+  let tIdx = 0;
+  const tQuote = document.getElementById('tQuote');
+  const tAuthor = document.getElementById('tAuthor');
+  function showT() {
+    const t = testimonials[tIdx % testimonials.length];
+    tQuote.textContent = '"' + t.text + '"';
+    tAuthor.textContent = '— ' + t.name;
+    tIdx++;
+  }
+  showT();
+  const tInterval = setInterval(showT, 3500);
+
+  const commitArea = document.getElementById('commitArea');
+  const questions = [
+    "Queres aprofundar a tua devoção a Nossa Senhora?",
+    "Estás disposto/a a rezar com Maria todos os dias em Maio?",
+    "Comprometes-te a viver o Mês de Maria com oração diária?"
+  ];
+
+  async function runPhase(p) {
+    const bar = document.getElementById('bar' + (p+1));
+    const pct = document.getElementById('pct' + (p+1));
+    await new Promise(r => setTimeout(r, 150));
+    bar.style.width = '100%';
+    const start = Date.now();
+    const dur = 2000;
+    const tick = () => {
+      const k = Math.min(1, (Date.now() - start)/dur);
+      pct.textContent = Math.round(k * 100) + '%';
+      if (k < 1) requestAnimationFrame(tick);
+    };
+    tick();
+    await new Promise(r => setTimeout(r, 2100));
+
+    commitArea.innerHTML = `
+      <div class="commit-modal">
+        <h3>${esc(questions[p])}</h3>
+        <div class="commit-btns">
+          <button class="yes">Sim</button>
+          <button class="no">Agora não</button>
+        </div>
+      </div>
+    `;
+    await new Promise(resolve => {
+      commitArea.querySelector('.yes').addEventListener('click', () => {
+        commitArea.innerHTML = '';
+        resolve();
+      });
+      commitArea.querySelector('.no').addEventListener('click', () => {
+        commitArea.innerHTML = '';
+        resolve();
+      });
+    });
+  }
+
+  (async () => {
+    for (let p = 0; p < 3; p++) {
+      await runPhase(p);
+    }
+    clearInterval(tInterval);
+    next();
+  })();
+}
+
+/* ============== OFFER ============== */
+function renderScreen19() {
+  const profile = computeProfile();
+  const desire = getMainDesire();
+  const barrier = getMainBarrier();
+  const firstName = getFirstName() || 'Amigo';
+  const promo = getPromoCode();
+  const email = state.answers.email || '';
+
+  container.innerHTML = `
+    <div class="timer-bar">
+      ⏳ Oferta especial termina em <strong id="timer">04:00:00</strong>
+    </div>
+
+    <div class="offer-hero">
+      <div class="eyebrow">Oferta Especial · Mês de Maria</div>
+      <h1>${esc(firstName)}, a tua Oferta de Fátima está pronta!</h1>
+      <p class="dek">Personalizada com base no perfil <strong style="color:var(--navy)">${esc(profile.name)}</strong>.</p>
+
+      <div class="product-image-wrap">
+        <img class="product-image" src="${resURL('ofertaFatima','assets/oferta-fatima.webp')}" loading="lazy" decoding="async" width="480" height="720" alt="Oferta de Fátima — Mês de Maria" />
+        <p class="product-image-caption">Acesso imediato após confirmação</p>
+      </div>
+    </div>
+
+    <div class="perso-card">
+      <h3>Personalizado para ti</h3>
+      <div class="perso-row"><div class="pk">Perfil</div><div class="pv">${esc(profile.name)}</div></div>
+      <div class="perso-row"><div class="pk">Objectivo</div><div class="pv">${esc(desire)}</div></div>
+      <div class="perso-row"><div class="pk">Barreira</div><div class="pv">${esc(barrier)}</div></div>
+    </div>
+
+    <ul class="benefits">
+      <li><span class="tick">✔</span><span><strong>365 orações diárias</strong> de Leão XIII, uma para cada dia do ano.</span></li>
+      <li><span class="tick">✔</span><span><strong>Datas de Fátima e do Mês de Maria</strong> destacadas no calendário.</span></li>
+      <li><span class="tick">✔</span><span><strong>Calendário litúrgico completo</strong> com santos e festas marianas.</span></li>
+      <li><span class="tick">✔</span><span><strong>Guia de oração mariana</strong> para viveres o Mês de Maria.</span></li>
+      <li><span class="tick">✔</span><span><strong>Acesso imediato</strong> — entregue por e-mail em formato digital.</span></li>
+    </ul>
+
+    <section class="anchor-block">
+      <h3 class="anchor-title">O que recebes hoje:</h3>
+
+      <div class="anchor-main">
+        <div class="anchor-main-title"><span class="a-emoji">📖</span> Calendário Papal 2026</div>
+        <div class="anchor-prices">
+          <span class="a-was">De: €29</span>
+          <span class="a-arrow">→</span>
+          <span class="a-now">Por: €14</span>
+        </div>
+        <div class="anchor-desc">366 orações, reflexões e versículos diários</div>
+      </div>
+
+      <div class="anchor-bonus">
+        <div class="ab-head"><span class="a-emoji">🌹</span> Bónus 1: 50 Orações Marianas para o Mês de Maria</div>
+        <div class="ab-foot">
+          <div class="ab-prices"><span class="a-was">De: €9</span> <span class="a-arrow">→</span> <span class="a-now">Por: €0</span></div>
+          <span class="a-free">GRÁTIS</span>
+        </div>
+      </div>
+
+      <div class="anchor-bonus">
+        <div class="ab-head"><span class="a-emoji">🌹</span> Bónus 2: Novena de Nossa Senhora de Fátima</div>
+        <div class="ab-foot">
+          <div class="ab-prices"><span class="a-was">De: €9</span> <span class="a-arrow">→</span> <span class="a-now">Por: €0</span></div>
+          <span class="a-free">GRÁTIS</span>
+        </div>
+      </div>
+
+      <div class="anchor-bonus">
+        <div class="ab-head"><span class="a-emoji">🌹</span> Bónus 3: Guia de Oração com Maria</div>
+        <div class="ab-foot">
+          <div class="ab-prices"><span class="a-was">De: €9</span> <span class="a-arrow">→</span> <span class="a-now">Por: €0</span></div>
+          <span class="a-free">GRÁTIS</span>
+        </div>
+      </div>
+
+      <a class="anchor-total" href="https://pay.hotmart.com/N105533278Y" style="display:block;text-decoration:none;cursor:pointer;">
+        Valor total: <span class="at-was">€56</span> Hoje apenas <strong>€14</strong>
+      </a>
+    </section>
+
+    <div class="promo-applied">
+      <div class="pa-line1"><span class="pa-tick">✓</span> O teu código promocional foi aplicado!</div>
+      <div class="pa-line2">Poupaste €42 — acesso ao Calendário Papal 2026 + bónus de Fátima por apenas €14 em vez de €56.</div>
+      <div class="pa-line3">*Desconto de 75% aplicado automaticamente com o código ${esc(promo)}</div>
+    </div>
+
+    <div class="promo-code-card">
+      <div class="code"><span class="tick">✓</span>${esc(promo)}</div>
+      <div class="mini-timer" id="miniTimer">04:00:00</div>
+    </div>
+    ${email ? `<p class="email-note">O acesso será enviado para <strong style="color:var(--navy)">${esc(email)}</strong></p>` : ''}
+
+    <a class="cta-big" href="https://pay.hotmart.com/N105533278Y">QUERO A MINHA OFERTA DE FÁTIMA!</a>
+
+    <div class="testimonials-block">
+      <h3>O que dizem os devotos de Fátima</h3>
+      <div class="testimonial">
+        <div class="stars">★★★★★</div>
+        <div class="text">"Rezar o Rosário com as orações do Calendário durante o Mês de Maria foi uma graça imensa. Nossa Senhora foi a minha guia."</div>
+        <div class="name">— Maria Conceição, Fátima</div>
+      </div>
+      <div class="testimonial">
+        <div class="stars">★★★★★</div>
+        <div class="text">"Aos 68 anos, foi o Mês de Maio mais próximo de Nossa Senhora que já vivi. Recomendo a todos os devotos de Fátima."</div>
+        <div class="name">— António Ferreira, Braga</div>
+      </div>
+    </div>
+
+    <div class="guarantee">
+      <div class="seal">7<br>DIAS</div>
+      <h4>Garantia de 7 dias</h4>
+      <p>Se não sentires que te aproximou de Nossa Senhora, devolvemos o teu dinheiro integralmente. Sem perguntas, sem complicações.</p>
+    </div>
+
+    <p class="legal">Conteúdo digital entregue por e-mail após confirmação do pagamento. Este produto é de natureza devocional e não substitui orientação espiritual presencial. Ao continuares, aceitas os termos e política de privacidade.</p>
+  `;
+
+  const END = Date.now() + 4 * 60 * 60 * 1000;
+  const timerEl = document.getElementById('timer');
+  function fmt(n) { return String(n).padStart(2,'0'); }
+  const miniEl = document.getElementById('miniTimer');
+  function tick() {
+    const rem = Math.max(0, END - Date.now());
+    const h = Math.floor(rem / 3600000);
+    const m = Math.floor((rem % 3600000) / 60000);
+    const s = Math.floor((rem % 60000) / 1000);
+    const txt = `${fmt(h)}:${fmt(m)}:${fmt(s)}`;
+    timerEl.textContent = txt;
+    if (miniEl) miniEl.textContent = txt;
+  }
+  tick();
+  if (window.__offerTimer) clearInterval(window.__offerTimer);
+  window.__offerTimer = setInterval(tick, 1000);
+}
+
+/* ============== LOGO INJECTION ============== */
+function injectLogo() {
+  const n = state.screen;
+  if (n < 1) return; // skip gender screen (ecrã 0)
+  // For the offer screen (22), insert after the timer-bar at top
+  if (n === 22) {
+    const timerBar = container.querySelector('.timer-bar');
+    if (!timerBar) return;
+    if (container.querySelector('.brand-logo')) return;
+    const wrap = document.createElement('div');
+    wrap.className = 'brand-logo offer-logo';
+    wrap.innerHTML = '<img id="logo-editora" src="' + resURL('logoEditora','assets/logo-editora-sagrado.webp') + '" alt="Editora Sagrado" width="180" height="56" />';
+    timerBar.insertAdjacentElement('afterend', wrap);
+    return;
+  }
+  // For all other screens, insert at top of .screen
+  const screen = container.querySelector('.screen');
+  if (!screen) return;
+  if (screen.querySelector('.brand-logo')) return;
+  const wrap = document.createElement('div');
+  wrap.className = 'brand-logo';
+  wrap.innerHTML = '<img id="logo-editora" src="' + resURL('logoEditora','assets/logo-editora-sagrado.webp') + '" alt="Editora Sagrado" width="180" height="56" />';
+  screen.insertBefore(wrap, screen.firstChild);
+}
+
+/* ============== MAIN RENDER ============== */
+function render() {
+  updateProgress();
+  const n = state.screen;
+  switch (n) {
+    case 0:  renderScreen0(); break;
+    case 1:  renderScreen1(); break;
+    case 2:  renderScreen2(); break;
+    case 3:  renderRadio('qFatima1', Q.qFatima1, 1); break;
+    case 4:  renderRadio('qFatima2', Q.qFatima2, 2); break;
+    case 5:  renderRadio('q1',  Q.q1,  3);  break;
+    case 6:  renderRadio('q2',  Q.q2,  4);  break;
+    case 7:  renderRadio('q3',  Q.q3,  5);  break;
+    case 8:  renderRadio('q4',  Q.q4,  6);  break;
+    case 9:  renderScale('q5',  Q.q5,  7);  break;
+    case 10: renderRadio('q6',  Q.q6,  8);  break;
+    case 11: renderRadio('q7',  Q.q7,  9);  break;
+    case 12: renderMulti('q8',  Q.q8,  10); break;
+    case 13: renderMulti('q9',  Q.q9,  11); break;
+    case 14: renderMulti('q10', Q.q10, 12); break;
+    case 15: renderMulti('q11', Q.q11, 13); break;
+    case 16: renderRadio('q12', Q.q12, 14); break;
+    case 17: renderRadio('q13', Q.q13, 15); break;
+    case 18: renderRadio('q14', Q.q14, 16); break;
+    case 19: renderScreen17(); break;
+    case 20: renderScreenLead(); break;
+    case 21: renderScreen18(); break;
+    case 22: renderScreen19(); break;
+    default: renderScreen0();
+  }
+  injectLogo();
+}
+
+/* ============== BOOT ============== */
+render();
+</script>
+
+<!-- UTM capture + checkout link enrichment -->
+<script>
+(function() {
+  const utmKeys = ['utm_source','utm_medium','utm_campaign','utm_term','utm_content','utm_id','src'];
+  const params = new URLSearchParams(window.location.search);
+  const stored = {};
+  utmKeys.forEach(k => { if(params.get(k)) stored[k] = params.get(k); });
+  if(Object.keys(stored).length) sessionStorage.setItem('quiz_utms', JSON.stringify(stored));
+
+  function appendUtms(url) {
+    try {
+      const u = new URL(url, window.location.origin);
+      const saved = JSON.parse(sessionStorage.getItem('quiz_utms') || '{}');
+      Object.entries(saved).forEach(([k,v]) => u.searchParams.set(k,v));
+      const qn = sessionStorage.getItem('quiz_name');
+      const qe = sessionStorage.getItem('quiz_email');
+      if (qn) u.searchParams.set('name', qn);
+      if (qe) u.searchParams.set('email', qe);
+      return u.toString();
+    } catch(e) { return url; }
+  }
+
+  document.addEventListener('click', function(e) {
+    const btn = e.target.closest('a[href], button[data-checkout]');
+    if(btn && btn.href && (btn.href.includes('pay') || btn.href.includes('checkout') || btn.href.includes('hotmart') || btn.href.includes('kiwify') || btn.href.includes('editorasagrado') || btn.href.includes('N105533278Y'))) {
+      e.preventDefault();
+      // Meta Pixel — AddToCart
+      if(typeof fbq === 'function') {
+        fbq('track', 'AddToCart', {
+          value: 70.00,
+          currency: 'BRL',
+          content_name: 'Oferta de Fátima — Calendário Papal 2026',
+          content_ids: ['fatima-calendario-2026'],
+          content_type: 'product'
+        });
+      }
+      window.location.href = appendUtms(btn.href);
+    }
+  });
+})();
+</script>
+
+<!-- UTMify — captura UTMs da URL -->
+<script src="https://cdn.utmify.com.br/scripts/utms/latest.js" data-utmify-prevent-subids="" async defer></script>
+
+<!-- Scripts de terceiros — carregados em idle para não bloquear render (TBT) -->
+<script>
+function _loadThirdParty() {
+  // Microsoft Clarity
+  (function(c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window,document,"clarity","script","ksoj7nifzg");
+
+  // Meta Pixel
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window,document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init','745685381942209');
+  fbq('track','PageView');
+}
+// Carrega na primeira interacção do utilizador OU após 5.5s (o que vier primeiro)
+// Garante que scripts de terceiros não bloqueiam o render inicial (TBT)
+var _tpLoaded = false;
+function _runOnce() {
+  if (_tpLoaded) return;
+  _tpLoaded = true;
+  ['click','touchstart','scroll','keydown','mousemove'].forEach(function(ev) {
+    document.removeEventListener(ev, _runOnce, { passive: true, capture: true });
+  });
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(_loadThirdParty, { timeout: 2000 });
+  } else {
+    _loadThirdParty();
+  }
+}
+['click','touchstart','scroll','keydown','mousemove'].forEach(function(ev) {
+  document.addEventListener(ev, _runOnce, { passive: true, capture: true, once: true });
+});
+setTimeout(_runOnce, 5500);
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=745685381942209&ev=PageView&noscript=1"
+/></noscript>
+
+</body></html>
+
