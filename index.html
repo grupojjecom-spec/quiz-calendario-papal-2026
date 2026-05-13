@@ -12,17 +12,6 @@
 
 
 
-<!-- Microsoft Clarity -->
-<script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "ksoj7nifzg");
-</script>
-
-<!-- UTMify -->
-<script src="https://cdn.utmify.com.br/scripts/utms/latest.js" data-utmify-prevent-subids="" async="" defer=""></script>
 <title>Calendário Papal 2026 — Quiz</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
@@ -1686,5 +1675,53 @@ render();
 })();
 </script>
 
+<!-- UTMify — captura UTMs da URL -->
+<script src="https://cdn.utmify.com.br/scripts/utms/latest.js" data-utmify-prevent-subids="" async defer></script>
+
+<!-- Scripts de terceiros — carregados em idle para não bloquear render (TBT) -->
+<script>
+function _loadThirdParty() {
+  // Microsoft Clarity
+  (function(c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window,document,"clarity","script","ksoj7nifzg");
+
+  // Meta Pixel
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window,document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init','745685381942209');
+  fbq('track','PageView');
+}
+// Carrega na primeira interacção do utilizador OU após 5.5s (o que vier primeiro)
+// Garante que scripts de terceiros não bloqueiam o render inicial (TBT)
+var _tpLoaded = false;
+function _runOnce() {
+  if (_tpLoaded) return;
+  _tpLoaded = true;
+  ['click','touchstart','scroll','keydown','mousemove'].forEach(function(ev) {
+    document.removeEventListener(ev, _runOnce, { passive: true, capture: true });
+  });
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(_loadThirdParty, { timeout: 2000 });
+  } else {
+    _loadThirdParty();
+  }
+}
+['click','touchstart','scroll','keydown','mousemove'].forEach(function(ev) {
+  document.addEventListener(ev, _runOnce, { passive: true, capture: true, once: true });
+});
+setTimeout(_runOnce, 5500);
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=745685381942209&ev=PageView&noscript=1"
+/></noscript>
 
 </body></html>
