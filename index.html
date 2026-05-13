@@ -1022,6 +1022,12 @@ function go(n) {
   state.screen = n;
   render();
   window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  // — Tracking por ecrã —
+  var _stepNames = ['genero','intro1','intro2','q1','q2','q3','q4','q5','q6','q7','q8','q9','q10','q11','q12','q13','q14','resultado','lead','pre-oferta','oferta'];
+  var _stepName = _stepNames[n] || ('ecra-' + n);
+  if (typeof fbq === 'function') fbq('trackCustom', 'QuizStep', { step: n, name: _stepName });
+  if (typeof clarity === 'function') clarity('set', 'quiz_step', _stepName);
 }
 
 function next() { go(state.screen + 1); }
