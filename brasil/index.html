@@ -1009,12 +1009,12 @@ const progressBar = document.getElementById('progressBar');
 const progressWrap = document.getElementById('progressWrap');
 
 function updateProgress() {
-  if (state.screen >= 20) {
+  if (state.screen >= 19) {
     progressWrap.style.display = 'none';
     return;
   }
   progressWrap.style.display = 'block';
-  const pct = Math.round((state.screen / 19) * 100);
+  const pct = Math.round((state.screen / 18) * 100);
   progressBar.style.width = pct + '%';
 }
 
@@ -1024,7 +1024,7 @@ function go(n) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 
   // — Tracking por ecrã —
-  var _stepNames = ['genero','intro1','intro2','q1','q2','q3','q4','q5','q6','q7','q8','q9','q10','q11','q12','q13','q14','resultado','lead','pre-oferta','oferta'];
+  var _stepNames = ['genero','intro1','intro2','q1','q2','q3','q4','q5','q6','q7','q8','q9','q10','q11','q12','q13','q14','lead','pre-oferta','oferta'];
   var _stepName = _stepNames[n] || ('ecra-' + n);
   if (typeof fbq === 'function') fbq('trackCustom', 'QuizStep', { step: n, name: _stepName });
   if (typeof clarity === 'function') clarity('set', 'quiz_step', _stepName);
@@ -1303,9 +1303,9 @@ function renderScreenLead() {
   const email = state.answers.email || '';
   container.innerHTML = `
     <div class="screen">
-      <div class="eyebrow">Último passo</div>
-      <h1>O teu Perfil está pronto — falta um último passo</h1>
-      <p class="subtitle">Introduz os teus dados para personalizarmos o teu Calendário de Oração 2026.</p>
+      <div class="eyebrow">Quase lá — último passo</div>
+      <h1>Seu perfil espiritual está pronto!</h1>
+      <p class="subtitle">Informe seus dados para revelarmos seu perfil e prepararmos o seu Calendário de Oração 2026 personalizado.</p>
       <div class="lead-form">
         <label class="lead-label">Nome</label>
         <input type="text" id="leadName" class="lead-input" placeholder="O teu primeiro nome" value="${esc(name)}" autocomplete="given-name" required />
@@ -1455,10 +1455,23 @@ function renderScreen19() {
       ⏳ Oferta especial termina em <strong id="timer">04:00:00</strong>
     </div>
 
+    <div style="background:var(--navy);padding:28px 20px 24px;text-align:center;border-bottom:3px solid var(--gold)">
+      <div style="font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:8px">✝ Seu perfil espiritual</div>
+      <div style="font-size:26px;font-weight:800;color:#fff;margin-bottom:14px">${esc(profile.name)}</div>
+      <div style="display:flex;justify-content:center;gap:6px;margin-bottom:8px">
+        ${[0,1,2,3].map(i=>`<div style="height:8px;flex:1;max-width:60px;border-radius:4px;background:${i<=profile.level?'var(--gold)':'rgba(201,168,106,0.2)'}"></div>`).join('')}
+      </div>
+      <div style="font-size:12px;color:rgba(255,255,255,.55);margin-bottom:20px">${['Em Busca','Crescimento','Aprofundado','Enraizado'][profile.level]}</div>
+      <div style="background:rgba(255,255,255,.06);border:1px solid rgba(201,168,106,.2);border-radius:12px;padding:14px 16px;text-align:left;font-size:13px">
+        <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.07)"><span style="color:rgba(255,255,255,.5)">Principal desejo</span><span style="color:#fff;font-weight:600;max-width:60%;text-align:right">${esc(desire)}</span></div>
+        <div style="display:flex;justify-content:space-between;padding:6px 0"><span style="color:rgba(255,255,255,.5)">Principal barreira</span><span style="color:#fff;font-weight:600;max-width:60%;text-align:right">${esc(barrier)}</span></div>
+      </div>
+    </div>
+
     <div class="offer-hero">
-      <div class="eyebrow">O teu Calendário está pronto</div>
-      <h1>${esc(firstName)}, o teu Calendário de Oração está pronto!</h1>
-      <p class="dek">Personalizado com base no perfil <strong style="color:var(--navy)">${esc(profile.name)}</strong>.</p>
+      <div class="eyebrow">Solução preparada para você</div>
+      <h1>${esc(firstName)}, preparamos o Calendário ideal para o seu perfil!</h1>
+      <p class="dek">Com base no perfil <strong style="color:var(--navy)">${esc(profile.name)}</strong>, selecionamos o conteúdo certo para o seu caminho espiritual.</p>
 
       <div class="product-image-wrap">
         <img class="product-image" src="${resURL('bundleImg','assets/oferta-bundle.webp')}" loading="lazy" width="480" height="854" alt="Kit Calendário Papal 2026 com 3 bônus" />
@@ -1626,10 +1639,9 @@ function render() {
     case 14: renderRadio('q12', Q.q12, 12); break;
     case 15: renderRadio('q13', Q.q13, 13); break;
     case 16: renderRadio('q14', Q.q14, 14); break;
-    case 17: renderScreen17(); break;
-    case 18: renderScreenLead(); break;
-    case 19: renderScreen18(); break;
-    case 20: renderScreen19(); break;
+    case 17: renderScreenLead(); break;
+    case 18: renderScreen18(); break;
+    case 19: renderScreen19(); break;
     default: renderScreen0();
   }
   injectLogo();
