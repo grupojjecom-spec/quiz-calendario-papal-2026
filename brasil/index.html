@@ -852,7 +852,7 @@ const Q = {
     options: ["Todos os dias", "Algumas vezes por semana", "Raramente", "Quase nunca"]
   },
   q2: {
-    title: "Como te descreves espiritualmente?",
+    title: "Como você se descreve espiritualmente?",
     subtitle: "Escolhe o que mais se aproxima.",
     options: [
       "Próximo de Deus e da fé",
@@ -909,7 +909,7 @@ const Q = {
     ]
   },
   q8: {
-    title: "Que dificuldades espirituais sentes?",
+    title: "Quais dificuldades espirituais você sente?",
     subtitle: "Selecciona todas as que se aplicam.",
     multi: true,
     options: [
@@ -923,7 +923,7 @@ const Q = {
     ]
   },
   q9: {
-    title: "O que desejas cultivar espiritualmente?",
+    title: "O que você deseja cultivar espiritualmente?",
     subtitle: "Selecciona todas as que se aplicam.",
     multi: true,
     options: [
@@ -937,7 +937,7 @@ const Q = {
     ]
   },
   q10: {
-    title: "Que apoio espiritual te seria útil?",
+    title: "Qual apoio espiritual seria útil para você?",
     subtitle: "Selecciona todas as que se aplicam.",
     multi: true,
     options: [
@@ -950,7 +950,7 @@ const Q = {
     ]
   },
   q11: {
-    title: "Qual área queres que Deus transforme?",
+    title: "Qual área você quer que Deus transforme?",
     subtitle: "Selecciona todas as que se aplicam.",
     multi: true,
     options: [
@@ -995,7 +995,7 @@ const testimonials = [
   { text: "Há anos que não sentia esta paz. As orações diárias mudaram a minha rotina.", name: "Maria F., Braga", stars: 5 },
   { text: "Comecei com 5 minutos por dia. Hoje não consigo começar o dia de outra forma.", name: "Joaquim S., Porto", stars: 5 },
   { text: "Uma verdadeira bênção. Sinto-me mais próximo de Deus todos os dias.", name: "Ana R., Coimbra", stars: 5 },
-  { text: "Reconciliei-me comigo e com a minha família através da oração.", name: "Teresa M., Lisboa", stars: 5 },
+  { text: "Reconciliei-me comigo e com a minha família através da oração.", name: "Teresa M., São Paulo", stars: 5 },
   { text: "Cada dia uma nova graça. Recomendo a todos os que procuram Deus.", name: "Manuel C., Évora", stars: 5 },
 ];
 
@@ -1023,7 +1023,7 @@ function go(n) {
   render();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 
-  // — Tracking por ecrã —
+  // — Tracking por etapa —
   var _stepNames = ['genero','intro1','intro2','q1','q2','q3','q4','q5','q6','q7','q8','q9','q10','q11','q12','q13','q14','lead','pre-oferta','oferta'];
   var _stepName = _stepNames[n] || ('ecra-' + n);
   if (typeof fbq === 'function') fbq('trackCustom', 'QuizStep', { step: n, name: _stepName });
@@ -1183,7 +1183,7 @@ function renderScreen0() {
   container.innerHTML = `
     <div class="screen">
       <div class="eyebrow">Calendário Papal 2026</div>
-      <h1>Aproxima-te de Deus através da oração diária</h1>
+      <h1>Aproxime-se de Deus através da oração diária</h1>
       <p class="subtitle">Quiz de 2 minutos · orações diárias de Leão XIII</p>
       <div class="gender-grid">
         <button class="gender-card ${picked==='M'?'selected':''}" data-g="M" aria-label="Homem">
@@ -1218,8 +1218,8 @@ function renderScreen1() {
   container.innerHTML = `
     <div class="screen">
       <div class="eyebrow">Sobre ti</div>
-      <h1>Qual é a tua faixa etária?</h1>
-      <p class="subtitle">Vamos adaptar o teu Calendário ao teu momento de vida.</p>
+      <h1>Qual é a sua faixa etária?</h1>
+      <p class="subtitle">Vamos adaptar o seu Calendário ao seu momento de vida.</p>
       <div class="options">
         ${opts.map((o,i)=>`<button class="opt ${picked===i?'selected':''}" data-i="${i}"><span class="check"></span><span>${o}</span></button>`).join('')}
       </div>
@@ -1240,7 +1240,7 @@ function renderScreen2() {
       <div class="emblem">✝</div>
       <h1>Ficamos felizes por estares aqui.</h1>
       <p class="subtitle" style="max-width:380px;margin:16px auto 0;">
-        Nos próximos ecrãs, vamos descobrir o teu perfil espiritual e preparar o teu
+        Nas próximas etapas, vamos descobrir o seu perfil espiritual e preparar o seu
         <strong>Calendário Papal 2026</strong> — com orações diárias de Leão XIII pensadas para ti.
       </p>
       <button class="btn-primary" id="contBtn">Continuar →</button>
@@ -1258,9 +1258,9 @@ function renderScreen17() {
 
   container.innerHTML = `
     <div class="screen">
-      <div class="eyebrow">O teu perfil espiritual</div>
+      <div class="eyebrow">O seu perfil espiritual</div>
       <h1>Conhecemos-te melhor agora.</h1>
-      <p class="subtitle">Com base nas tuas respostas, este é o teu perfil.</p>
+      <p class="subtitle">Com base nas suas respostas, este é o seu perfil.</p>
 
       <div class="profile-card">
         <div class="label">Perfil</div>
@@ -1308,12 +1308,12 @@ function renderScreenLead() {
       <p class="subtitle">Informe seus dados para revelarmos seu perfil e prepararmos o seu Calendário de Oração 2026 personalizado.</p>
       <div class="lead-form">
         <label class="lead-label">Nome</label>
-        <input type="text" id="leadName" class="lead-input" placeholder="O teu primeiro nome" value="${esc(name)}" autocomplete="given-name" required />
+        <input type="text" id="leadName" class="lead-input" placeholder="Seu primeiro nome" value="${esc(name)}" autocomplete="given-name" required />
         <label class="lead-label" style="margin-top:14px">E-mail</label>
-        <input type="email" id="leadEmail" class="lead-input" placeholder="O teu melhor e-mail" value="${esc(email)}" autocomplete="email" required />
+        <input type="email" id="leadEmail" class="lead-input" placeholder="Seu melhor e-mail" value="${esc(email)}" autocomplete="email" required />
       </div>
       <button class="btn-primary" id="leadSubmit" disabled>Criar o meu calendário personalizado →</button>
-      <p class="lead-legal">Os teus dados estão seguros. Não fazemos spam.</p>
+      <p class="lead-legal">Seus dados estão seguros. Não fazemos spam.</p>
     </div>
   `;
   const n = document.getElementById('leadName');
@@ -1343,8 +1343,8 @@ function renderScreen18() {
   container.innerHTML = `
     <div class="screen">
       <div class="eyebrow">Quase lá</div>
-      <h1>Estamos a preparar o teu Calendário de Oração para 2026.</h1>
-      <p class="subtitle">Personalizando cada dia para o teu caminho espiritual.</p>
+      <h1>Estamos preparando o seu Calendário de Oração para 2026.</h1>
+      <p class="subtitle">Personalizando cada dia para o seu caminho espiritual.</p>
 
       <div class="loading-bars" id="loadingBars">
         <div class="loading-item">
@@ -1352,11 +1352,11 @@ function renderScreen18() {
           <div class="loading-track"><div class="loading-fill" id="bar1"></div></div>
         </div>
         <div class="loading-item">
-          <div class="lbl"><span>A personalizar o teu perfil</span><span class="pct" id="pct2">0%</span></div>
+          <div class="lbl"><span>Personalizando o seu perfil</span><span class="pct" id="pct2">0%</span></div>
           <div class="loading-track"><div class="loading-fill" id="bar2"></div></div>
         </div>
         <div class="loading-item">
-          <div class="lbl"><span>A preparar o teu Calendário 2026</span><span class="pct" id="pct3">0%</span></div>
+          <div class="lbl"><span>Preparando o seu Calendário 2026</span><span class="pct" id="pct3">0%</span></div>
           <div class="loading-track"><div class="loading-fill" id="bar3"></div></div>
         </div>
       </div>
@@ -1595,7 +1595,7 @@ function renderScreen19() {
 /* ============== LOGO INJECTION ============== */
 function injectLogo() {
   const n = state.screen;
-  if (n < 1) return; // skip gender screen (ecrã 0)
+  if (n < 1) return; // skip gender screen (etapa 0)
   // For the offer screen (20), insert after the timer-bar at top
   if (n === 20) {
     const timerBar = container.querySelector('.timer-bar');
