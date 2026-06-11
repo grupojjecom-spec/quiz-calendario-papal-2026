@@ -554,31 +554,53 @@ img{max-width:100%;display:block}
 })();
 </script>
 
-<!-- Facebook Pixel stub inline (sem SDK — fila de eventos) -->
+<!-- Facebook Pixel — código oficial Meta (async, não bloqueia render) -->
 <script>
-window.fbq=function(){(window.fbq.q=window.fbq.q||[]).push(arguments)};
-window._fbq=window.fbq;window.fbq.push=window.fbq;
-window.fbq.loaded=!0;window.fbq.version='2.0';window.fbq.queue=[];
-fbq('init','745685381942209');fbq('track','PageView');
+!function(f,b,e,v,n,t,s){
+  if(f.fbq)return;
+  n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;
+  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];
+  t=b.createElement(e);t.async=!0;t.src=v;
+  s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)
+}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','745685381942209');
+fbq('track','PageView');
 </script>
 <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=745685381942209&ev=PageView&noscript=1"/></noscript>
 
-<!-- Pixel SDK + UTMify + Clarity — carregam APÓS window.load (zero TBT) -->
+<!-- AddToCart — dispara ao clicar em qualquer botão da oferta -->
 <script>
-window.addEventListener('load',function(){
-  // Facebook Pixel SDK (processa a fila fbq já criada)
-  var fp=document.createElement('script');fp.async=1;
-  fp.src='https://connect.facebook.net/en_US/fbevents.js';
-  document.head.appendChild(fp);
-  // UTMify
-  var ut=document.createElement('script');ut.async=1;
-  ut.src='https://cdn.utmify.com.br/scripts/utms/latest.js';
-  ut.setAttribute('data-utmify-prevent-subids','');
-  document.head.appendChild(ut);
-  // Clarity em idle
+(function(){
+  var brlValue = 83.72; // €14 × 5.98 — fallback estático
+  fetch('https://api.exchangerate-api.com/v4/latest/EUR')
+    .then(function(r){return r.json();})
+    .then(function(d){var rate=d&&d.rates&&d.rates.BRL;if(rate)brlValue=Math.round(14*rate*100)/100;})
+    .catch(function(){});
+  function bind(){
+    document.querySelectorAll('a[href*="hotmart.com"],a[href*="pay.hotmart"]').forEach(function(a){
+      a.addEventListener('click',function(){
+        if(typeof fbq==='function'){
+          fbq('track','AddToCart',{value:brlValue,currency:'BRL',
+            content_name:'Calendário Papal 2026',content_ids:['calendariopapal2026'],
+            content_type:'product',num_items:1});
+        }
+      });
+    });
+  }
+  document.readyState==='loading'?document.addEventListener('DOMContentLoaded',bind):bind();
+})();
+</script>
+
+<!-- UTMify — async defer -->
+<script src="https://cdn.utmify.com.br/scripts/utms/latest.js" data-utmify-prevent-subids="" async defer></script>
+
+<!-- Clarity — em idle -->
+<script>
+(function(){
   function lc(){(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src='https://www.clarity.ms/tag/'+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,'clarity','script','ksoj7nifzg');}
   'requestIdleCallback' in window?requestIdleCallback(lc,{timeout:3000}):setTimeout(lc,2000);
-},{once:true});
+})();
 </script>
 </body>
 </html>
