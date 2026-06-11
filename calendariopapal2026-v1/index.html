@@ -534,6 +534,39 @@ img{max-width:100%;display:block}
 })();
 </script>
 
+<!-- UTMify — captura e repassa UTMs -->
+<script src="https://cdn.utmify.com.br/scripts/utms/latest.js" data-utmify-prevent-subids="" async defer></script>
+
+<!-- Captura UTMs da URL e injeta nos links de checkout -->
+<script>
+(function(){
+  var utmKeys = ['utm_source','utm_medium','utm_campaign','utm_term','utm_content','utm_id','src'];
+  var params = new URLSearchParams(window.location.search);
+  var stored = {};
+  utmKeys.forEach(function(k){ if(params.get(k)) stored[k] = params.get(k); });
+  if(Object.keys(stored).length) sessionStorage.setItem('page_utms', JSON.stringify(stored));
+
+  function applyUtms(){
+    var saved = {};
+    try{ saved = JSON.parse(sessionStorage.getItem('page_utms') || '{}'); }catch(e){}
+    if(!Object.keys(saved).length) return;
+    document.querySelectorAll('a[href*="hotmart.com"], a[href*="pay.hotmart"]').forEach(function(a){
+      try{
+        var u = new URL(a.href);
+        Object.keys(saved).forEach(function(k){ u.searchParams.set(k, saved[k]); });
+        a.href = u.toString();
+      }catch(e){}
+    });
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', applyUtms);
+  } else {
+    applyUtms();
+  }
+})();
+</script>
+
 <!-- Clarity + Facebook Pixel (interaction-first) -->
 <script>
 function _loadThirdParty(){
