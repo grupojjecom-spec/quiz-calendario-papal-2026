@@ -12,7 +12,7 @@
 <meta property="og:image" content="assets/bundle-abertura.webp">
 <meta property="og:type" content="website">
 <!-- Preload LCP hero image -->
-<link rel="preload" as="image" href="assets/bundle-abertura.webp" fetchpriority="high">
+<link rel="preload" as="image" href="assets/bundle-abertura.webp" fetchpriority="high" type="image/webp">
 <style>
 /* ═══ RESET & BASE (mobile-first: base = 375px) ═══ */
 *{box-sizing:border-box;margin:0;padding:0}
@@ -293,7 +293,7 @@ img{max-width:100%;display:block}
   <h1>Acreditas em Deus.<br>Mas vives como se não tivesses tempo para Ele.</h1>
   <p class="hero-sub">A rotina espiritual que sempre quiseste ter. Já organizada para os 366 dias de 2026.</p>
 
-  <img src="assets/bundle-abertura.webp" alt="Calendário Papal 2026 — Kit Completo" class="hero-img" width="560" height="995" fetchpriority="high">
+  <img src="assets/bundle-abertura.webp" alt="Calendário Papal 2026 — Kit Completo" class="hero-img" width="480" height="853" fetchpriority="high">
 
   <ul class="hero-bullets">
     <li>Orações organizadas para cada dia do ano</li>
@@ -451,7 +451,7 @@ img{max-width:100%;display:block}
   <h2 class="offer-headline">Recupere a vida de oração que se perdeu na rotina.<br>Em 5 minutos por dia, todos os dias até 31 de Dezembro.</h2>
   <p class="offer-sub">Um caminho espiritual já organizado para si — para nunca mais ter de decidir o que rezar.</p>
 
-  <img src="assets/bundle-abertura.webp" alt="Kit Calendário Papal 2026" class="offer-img" width="560" height="995" loading="lazy" decoding="async">
+  <img src="assets/bundle-abertura.webp" alt="Kit Calendário Papal 2026" class="offer-img" width="480" height="853" loading="lazy" decoding="async">
 
   <div class="price-table">
     <p><strong>Valor do kit completo:</strong></p>
@@ -536,59 +536,49 @@ img{max-width:100%;display:block}
 })();
 </script>
 
-<!-- UTMify — captura e repassa UTMs -->
-<script src="https://cdn.utmify.com.br/scripts/utms/latest.js" data-utmify-prevent-subids="" async defer></script>
-
-<!-- Captura UTMs da URL e injeta nos links de checkout -->
+<!-- UTMs: captura inline (sem script externo) + aplica nos links -->
 <script>
 (function(){
-  var utmKeys = ['utm_source','utm_medium','utm_campaign','utm_term','utm_content','utm_id','src'];
-  var params = new URLSearchParams(window.location.search);
-  var stored = {};
-  utmKeys.forEach(function(k){ if(params.get(k)) stored[k] = params.get(k); });
-  if(Object.keys(stored).length) sessionStorage.setItem('page_utms', JSON.stringify(stored));
-
-  function applyUtms(){
-    var saved = {};
-    try{ saved = JSON.parse(sessionStorage.getItem('page_utms') || '{}'); }catch(e){}
-    if(!Object.keys(saved).length) return;
-    document.querySelectorAll('a[href*="hotmart.com"], a[href*="pay.hotmart"]').forEach(function(a){
-      try{
-        var u = new URL(a.href);
-        Object.keys(saved).forEach(function(k){ u.searchParams.set(k, saved[k]); });
-        a.href = u.toString();
-      }catch(e){}
+  var keys=['utm_source','utm_medium','utm_campaign','utm_term','utm_content','utm_id','src'];
+  var p=new URLSearchParams(window.location.search),s={};
+  keys.forEach(function(k){if(p.get(k))s[k]=p.get(k);});
+  if(Object.keys(s).length)sessionStorage.setItem('page_utms',JSON.stringify(s));
+  function apply(){
+    var saved={};try{saved=JSON.parse(sessionStorage.getItem('page_utms')||'{}');}catch(e){}
+    if(!Object.keys(saved).length)return;
+    document.querySelectorAll('a[href*="hotmart.com"],a[href*="pay.hotmart"]').forEach(function(a){
+      try{var u=new URL(a.href);Object.keys(saved).forEach(function(k){u.searchParams.set(k,saved[k]);});a.href=u.toString();}catch(e){}
     });
   }
-
-  if(document.readyState === 'loading'){
-    document.addEventListener('DOMContentLoaded', applyUtms);
-  } else {
-    applyUtms();
-  }
+  document.readyState==='loading'?document.addEventListener('DOMContentLoaded',apply):apply();
 })();
 </script>
 
-<!-- Facebook Pixel — dispara PageView imediatamente -->
+<!-- Facebook Pixel stub inline (sem SDK — fila de eventos) -->
 <script>
-!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
-fbq('init','745685381942209');
-fbq('track','PageView');
+window.fbq=function(){(window.fbq.q=window.fbq.q||[]).push(arguments)};
+window._fbq=window.fbq;window.fbq.push=window.fbq;
+window.fbq.loaded=!0;window.fbq.version='2.0';window.fbq.queue=[];
+fbq('init','745685381942209');fbq('track','PageView');
 </script>
 <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=745685381942209&ev=PageView&noscript=1"/></noscript>
 
-<!-- Clarity — carrega em idle para não bloquear render -->
+<!-- Pixel SDK + UTMify + Clarity — carregam APÓS window.load (zero TBT) -->
 <script>
-(function(){
-  function _loadClarity(){
-    (function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","ksoj7nifzg");
-  }
-  if('requestIdleCallback' in window){
-    requestIdleCallback(_loadClarity, {timeout:3000});
-  } else {
-    setTimeout(_loadClarity, 2000);
-  }
-})();
+window.addEventListener('load',function(){
+  // Facebook Pixel SDK (processa a fila fbq já criada)
+  var fp=document.createElement('script');fp.async=1;
+  fp.src='https://connect.facebook.net/en_US/fbevents.js';
+  document.head.appendChild(fp);
+  // UTMify
+  var ut=document.createElement('script');ut.async=1;
+  ut.src='https://cdn.utmify.com.br/scripts/utms/latest.js';
+  ut.setAttribute('data-utmify-prevent-subids','');
+  document.head.appendChild(ut);
+  // Clarity em idle
+  function lc(){(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src='https://www.clarity.ms/tag/'+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,'clarity','script','ksoj7nifzg');}
+  'requestIdleCallback' in window?requestIdleCallback(lc,{timeout:3000}):setTimeout(lc,2000);
+},{once:true});
 </script>
 </body>
 </html>
