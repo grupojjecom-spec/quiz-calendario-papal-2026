@@ -13,6 +13,20 @@
 <meta property="og:type" content="website">
 <!-- Preload LCP hero image -->
 <link rel="preload" as="image" href="assets/bundle-abertura.webp" fetchpriority="high" type="image/webp">
+<!-- Facebook Pixel — no <head> para disparar antes de qualquer saída da página -->
+<script>
+!function(f,b,e,v,n,t,s){
+  if(f.fbq)return;
+  n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;
+  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];
+  t=b.createElement(e);t.async=!0;t.src=v;
+  s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)
+}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','745685381942209');
+fbq('track','PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=745685381942209&ev=PageView&noscript=1"/></noscript>
 <style>
 /* ═══ RESET & BASE (mobile-first: base = 375px) ═══ */
 *{box-sizing:border-box;margin:0;padding:0}
@@ -91,9 +105,9 @@ img{max-width:100%;display:block}
 .hero .hero-sub{
   font-size:15px;font-weight:600;
   color:#333;line-height:1.45;
-  margin-bottom:16px;
+  margin-bottom:8px;
 }
-.hero-img{width:100%;margin:0 0 18px;border-radius:8px}
+.hero-img{width:82%;max-width:320px;margin:0 auto 14px;display:block;border-radius:8px}
 .hero-bullets{
   list-style:disc;padding-left:20px;
   text-align:left;display:flex;flex-direction:column;gap:5px;
@@ -133,7 +147,7 @@ img{max-width:100%;display:block}
 
 /* ── TESTIMONIALS ── */
 .testi{margin-bottom:20px}
-.testi img{width:100%;border-radius:8px;margin-bottom:10px}
+.testi img{width:88%;max-width:320px;margin:0 auto 10px;display:block;border-radius:8px}
 .testi-quote{font-size:15px;color:#1a1a1a;line-height:1.55;margin-bottom:4px}
 .testi-name{font-size:14px;color:#444}
 
@@ -290,8 +304,8 @@ img{max-width:100%;display:block}
 
 <!-- HERO -->
 <section class="hero">
-  <h1>Acreditas em Deus.<br>Mas vives como se não tivesses tempo para Ele.</h1>
-  <p class="hero-sub">A rotina espiritual que sempre quiseste ter. Já organizada para os 366 dias de 2026.</p>
+  <h1>Uma rotina diária de oração para viver a fé com constância ao longo do ano</h1>
+  <p class="hero-sub">Um calendário espiritual inspirado nos ensinamentos do Papa Leão XIII.</p>
 
   <img src="assets/bundle-abertura.webp" alt="Calendário Papal 2026 — Kit Completo" class="hero-img" width="480" height="853" fetchpriority="high">
 
@@ -507,7 +521,7 @@ img{max-width:100%;display:block}
 <script>
 // COUNTDOWN — 4 horas, só Horas e Minutos
 (function(){
-  var END = Date.now() + 40 * 60 * 1000;
+  var END = Date.now() + (3*60+49) * 60 * 1000;
   function fmt(n){ return String(n).padStart(2,'0'); }
   function tick(){
     var left = Math.max(0, END - Date.now());
@@ -554,37 +568,27 @@ img{max-width:100%;display:block}
 })();
 </script>
 
-<!-- Facebook Pixel — código oficial Meta (async, não bloqueia render) -->
-<script>
-!function(f,b,e,v,n,t,s){
-  if(f.fbq)return;
-  n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-  if(!f._fbq)f._fbq=n;
-  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];
-  t=b.createElement(e);t.async=!0;t.src=v;
-  s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)
-}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
-fbq('init','745685381942209');
-fbq('track','PageView');
-</script>
-<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=745685381942209&ev=PageView&noscript=1"/></noscript>
-
-<!-- AddToCart — dispara ao clicar em qualquer botão da oferta -->
+<!-- AddToCart — para navegação 300ms para fbq enviar antes de sair -->
 <script>
 (function(){
-  var brlValue = 83.72; // €14 × 5.98 — fallback estático
+  var brlValue = 83.72;
   fetch('https://api.exchangerate-api.com/v4/latest/EUR')
     .then(function(r){return r.json();})
     .then(function(d){var rate=d&&d.rates&&d.rates.BRL;if(rate)brlValue=Math.round(14*rate*100)/100;})
     .catch(function(){});
   function bind(){
     document.querySelectorAll('a[href*="hotmart.com"],a[href*="pay.hotmart"]').forEach(function(a){
-      a.addEventListener('click',function(){
-        if(typeof fbq==='function'){
-          fbq('track','AddToCart',{value:brlValue,currency:'BRL',
-            content_name:'Calendário Papal 2026',content_ids:['calendariopapal2026'],
-            content_type:'product',num_items:1});
-        }
+      a.addEventListener('click',function(e){
+        if(typeof fbq!=='function') return;
+        e.preventDefault();
+        var dest = this.href;
+        fbq('track','AddToCart',{
+          value:brlValue, currency:'BRL',
+          content_name:'Calendário Papal 2026',
+          content_ids:['calendariopapal2026'],
+          content_type:'product', num_items:1
+        });
+        setTimeout(function(){ window.location.href = dest; }, 300);
       });
     });
   }
