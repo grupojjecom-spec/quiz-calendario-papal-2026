@@ -184,11 +184,39 @@ img{max-width:100%;height:auto;display:block}
 .offer-de s{font-weight:700}
 .offer-por{text-align:center;font-size:28px;font-weight:700;color:#22a843;margin-bottom:18px}
 .btn-cta-offer{
-  display:block;background:#0a1a3d;color:#fff;
-  font-size:15px;font-weight:700;border-radius:50px;
-  padding:16px 18px;text-decoration:none;text-align:center;
-  letter-spacing:.02em;font-family:inherit;margin-bottom:14px;
+  display:block;background:#e52222;color:#fff;
+  font-size:17px;font-weight:800;border-radius:14px;
+  padding:20px 24px;text-decoration:none;text-align:center;
+  letter-spacing:.01em;font-family:inherit;margin-bottom:6px;
+  box-shadow:0 4px 18px rgba(229,34,34,0.45);
+  line-height:1.3;
 }
+.btn-cta-offer .cta-sub{
+  display:block;font-size:12px;font-weight:500;
+  opacity:.9;margin-top:4px;letter-spacing:.02em;
+}
+
+/* ── PRICE CARD ── */
+.price-card{margin:0 0 18px;background:#1a2744;border-radius:16px;overflow:hidden}
+.pc-header{background:#c8a96e;padding:11px 18px;display:flex;align-items:center;justify-content:space-between}
+.pc-header-label{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:#3a2a10;font-weight:600}
+.pc-header-badge{background:#1a2744;color:#c8a96e;font-size:10px;font-weight:600;padding:3px 10px;border-radius:20px}
+.pc-body{padding:6px 16px 2px}
+.pc-item{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.07);gap:8px}
+.pc-name{font-size:13px;color:#e8dfc8;font-weight:500;flex:1}
+.pc-price-wrap{display:flex;flex-direction:column;align-items:flex-end;gap:1px}
+.pc-price-old{font-size:11px;color:rgba(229,80,80,0.75);text-decoration:line-through;display:block}
+.pc-price-new{font-size:13px;color:#6ec97a;font-weight:600}
+.pc-price-new.paid{color:#c8a96e;font-size:14px}
+.pc-footer{padding:10px 16px 16px}
+.pc-total-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.pc-total-label{font-size:13px;color:#a09070;font-weight:500}
+.pc-total-old{font-size:16px;font-weight:700;color:#e55050;text-decoration:line-through;text-decoration-color:#e55050;text-decoration-thickness:2px}
+.pc-savings-row{background:rgba(110,201,122,0.12);border:1px solid rgba(110,201,122,0.25);border-radius:8px;padding:8px 12px;margin-bottom:10px;text-align:center;font-size:13px;color:#6ec97a;font-weight:500}
+.pc-final-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.pc-final-label{font-size:13px;color:#c8a96e;font-weight:500}
+.pc-final-price{font-size:30px;font-weight:700;color:#6ec97a}
+.pc-note{font-size:11px;color:rgba(255,255,255,0.4);text-align:center;margin-top:4px}
 
 /* ── AFTER CTA ── */
 .badge-save{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:12px}
@@ -256,9 +284,7 @@ img{max-width:100%;height:auto;display:block}
   .cd-num,.cd-sep{font-size:40px}
 }
 </style>
-</head>
-<body>
-<!-- Facebook Pixel -->
+<!-- Facebook Pixel — init no HEAD (hf1), track no body (pl1) -->
 <script>
 !function(f,b,e,v,n,t,s){
   if(f.fbq)return;
@@ -269,8 +295,11 @@ img{max-width:100%;height:auto;display:block}
   s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)
 }(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
 fbq('init','745685381942209');
-fbq('track','PageView');
 </script>
+</head>
+<body>
+<!-- Facebook Pixel — track PageView no BODY -->
+<script>fbq('track','PageView');</script>
 <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=745685381942209&ev=PageView&noscript=1"/></noscript>
 <div class="wrap">
 
@@ -466,18 +495,47 @@ fbq('track','PageView');
 
   <img src="assets/bundle-abertura.webp?v=20260616" alt="Kit Calendário Papal 2026" class="offer-img" width="900" height="1599" loading="lazy" decoding="async">
 
-  <div class="price-table">
-    <p><strong>Valor do kit completo:</strong></p>
-    <p style="margin-top:10px"><strong>Calendário Papal 2026</strong><br><span class="red-strike">De: €29</span> Por: €14</p>
-    <p style="margin-top:8px"><strong>Novena Espiritual 2026</strong><br><span class="red-strike">De: €9</span> Por: €0</p>
-    <p style="margin-top:8px"><strong>Guia de Oração com Maria</strong><br><span class="red-strike">De: €9</span> Por: €0</p>
-    <p style="margin-top:8px"><strong>Salmos que Sustentam</strong><br><span class="red-strike">De: €9</span> Por: 0</p>
+  <!-- PRICE CARD -->
+  <div class="price-card">
+    <div class="pc-header">
+      <span class="pc-header-label">O que está incluído</span>
+      <span class="pc-header-badge">Kit Completo</span>
+    </div>
+    <div class="pc-body">
+      <div class="pc-item">
+        <span class="pc-name">📖 Calendário Papal 2026</span>
+        <span class="pc-price-wrap"><span class="pc-price-old">€29</span><span class="pc-price-new paid">€14</span></span>
+      </div>
+      <div class="pc-item">
+        <span class="pc-name">🕊️ Novena Espiritual 2026</span>
+        <span class="pc-price-wrap"><span class="pc-price-old">€9</span><span class="pc-price-new">Grátis</span></span>
+      </div>
+      <div class="pc-item">
+        <span class="pc-name">📿 Guia de Oração com Maria</span>
+        <span class="pc-price-wrap"><span class="pc-price-old">€9</span><span class="pc-price-new">Grátis</span></span>
+      </div>
+      <div class="pc-item" style="border-bottom:none">
+        <span class="pc-name">📜 Salmos que Sustentam</span>
+        <span class="pc-price-wrap"><span class="pc-price-old">€9</span><span class="pc-price-new">Grátis</span></span>
+      </div>
+    </div>
+    <div class="pc-footer">
+      <div class="pc-total-row">
+        <span class="pc-total-label">Valor total</span>
+        <span class="pc-total-old">€56</span>
+      </div>
+      <div class="pc-savings-row">
+        <span>✦ Poupa hoje &nbsp;—&nbsp; −€42 &nbsp;<strong>(75% off)</strong></span>
+      </div>
+      <div class="pc-final-row">
+        <span class="pc-final-label">Hoje paga apenas</span>
+        <span class="pc-final-price">€14,00</span>
+      </div>
+      <p class="pc-note">Acesso imediato após pagamento · Garantia de 7 dias</p>
+    </div>
   </div>
 
-  <p class="offer-de"><s>De €56</s></p>
-  <p class="offer-por">Por : €14,00</p>
-
-  <a href="https://pay.hotmart.com/N105533278Y?checkoutMode=10" class="btn-cta-offer">QUERO GARANTIR O MEU CALENDÁRIO PAPAL 2026!</a>
+  <a href="https://pay.hotmart.com/N105533278Y?checkoutMode=10" class="btn-cta-offer">Garantir o meu Calendário Papal 2026<span class="cta-sub">⏰ Oferta por tempo limitado — aproveita agora</span></a>
 
   <!-- BADGES -->
   <div class="badge-save">
