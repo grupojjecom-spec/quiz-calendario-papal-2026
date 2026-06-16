@@ -849,7 +849,7 @@ const state = {
   answers: {},
 };
 
-const TOTAL_SCREENS = 20; // 0..19 (with lead capture at 18); 20 is offer now
+const TOTAL_SCREENS = 19; // 0..18 (lead at 17, loading at 18, offer at 19)
 const MONTHS_PT = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
 function getFirstName() {
   const n = (state.answers.name || '').trim();
@@ -1025,12 +1025,12 @@ const progressBar = document.getElementById('progressBar');
 const progressWrap = document.getElementById('progressWrap');
 
 function updateProgress() {
-  if (state.screen >= 20) {
+  if (state.screen >= 19) {
     progressWrap.style.display = 'none';
     return;
   }
   progressWrap.style.display = 'block';
-  const pct = Math.round((state.screen / 19) * 100);
+  const pct = Math.round((state.screen / 18) * 100);
   progressBar.style.width = pct + '%';
 }
 
@@ -1040,7 +1040,7 @@ function go(n) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 
   // — Tracking por ecrã —
-  var _stepNames = ['genero','intro1','intro2','q1','q2','q3','q4','q5','q6','q7','q8','q9','q10','q11','q12','q13','q14','resultado','lead','pre-oferta','oferta'];
+  var _stepNames = ['genero','intro1','intro2','q1','q2','q3','q4','q5','q6','q7','q8','q9','q10','q11','q12','q13','q14','lead','pre-oferta','oferta'];
   var _stepName = _stepNames[n] || ('ecra-' + n);
   if (typeof fbq === 'function') fbq('trackCustom', 'QuizStep', { step: n, name: _stepName });
   if (typeof clarity === 'function') clarity('set', 'quiz_step', _stepName);
@@ -1612,7 +1612,7 @@ function injectLogo() {
   const n = state.screen;
   if (n < 1) return; // skip gender screen (ecrã 0)
   // For the offer screen (20), insert after the timer-bar at top
-  if (n === 20) {
+  if (n === 19) {
     const timerBar = container.querySelector('.timer-bar');
     if (!timerBar) return;
     if (container.querySelector('.brand-logo')) return;
@@ -1654,10 +1654,10 @@ function render() {
     case 14: renderRadio('q12', Q.q12, 12); break;
     case 15: renderRadio('q13', Q.q13, 13); break;
     case 16: renderRadio('q14', Q.q14, 14); break;
-    case 17: renderScreen17(); break;
-    case 18: renderScreenLead(); break;
-    case 19: renderScreen18(); break;
-    case 20: renderScreen19(); break;
+    case 17: renderScreenLead(); break;
+    case 18: renderScreen18(); break;
+    case 19: renderScreen19(); break;
+    case 20: renderScreen19(); break; // fallback
     default: renderScreen0();
   }
   injectLogo();
