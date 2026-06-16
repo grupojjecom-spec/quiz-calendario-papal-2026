@@ -432,6 +432,22 @@
   .testimonial-rotator .quote { font-size: 14px; color: var(--navy); font-style: italic; line-height: 1.5; }
   .testimonial-rotator .author { font-size: 12px; color: var(--muted); margin-top: 8px; font-weight: 600; }
   .stars { color: var(--gold); letter-spacing: 2px; font-size: 13px; margin-bottom: 6px; }
+
+  /* ── OFFER PROFILE BANNER ── */
+  .offer-profile-banner { background: var(--navy); padding: 24px 22px 0; }
+  .opb-eyebrow { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); font-weight: 700; margin-bottom: 6px; }
+  .opb-name { font-size: 26px; font-weight: 800; color: #fff; margin-bottom: 14px; line-height: 1.2; }
+  .opb-levels { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; margin-bottom: 5px; }
+  .opb-chunk { height: 6px; border-radius: 3px; background: rgba(255,255,255,0.12); }
+  .opb-chunk.active { background: var(--gold); }
+  .opb-level-names { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; font-size: 9px; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 0.06em; text-align: center; margin-bottom: 18px; }
+  .opb-level-names span.active { color: var(--gold); font-weight: 700; }
+  .opb-rows { display: flex; flex-direction: column; }
+  .opb-row { display: flex; justify-content: space-between; align-items: baseline; padding: 10px 0; border-top: 1px solid rgba(255,255,255,0.1); gap: 12px; }
+  .opb-k { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); font-weight: 700; flex-shrink: 0; }
+  .opb-v { font-size: 13px; color: rgba(255,255,255,0.88); text-align: right; line-height: 1.4; }
+  .opb-transition { background: var(--navy); padding: 16px 22px 22px; text-align: center; color: rgba(255,255,255,0.75); font-size: 14px; font-weight: 600; border-bottom: 2px solid var(--gold); }
+
   /* Offer screen */
   .timer-bar {
     background: var(--red);
@@ -1291,7 +1307,8 @@ function renderScreen17() {
         </div>
       </div>
 
-      <button class="btn-primary" id="contBtn">Continuar →</button>
+      <p style="text-align:center;color:var(--muted);font-size:14px;margin-top:16px;line-height:1.5;">Com base neste perfil, seleccionámos o Calendário de Oração ideal para ti.<br>Vê o que preparámos a seguir.</p>
+      <button class="btn-primary" id="contBtn">Ver o meu Calendário personalizado →</button>
     </div>
   `;
   document.getElementById('contBtn').addEventListener('click', next);
@@ -1401,14 +1418,14 @@ function renderScreen18() {
     bar.style.width = '100%';
     let cur = 0;
     const start = Date.now();
-    const dur = 2000;
+    const dur = 1400;
     const tick = () => {
       const k = Math.min(1, (Date.now() - start)/dur);
       pct.textContent = Math.round(k * 100) + '%';
       if (k < 1) requestAnimationFrame(tick);
     };
     tick();
-    await new Promise(r => setTimeout(r, 2100));
+    await new Promise(r => setTimeout(r, 1500));
 
     // Show commit question
     commitArea.innerHTML = `
@@ -1446,38 +1463,49 @@ function renderScreen19() {
   const profile = computeProfile();
   const desire = getMainDesire();
   const barrier = getMainBarrier();
+  const path = getRecommendedPath(profile);
   const firstName = getFirstName() || 'Amigo';
   const promo = getPromoCode();
   const email = state.answers.email || '';
+  const levelNames = ["Em Busca", "Crescimento", "Aprofundado", "Enraizado"];
 
   container.innerHTML = `
     <div class="timer-bar">
       ⏳ Oferta especial termina em <strong id="timer">04:00:00</strong>
     </div>
 
+    <div class="offer-profile-banner">
+      <div class="opb-eyebrow">✝ O teu perfil de fé</div>
+      <div class="opb-name">${esc(profile.name)}</div>
+      <div class="opb-levels">
+        ${[0,1,2,3].map(i => `<div class="opb-chunk ${i<=profile.level?'active':''}"></div>`).join('')}
+      </div>
+      <div class="opb-level-names">
+        ${levelNames.map((n,i) => `<span class="${i===profile.level?'active':''}">${n}</span>`).join('')}
+      </div>
+      <div class="opb-rows">
+        <div class="opb-row"><span class="opb-k">Objectivo</span><span class="opb-v">${esc(desire)}</span></div>
+        <div class="opb-row"><span class="opb-k">Barreira</span><span class="opb-v">${esc(barrier)}</span></div>
+        <div class="opb-row"><span class="opb-k">Caminho</span><span class="opb-v">${esc(path)}</span></div>
+      </div>
+      <div class="opb-transition">Com base no teu perfil, preparámos o Calendário de Oração ideal para ti ↓</div>
+    </div>
+
     <div class="offer-hero">
       <div class="eyebrow">O teu Calendário está pronto</div>
       <h1>${esc(firstName)}, o teu Calendário de Oração está pronto!</h1>
-      <p class="dek">Personalizado com base no perfil <strong style="color:var(--navy)">${esc(profile.name)}</strong>.</p>
 
       <div class="product-image-wrap">
-        <img class="product-image" src="${resURL('bundleImg','assets/oferta-bundle.webp')}" loading="lazy" width="480" height="854" alt="Kit Calendário Papal 2026 com 4 bónus" />
+        <img class="product-image" src="${resURL('bundleImg','assets/oferta-bundle.webp')}" loading="lazy" width="480" height="854" alt="Kit Calendário Papal 2026 com 3 bónus" />
         <p class="product-image-caption">⭐⭐⭐⭐⭐ 26.742 avaliações · Acesso imediato após confirmação</p>
       </div>
     </div>
 
-    <div class="perso-card">
-      <h3>Personalizado para ti</h3>
-      <div class="perso-row"><div class="pk">Perfil</div><div class="pv">${esc(profile.name)}</div></div>
-      <div class="perso-row"><div class="pk">Objectivo</div><div class="pv">${esc(desire)}</div></div>
-      <div class="perso-row"><div class="pk">Barreira</div><div class="pv">${esc(barrier)}</div></div>
-    </div>
-
     <ul class="benefits">
-      <li><span class="tick">✔</span><span><strong>365 orações diárias</strong> de Leão XIII, uma para cada dia do ano.</span></li>
-      <li><span class="tick">✔</span><span><strong>Meditações personalizadas</strong> para o teu perfil espiritual.</span></li>
+      <li><span class="tick">✔</span><span><strong>366 orações diárias</strong> de Leão XIII, uma para cada dia do ano.</span></li>
+      <li><span class="tick">✔</span><span><strong>Meditações personalizadas</strong> para o teu perfil de fé.</span></li>
       <li><span class="tick">✔</span><span><strong>Calendário litúrgico completo</strong> com santos e festas.</span></li>
-      <li><span class="tick">✔</span><span><strong>Guia de 7 dias</strong> para criar a tua rotina de oração.</span></li>
+      <li><span class="tick">✔</span><span><strong>3 bónus espirituais</strong> incluídos gratuitamente.</span></li>
       <li><span class="tick">✔</span><span><strong>Acesso imediato</strong> — entregue por e-mail em formato digital.</span></li>
     </ul>
 
@@ -1495,7 +1523,7 @@ function renderScreen19() {
       </div>
 
       <div class="anchor-bonus">
-        <div class="ab-head"><span class="a-emoji">🎁</span> Bónus 1: Elevai o Olhar <span style="color:rgba(255,255,255,0.6);font-weight:500">— Compreender a Ascensão do Senhor</span></div>
+        <div class="ab-head"><span class="a-emoji">🎁</span> Bónus 1: Novena Espiritual 2026</div>
         <div class="ab-foot">
           <div class="ab-prices"><span class="a-was">De: €9</span> <span class="a-arrow">→</span> <span class="a-now">Por: €0</span></div>
           <span class="a-free">GRÁTIS</span>
@@ -1503,7 +1531,7 @@ function renderScreen19() {
       </div>
 
       <div class="anchor-bonus">
-        <div class="ab-head"><span class="a-emoji">🎁</span> Bónus 2: Novena Espiritual 2026</div>
+        <div class="ab-head"><span class="a-emoji">🎁</span> Bónus 2: Guia de Oração com Maria</div>
         <div class="ab-foot">
           <div class="ab-prices"><span class="a-was">De: €9</span> <span class="a-arrow">→</span> <span class="a-now">Por: €0</span></div>
           <span class="a-free">GRÁTIS</span>
@@ -1511,15 +1539,7 @@ function renderScreen19() {
       </div>
 
       <div class="anchor-bonus">
-        <div class="ab-head"><span class="a-emoji">🎁</span> Bónus 3: Guia de Oração com Maria</div>
-        <div class="ab-foot">
-          <div class="ab-prices"><span class="a-was">De: €9</span> <span class="a-arrow">→</span> <span class="a-now">Por: €0</span></div>
-          <span class="a-free">GRÁTIS</span>
-        </div>
-      </div>
-
-      <div class="anchor-bonus">
-        <div class="ab-head"><span class="a-emoji">🎁</span> Bónus 4: Vinde, Espírito Santo <span style="color:rgba(255,255,255,0.6);font-weight:500">— Novena para o Pentecostes</span></div>
+        <div class="ab-head"><span class="a-emoji">🎁</span> Bónus 3: Salmos que Sustentam</div>
         <div class="ab-foot">
           <div class="ab-prices"><span class="a-was">De: €9</span> <span class="a-arrow">→</span> <span class="a-now">Por: €0</span></div>
           <span class="a-free">GRÁTIS</span>
@@ -1527,13 +1547,13 @@ function renderScreen19() {
       </div>
 
       <div class="anchor-total">
-        Valor total: <span class="at-was">€65</span> Hoje apenas <strong>€14</strong>
+        Valor total: <span class="at-was">€56</span> Hoje apenas <strong>€14</strong>
       </div>
     </section>
 
     <div class="promo-applied">
       <div class="pa-line1"><span class="pa-tick">✓</span> O teu código promocional foi aplicado!</div>
-      <div class="pa-line2">Poupaste €51 — acesso ao Kit Calendário Papal 2026 por apenas €14 em vez de €65.</div>
+      <div class="pa-line2">Poupaste €42 — acesso ao Kit Calendário Papal 2026 por apenas €14 em vez de €56.</div>
       <div class="pa-line3">*Desconto de 75% aplicado automaticamente com o código ${esc(promo)}</div>
     </div>
 
