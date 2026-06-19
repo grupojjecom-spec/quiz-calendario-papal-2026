@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>The Catholic Daily 2026 — Discover Your Spiritual Profile</title>
+<style>
+/* ══════════════════════════════
+   RESET & BASE
+══════════════════════════════ */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100vh;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Inter',sans-serif;background:#fff;color:#111827;-webkit-font-smoothing:antialiased}
+
+/* ══════════════════════════════
+   TOP PROGRESS BAR
+══════════════════════════════ */
+#progress-wrap{position:fixed;top:0;left:0;right:0;height:4px;background:#e5e7eb;z-index:500}
+#progress-fill{height:4px;background:#2563EB;width:0%;transition:width .5s ease}
+
+/* ══════════════════════════════
+   LOGO BAR
+══════════════════════════════ */
+.logo-bar{display:flex;align-items:center;justify-content:center;padding:20px 20px 8px;position:relative}
+.back-btn{position:absolute;left:16px;background:none;border:none;cursor:pointer;color:#6b7280;font-size:22px;line-height:1;padding:4px 8px}
+.logo-text{font-size:12px;font-weight:800;letter-spacing:.18em;color:#1e3a6e;text-transform:uppercase}
+.logo-cross{color:#c9a84c;margin-right:6px;font-size:14px}
+.logo-img{height:44px;width:auto;display:block}
+
+/* ══════════════════════════════
+   SCREEN SYSTEM
+══════════════════════════════ */
+.screen{display:none;flex-direction:column;min-height:100vh;padding-bottom:90px}
+.screen.active{display:flex}
+.inner{max-width:480px;margin:0 auto;width:100%;padding:0 20px}
+
+/* ══════════════════════════════
+   PORTRAIT SELECTION (Gender/Age)
+══════════════════════════════ */
+.intro-section{padding:24px 0 14px}
+.badge{font-size:10px;font-weight:800;color:#2563EB;letter-spacing:.16em;text-transform:uppercase;margin-bottom:8px}
+.intro-section h1{font-size:25px;font-weight:800;line-height:1.25;color:#111827;margin-bottom:6px}
+.intro-section p{font-size:14px;color:#6b7280;line-height:1.5}
+
+.portrait-pair{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:16px}
+.portrait-card{position:relative;border-radius:18px;overflow:hidden;cursor:pointer;aspect-ratio:3/4}
+.portrait-card:active{transform:scale(.98)}
+
+/* ── Portrait image containers ── */
+.ph-img{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:11px;color:rgba(255,255,255,.5);text-align:center;padding:16px;line-height:1.5;background-size:cover;background-position:center top}
+/* Gender placeholders */
+.ph-man{background:linear-gradient(170deg,#9fb5cc 0%,#4a6f8a 100%)}
+.ph-woman{background:linear-gradient(170deg,#c4aeca 0%,#7a5890 100%)}
+/* Age placeholders */
+.ph-young{background:linear-gradient(170deg,#a8c5d4 0%,#5a8fa6 100%)}
+.ph-mid{background:linear-gradient(170deg,#aec4c4 0%,#5a9090 100%)}
+.ph-mature{background:linear-gradient(170deg,#c4b4a8 0%,#907060 100%)}
+.ph-senior{background:linear-gradient(170deg,#c4bca8 0%,#908060 100%)}
+
+.portrait-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,18,36,.88) 0%,rgba(8,18,36,0) 55%)}
+.portrait-label{position:absolute;bottom:0;left:0;right:0;padding:36px 14px 14px;display:flex;align-items:center;justify-content:space-between}
+.portrait-label span{color:#fff;font-size:17px;font-weight:800}
+.portrait-arrow{width:28px;height:28px;background:rgba(255,255,255,.18);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;flex-shrink:0}
+
+.age-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:16px}
+
+/* ══════════════════════════════
+   AFFIRMATION SCREEN
+══════════════════════════════ */
+.affirm-body{display:flex;flex-direction:column;align-items:center;text-align:center;padding:50px 24px 40px;flex:1}
+.affirm-icon{width:76px;height:76px;background:#1e3a6e;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 28px;box-shadow:0 8px 24px rgba(30,58,110,.3)}
+.affirm-icon svg{width:36px;height:36px}
+.affirm-body h2{font-size:28px;font-weight:800;color:#111827;margin-bottom:14px;line-height:1.25}
+.affirm-body p{font-size:16px;color:#4b5563;line-height:1.7;max-width:340px}
+.affirm-body strong{color:#111827}
+
+/* ══════════════════════════════
+   INTERSTITIAL SCREENS
+══════════════════════════════ */
+.break-screen{min-height:100vh;position:relative;display:flex;align-items:center;justify-content:center;padding:0 24px}
+.break-bg{position:absolute;inset:0;background-size:cover;background-position:center}
+/* PHOTO PLACEHOLDER — replace with real Catholic image (Vatican, Pope, church interior)
+   Example: background-image: url('images/vatican.jpg'); */
+/* Background image via ::before so filter only affects the image, not the text/button */
+.break-bg-1{background:#0a1525}
+.break-bg-1::before{content:'';position:absolute;inset:0;background-image:url('images/saint-peters-aerial.webp');background-size:cover;background-position:center;filter:brightness(0.45);z-index:0}
+.break-bg-2{background:#0d0a18}
+.break-bg-2::before{content:'';position:absolute;inset:0;background-image:url('images/church-interior.webp');background-size:cover;background-position:center;filter:brightness(0.35);z-index:0}
+.break-overlay{position:absolute;inset:0;background:rgba(5,10,20,.45);z-index:1}
+
+/* Catholic decorative SVG watermark */
+.break-deco{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:.06;z-index:2}
+.break-deco svg{width:260px;height:260px}
+
+.break-content{position:relative;z-index:3;text-align:center;max-width:400px}
+.break-badge{display:inline-block;background:rgba(201,168,76,.2);border:1px solid rgba(201,168,76,.6);color:#e8c96a;font-size:10px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;border-radius:20px;padding:5px 14px;margin-bottom:20px}
+.break-content h2{font-size:30px;font-weight:800;color:#fff;margin-bottom:14px;line-height:1.3;text-shadow:0 2px 16px rgba(0,0,0,.7)}
+.break-content p{font-size:15px;color:rgba(255,255,255,.9);line-height:1.7;margin-bottom:32px;text-shadow:0 1px 8px rgba(0,0,0,.6)}
+.break-img-hint{font-size:10px;color:rgba(255,255,255,.25);margin-bottom:20px;font-style:italic}
+.btn-break{display:inline-block;background:#2563EB;color:#fff;font-size:16px;font-weight:700;border-radius:14px;padding:17px 36px;cursor:pointer;border:none;letter-spacing:.01em;box-shadow:0 8px 28px rgba(0,0,0,.45)}
+.btn-break:hover{background:#1d4ed8}
+
+/* ══════════════════════════════
+   QUESTION SCREENS
+══════════════════════════════ */
+.q-top{padding:28px 0 6px}
+.q-counter{font-size:10px;font-weight:800;color:#2563EB;letter-spacing:.16em;text-transform:uppercase;margin-bottom:8px}
+.q-title{font-size:22px;font-weight:800;color:#111827;line-height:1.3;margin-bottom:5px}
+.q-sub{font-size:13.5px;color:#6b7280;margin-bottom:18px;line-height:1.5}
+.multi-note{font-size:12px;color:#9ca3af;margin-bottom:14px;font-style:italic}
+
+.options{display:flex;flex-direction:column;gap:9px}
+.opt{background:#fff;border:1.5px solid #e5e7eb;border-radius:13px;padding:14px 15px;cursor:pointer;font-size:14.5px;color:#1f2937;display:flex;align-items:center;gap:11px;transition:border-color .15s,background .15s;line-height:1.45}
+.opt:hover{border-color:#93c5fd;background:#f0f7ff}
+.opt.sel{border-color:#2563EB;background:#eff6ff}
+/* Radio dot */
+.dot{width:20px;height:20px;border-radius:50%;border:1.5px solid #d1d5db;flex-shrink:0;transition:all .15s}
+.opt.sel .dot{background:#2563EB;border-color:#2563EB;box-shadow:inset 0 0 0 4px #fff}
+/* Checkbox */
+.chk{width:20px;height:20px;border-radius:5px;border:1.5px solid #d1d5db;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;transition:all .15s}
+.opt.sel .chk{background:#2563EB;border-color:#2563EB;color:#fff}
+.opt.sel .chk::after{content:'✓'}
+
+/* ══════════════════════════════
+   FIXED BOTTOM BUTTON
+══════════════════════════════ */
+.fixed-bottom{position:fixed;bottom:0;left:0;right:0;padding:12px 20px 18px;background:#fff;border-top:1px solid #f3f4f6;z-index:300}
+.btn-main{display:block;background:#2563EB;color:#fff;font-size:16px;font-weight:700;border-radius:14px;padding:17px;text-align:center;cursor:pointer;border:none;width:100%;max-width:480px;margin:0 auto;letter-spacing:.01em;transition:background .15s}
+.btn-main:hover{background:#1d4ed8}
+.btn-main.dim{background:#d1d5db;color:#9ca3af;pointer-events:none}
+
+/* ══════════════════════════════
+   RESULT SCREEN
+══════════════════════════════ */
+.result-head{text-align:center;padding:30px 0 20px}
+.result-head .pre{font-size:10px;font-weight:800;color:#c9a84c;letter-spacing:.18em;text-transform:uppercase;margin-bottom:8px}
+.result-head h2{font-size:23px;font-weight:800;color:#111827;line-height:1.25;margin-bottom:2px}
+.result-head .blue{color:#2563EB}
+
+.spectrum-wrap{margin-bottom:20px}
+.spectrum-lbl{font-size:13px;font-weight:700;color:#374151;margin-bottom:9px}
+.spec-bar-wrap{position:relative;margin-bottom:8px}
+.spec-bar{height:10px;border-radius:5px;background:linear-gradient(90deg,#ef4444 0%,#f59e0b 42%,#22c55e 100%)}
+.spec-knob{position:absolute;top:50%;transform:translate(-50%,-50%);width:22px;height:22px;background:#fff;border:2.5px solid #1e3a6e;border-radius:50%;box-shadow:0 2px 8px rgba(0,0,0,.2);transition:left .9s cubic-bezier(.34,1.4,.64,1)}
+.spec-ends{display:flex;justify-content:space-between;font-size:11px;color:#9ca3af;font-weight:600}
+
+.state-box{background:#eff6ff;border-radius:14px;padding:14px 16px;margin-bottom:14px;display:flex;gap:12px;align-items:flex-start}
+.state-icon{font-size:22px;flex-shrink:0;margin-top:1px}
+.state-txt strong{display:block;font-size:13.5px;color:#1e40af;font-weight:800;margin-bottom:3px}
+.state-txt p{font-size:13px;color:#3b82f6;line-height:1.55}
+
+.profile-rows{background:#f9fafb;border-radius:14px;overflow:hidden;margin-bottom:16px}
+.prof-row{display:flex;align-items:center;gap:12px;padding:13px 16px;border-bottom:1px solid #f3f4f6}
+.prof-row:last-child{border-bottom:none}
+.prof-icon{width:36px;height:36px;background:#eff6ff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.prof-text .lbl{font-size:10.5px;color:#9ca3af;font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:1px}
+.prof-text .val{font-size:14px;font-weight:700;color:#1f2937}
+
+/* ══════════════════════════════
+   LOADING SCREEN
+══════════════════════════════ */
+.loading-head{text-align:center;padding:60px 0 32px}
+.loading-head .h1{font-size:21px;font-weight:700;color:#111827;margin-bottom:2px}
+.loading-head .h2{font-size:21px;font-weight:800;color:#2563EB}
+
+.prog-item{margin-bottom:22px}
+.prog-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.prog-name{font-size:14px;font-weight:600;color:#374151}
+.prog-name.done{color:#9ca3af;text-decoration:line-through}
+.prog-right{display:flex;align-items:center;gap:6px}
+.prog-pct{font-size:13px;color:#6b7280;font-weight:600}
+.prog-done{color:#22c55e;font-size:20px;display:none}
+.prog-track{height:4px;background:#f3f4f6;border-radius:2px;overflow:hidden}
+.prog-bar{height:4px;background:#2563EB;border-radius:2px;width:0%;transition:width .3s linear}
+
+/* Catholic imagery strip during loading */
+.loading-img-strip{width:100%;height:140px;border-radius:14px;overflow:hidden;margin:24px 0 20px;position:relative;background-image:url('images/vatican-strip.webp');background-size:cover;background-position:center}
+/* REPLACE: Add a beautiful Catholic image here as background
+   Example: background-image: url('images/saint-peters.jpg'); background-size:cover; background-position:center */
+.loading-img-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;background:rgba(0,0,0,.2)}
+.loading-img-inner svg{width:48px;height:48px;opacity:.7}
+.loading-img-inner span{font-size:11px;color:rgba(255,255,255,.5);font-style:italic}
+
+.testimon{background:#f9fafb;border-radius:14px;padding:18px;min-height:128px}
+.testi-stars{color:#f59e0b;font-size:13px;margin-bottom:7px;letter-spacing:2px}
+.testi-title{font-size:14px;font-weight:800;color:#111827;margin-bottom:6px}
+.testi-text{font-size:13px;color:#4b5563;line-height:1.6;margin-bottom:8px}
+.testi-author{font-size:13px;color:#9ca3af;text-align:right;font-style:italic}
+
+/* ══════════════════════════════
+   MICRO-COMMIT MODALS
+══════════════════════════════ */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:600;align-items:center;justify-content:center;padding:24px}
+.modal-bg.show{display:flex}
+.modal-box{background:#fff;border-radius:22px;padding:28px 22px;max-width:400px;width:100%}
+.modal-pre{font-size:10.5px;color:#9ca3af;text-align:center;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px}
+.modal-q{font-size:20px;font-weight:800;color:#111827;text-align:center;line-height:1.3;margin-bottom:26px}
+.modal-btns{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.modal-btn{padding:16px 8px;border-radius:13px;border:1.5px solid #e5e7eb;cursor:pointer;background:#fff;display:flex;flex-direction:column;align-items:center;gap:7px;font-size:14px;font-weight:700;color:#374151;transition:all .15s}
+.modal-btn:hover{border-color:#2563EB;background:#eff6ff}
+.modal-btn .mi{font-size:26px}
+.modal-btn.yes{border-color:#2563EB;background:#eff6ff;color:#1e40af}
+
+/* ══════════════════════════════
+   EMAIL SCREEN
+══════════════════════════════ */
+.email-head{text-align:center;padding:60px 0 32px}
+.email-head .h1{font-size:21px;font-weight:700;color:#111827;margin-bottom:2px}
+.email-head .h2{font-size:21px;font-weight:800;color:#2563EB;margin-bottom:0}
+
+.email-field{display:flex;align-items:center;gap:10px;border:1.5px solid #e5e7eb;border-radius:14px;padding:15px 16px;margin-bottom:12px;transition:border-color .15s}
+.email-field:focus-within{border-color:#2563EB}
+.email-field input{flex:1;border:none;outline:none;font-size:16px;color:#374151;background:transparent;min-width:0}
+.email-field input::placeholder{color:#9ca3af}
+.email-icon{color:#9ca3af;font-size:18px}
+
+.privacy-note{display:flex;gap:11px;background:#f9fafb;border-radius:12px;padding:14px 15px;margin-bottom:20px;align-items:flex-start}
+.privacy-note .lock{font-size:18px;flex-shrink:0;margin-top:1px}
+.privacy-note p{font-size:12.5px;color:#6b7280;line-height:1.6}
+.privacy-note a{color:#2563EB;text-decoration:none}
+
+/* ══════════════════════════════
+   OFFER PAGE
+══════════════════════════════ */
+.offer-hero{background:linear-gradient(160deg,#0d1f40 0%,#1a3a6e 100%);padding:32px 24px 28px;text-align:center;position:relative;overflow:hidden}
+.offer-hero::before{content:'✝';position:absolute;font-size:200px;color:rgba(255,255,255,.03);top:-30px;right:-20px;line-height:1;pointer-events:none}
+.offer-badge{display:inline-block;background:rgba(201,168,76,.2);border:1px solid rgba(201,168,76,.5);color:#c9a84c;font-size:10px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;border-radius:20px;padding:5px 14px;margin-bottom:14px}
+.offer-hero h1{font-size:24px;font-weight:800;color:#fff;line-height:1.3;margin-bottom:6px}
+.offer-hero .profile-tag{display:inline-block;background:rgba(37,99,235,.3);border:1px solid rgba(37,99,235,.5);color:#93c5fd;font-size:12px;font-weight:700;border-radius:20px;padding:4px 14px;margin-top:4px}
+
+/* Timer */
+.timer-bar{background:#1e3a6e;padding:12px 20px;display:flex;align-items:center;justify-content:center;gap:12px;border-bottom:1px solid rgba(255,255,255,.08)}
+.timer-label{font-size:12px;color:rgba(255,255,255,.7);font-weight:600}
+.timer-digits{font-size:22px;font-weight:800;color:#ef4444;letter-spacing:.06em;font-variant-numeric:tabular-nums}
+
+/* Product mockup */
+.product-mockup{padding:24px 24px 16px;text-align:center}
+.mockup-img{width:100%;max-width:280px;margin:0 auto 10px;overflow:hidden;background:transparent}
+/* REPLACE: This is the The Catholic Daily 2026 product image.
+   Add the actual product cover image here:
+   background-image: url('images/calendar-mockup.jpg');
+   background-size: cover; background-position: center; */
+.mockup-placeholder{width:100%;height:100%;background:linear-gradient(135deg,#1e3a6e 0%,#2d5fa8 50%,#c9a84c 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:rgba(255,255,255,.8);text-align:center;padding:24px}
+.mockup-placeholder .cross{font-size:36px;color:#c9a84c}
+.mockup-placeholder .title{font-size:14px;font-weight:800;line-height:1.3}
+.mockup-placeholder .year{font-size:11px;opacity:.7;letter-spacing:.1em}
+
+/* Personalized pitch */
+.personal-pitch{background:#eff6ff;margin:0 20px;border-radius:14px;padding:16px;margin-bottom:16px;display:flex;gap:12px;align-items:flex-start}
+.personal-pitch .icon{font-size:20px;flex-shrink:0;margin-top:1px}
+.personal-pitch p{font-size:14px;color:#1e40af;line-height:1.6}
+.personal-pitch strong{font-weight:700}
+
+/* What's included */
+.offer-section{padding:0 20px;margin-bottom:20px}
+.offer-section h3{font-size:16px;font-weight:800;color:#111827;margin-bottom:12px}
+.include-item{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px;font-size:14px;color:#374151;line-height:1.5}
+.include-icon{color:#22c55e;font-size:16px;flex-shrink:0;margin-top:1px;font-weight:800}
+
+/* Testimonials */
+.offer-testi{background:#f9fafb;border-radius:14px;padding:16px;margin-bottom:10px;overflow:hidden}
+.offer-testi .stars{color:#f59e0b;font-size:12px;letter-spacing:2px;margin-bottom:6px}
+.offer-testi .ttext{font-size:13px;color:#4b5563;line-height:1.6;margin-bottom:8px;font-style:italic}
+.offer-testi .tauthor{font-size:12.5px;color:#9ca3af;text-align:right;font-weight:600}
+.testi-photo{width:calc(100% + 32px);margin:-16px -16px 14px -16px;display:block;max-height:240px;object-fit:cover;object-position:center top}
+
+/* Price section */
+.price-section{background:#f9fafb;border-radius:16px;padding:20px;margin:0 0 20px;text-align:center}
+.price-was{font-size:14px;color:#9ca3af;text-decoration:line-through;margin-bottom:2px}
+.price-now-wrap{display:flex;align-items:baseline;justify-content:center;gap:8px;margin-bottom:6px}
+.price-now{font-size:44px;font-weight:800;color:#111827;letter-spacing:-.02em}
+.price-note{font-size:13px;color:#6b7280}
+.price-tag{display:inline-block;background:#22c55e;color:#fff;font-size:11px;font-weight:800;letter-spacing:.08em;border-radius:20px;padding:4px 12px;margin-bottom:12px}
+
+/* Guarantee */
+.guarantee{display:flex;gap:12px;align-items:flex-start;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;padding:14px 16px;margin:0 0 16px}
+.guarantee .shield{font-size:24px;flex-shrink:0}
+.guarantee .gtxt strong{display:block;font-size:14px;color:#166534;font-weight:800;margin-bottom:2px}
+.guarantee .gtxt p{font-size:13px;color:#15803d;line-height:1.5}
+
+/* Sticky bottom offer CTA */
+.offer-cta-wrap{padding:0 0 6px}
+.offer-cta{display:block;background:#2563EB;color:#fff;font-size:17px;font-weight:800;border-radius:14px;padding:19px;text-align:center;cursor:pointer;border:none;width:100%;letter-spacing:.01em;margin-bottom:8px;transition:background .15s}
+.offer-cta:hover{background:#1d4ed8}
+.offer-cta-sub{text-align:center;font-size:12px;color:#9ca3af}
+.offer-cta-sub span{margin:0 8px}
+/* ── Bonus cards ── */
+.bonus-card{background:#fffbeb;border:1px solid #fde68a;border-radius:14px;padding:16px;margin-bottom:12px;display:flex;gap:14px;align-items:flex-start}
+.bonus-img{width:76px;height:102px;object-fit:cover;border-radius:8px;flex-shrink:0;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+.bonus-body{flex:1;min-width:0}
+.bonus-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.bonus-tag{font-size:10px;font-weight:800;color:#92400e;background:#fef3c7;border-radius:20px;padding:3px 10px;letter-spacing:.08em;text-transform:uppercase}
+.bonus-value{font-size:13px;font-weight:800;color:#16a34a}
+.bonus-value s{color:#9ca3af;font-weight:400;margin-right:4px}
+.bonus-title{font-size:15px;font-weight:800;color:#111827;margin-bottom:6px;line-height:1.35}
+.bonus-title small{font-size:13px;font-weight:600;color:#374151;display:block;margin-top:2px}
+.bonus-desc{font-size:13px;color:#4b5563;line-height:1.6}
+/* ── Price breakdown table ── */
+.price-breakdown{background:#fff;border:1px solid #e5e7eb;border-radius:12px;overflow:hidden;margin-bottom:16px}
+.pb-row{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid #f3f4f6;font-size:13px;color:#374151}
+.pb-row s{color:#9ca3af}
+.pb-total{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;background:#f9fafb;font-size:14px;font-weight:700;color:#111827}
+.pb-total s{color:#6b7280;font-weight:400}
+</style>
+<!-- Facebook Pixel -->
+<link rel="preload" href="https://connect.facebook.net/en_US/fbevents.js" as="script">
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}
+(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','745685381942209');
+fbq('track','PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=745685381942209&ev=PageView&noscript=1"/></noscript>
+<!-- End Facebook Pixel -->
+</head>
+<body>
+
+<!-- TOP PROGRESS BAR -->
+<div id="progress-wrap"><div id="progress-fill"></div></div>
+
+<!-- ══════════════════════════════════════════════════════
+  SCREEN: GENDER
+══════════════════════════════════════════════════════ -->
+<div class="screen active" id="s-gender">
+  <div class="inner">
+    <div class="logo-bar"><img src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
+    <div class="intro-section">
+      <div class="badge">The Catholic Daily 2026 · US Edition</div>
+      <h1>Get closer to God through daily prayer</h1>
+      <p>2-minute quiz · Discover your personalized spiritual plan</p>
+    </div>
+    <div class="portrait-pair">
+      <div class="portrait-card" onclick="selectGender('man')">
+        <img src="images/man.webp" alt="Man" style="width:100%;height:100%;object-fit:cover;object-position:top center">
+        <div class="portrait-overlay"></div>
+        <div class="portrait-label"><span>Man</span><div class="portrait-arrow">→</div></div>
+      </div>
+      <div class="portrait-card" onclick="selectGender('woman')">
+        <img src="images/woman.webp" alt="Woman" style="width:100%;height:100%;object-fit:cover;object-position:top center">
+        <div class="portrait-overlay"></div>
+        <div class="portrait-label"><span>Woman</span><div class="portrait-arrow">→</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+  SCREEN: AGE
+══════════════════════════════════════════════════════ -->
+<div class="screen" id="s-age">
+  <div class="inner">
+    <div class="logo-bar">
+      <button class="back-btn" onclick="goBack()">←</button>
+      <img src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img">
+    </div>
+    <div class="intro-section">
+      <div class="badge">About you</div>
+      <h1>What is your age range?</h1>
+      <p>We'll personalize your Calendar for your stage of life.</p>
+    </div>
+    <!-- AGE GRID: MALE — shown when gender = male -->
+    <div class="age-grid" id="age-grid-male" style="display:none">
+      <div class="portrait-card" onclick="selectAge('18-34')">
+        <img src="images/age-m-18-34.webp" alt="18-34" style="width:100%;height:100%;object-fit:cover;object-position:top center">
+        <div class="portrait-overlay"></div>
+        <div class="portrait-label"><span>18 – 34</span><div class="portrait-arrow">→</div></div>
+      </div>
+      <div class="portrait-card" onclick="selectAge('35-44')">
+        <img src="images/age-m-35-44.webp" alt="35-44" style="width:100%;height:100%;object-fit:cover;object-position:top center">
+        <div class="portrait-overlay"></div>
+        <div class="portrait-label"><span>35 – 44</span><div class="portrait-arrow">→</div></div>
+      </div>
+      <div class="portrait-card" onclick="selectAge('45-54')">
+        <img src="images/age-m-45-54.webp" alt="45-54" style="width:100%;height:100%;object-fit:cover;object-position:top center">
+        <div class="portrait-overlay"></div>
+        <div class="portrait-label"><span>45 – 54</span><div class="portrait-arrow">→</div></div>
+      </div>
+      <div class="portrait-card" onclick="selectAge('55+')">
+        <img src="images/age-m-55plus.webp" alt="55+" style="width:100%;height:100%;object-fit:cover;object-position:top center">
+        <div class="portrait-overlay"></div>
+        <div class="portrait-label"><span>55 +</span><div class="portrait-arrow">→</div></div>
+      </div>
+    </div>
+
+    <!-- AGE GRID: FEMALE — shown when gender = female -->
+    <div class="age-grid" id="age-grid-female" style="display:none">
+      <div class="portrait-card" onclick="selectAge('18-34')">
+        <img src="images/age-f-18-34.webp" alt="18-34" style="width:100%;height:100%;object-fit:cover;object-position:top center">
+        <div class="portrait-overlay"></div>
+        <div class="portrait-label"><span>18 – 34</span><div class="portrait-arrow">→</div></div>
+      </div>
+      <div class="portrait-card" onclick="selectAge('35-44')">
+        <img src="images/age-f-35-44.webp" alt="35-44" style="width:100%;height:100%;object-fit:cover;object-position:top center">
+        <div class="portrait-overlay"></div>
+        <div class="portrait-label"><span>35 – 44</span><div class="portrait-arrow">→</div></div>
+      </div>
+      <div class="portrait-card" onclick="selectAge('45-54')">
+        <img src="images/age-f-45-54.webp" alt="45-54" style="width:100%;height:100%;object-fit:cover;object-position:top center">
+        <div class="portrait-overlay"></div>
+        <div class="portrait-label"><span>45 – 54</span><div class="portrait-arrow">→</div></div>
+      </div>
+      <div class="portrait-card" onclick="selectAge('55+')">
+        <img src="images/age-f-55plus.webp" alt="55+" style="width:100%;height:100%;object-fit:cover;object-position:top center">
+        <div class="portrait-overlay"></div>
+        <div class="portrait-label"><span>55 +</span><div class="portrait-arrow">→</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+  SCREEN: AFFIRMATION
+══════════════════════════════════════════════════════ -->
+<div class="screen" id="s-affirm">
+  <div class="inner" style="display:flex;flex-direction:column;min-height:calc(100vh - 90px)">
+    <div class="logo-bar">
+      <button class="back-btn" onclick="goBack()">←</button>
+      <img src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img">
+    </div>
+    <div class="affirm-body">
+      <div class="affirm-icon">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2v20M2 8h20" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h2>We're glad you're here.</h2>
+      <p>In the next few minutes, we'll map your spiritual journey and build your <strong>The Catholic Daily 2026</strong>: a daily prayer plan chosen specifically for who you are and where you are in your faith.</p>
+    </div>
+  </div>
+  <div class="fixed-bottom">
+    <button class="btn-main" onclick="nav('q-0',10)">Begin my journey →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+  QUESTIONS 1–4  (Faith Background)
+══════════════════════════════════════════════════════ -->
+<div class="screen" id="q-0">
+  <div class="inner">
+    <div class="logo-bar"><button class="back-btn" onclick="goBack()">←</button><img src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
+    <div class="q-top">
+      <div class="q-counter">Question 1 of 18</div>
+      <div class="q-title">How long have you been practicing the Catholic faith?</div>
+    </div>
+    <div class="options">
+      <div class="opt" onclick="autoNext(this,0,0,'q-1',14)"><div class="dot"></div>Since childhood, faith has always been part of my life</div>
+      <div class="opt" onclick="autoNext(this,0,1,'q-1',14)"><div class="dot"></div>I returned to faith as an adult</div>
+      <div class="opt" onclick="autoNext(this,0,2,'q-1',14)"><div class="dot"></div>I'm relatively new to the Catholic faith</div>
+      <div class="opt" onclick="autoNext(this,0,3,'q-1',14)"><div class="dot"></div>I'm still exploring what it means to me</div>
+    </div>
+  </div>
+</div>
+
+<div class="screen" id="q-1">
+  <div class="inner">
+    <div class="logo-bar"><button class="back-btn" onclick="goBack()">←</button><img src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
+    <div class="q-top">
+      <div class="q-counter">Question 2 of 18</div>
+      <div class="q-title">How would you describe your spiritual life right now?</div>
+      <div class="q-sub">Be honest with yourself.</div>
+    </div>
+    <div class="options">
+      <div class="opt" onclick="autoNext(this,1,0,'q-2',18)"><div class="dot"></div>I feel close to God and engaged in my faith</div>
+      <div class="opt" onclick="autoNext(this,1,1,'q-2',18)"><div class="dot"></div>I'm on a growth path but still with doubts and inconsistency</div>
+      <div class="opt" onclick="autoNext(this,1,2,'q-2',18)"><div class="dot"></div>I feel distant from God but I miss that connection</div>
+      <div class="opt" onclick="autoNext(this,1,3,'q-2',18)"><div class="dot"></div>I'm searching and looking to reconnect or start fresh</div>
+    </div>
+  </div>
+</div>
+
+<div class="screen" id="q-2">
+  <div class="inner">
+    <div class="logo-bar"><button class="back-btn" onclick="goBack()">←</button><img src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
+    <div class="q-top">
+      <div class="q-counter">Question 3 of 18</div>
+      <div class="q-title">How often do you attend Mass?</div>
+    </div>
+    <div class="options">
+      <div class="opt" onclick="autoNext(this,2,0,'q-3',22)"><div class="dot"></div>Every week, without fail</div>
+      <div class="opt" onclick="autoNext(this,2,1,'q-3',22)"><div class="dot"></div>A few times a month</div>
+      <div class="opt" onclick="autoNext(this,2,2,'q-3',22)"><div class="dot"></div>Mostly on major holidays (Christmas, Easter)</div>
+      <div class="opt" onclick="autoNext(this,2,3,'q-3',22)"><div class="dot"></div>Rarely or not currently</div>
+    </div>
+  </div>
+</div>
+
+<div class="screen" id="q-3">
+  <div class="inner">
+    <div class="logo-bar"><button class="back-btn" onclick="goBack()">←</button><img src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
+    <div class="q-top">
+      <div class="q-counter">Question 4 of 18</div>
+      <div class="q-title">How important is your faith in your daily decisions?</div>
+    </div>
+    <div class="options">
+      <div class="opt" onclick="autoNext(this,3,0,'s-break1',26)"><div class="dot"></div>Very important. It guides everything I do</div>
+      <div class="opt" onclick="autoNext(this,3,1,'s-break1',26)"><div class="dot"></div>Somewhat important. I think about it often</div>
+      <div class="opt" onclick="autoNext(this,3,2,'s-break1',26)"><div class="dot"></div>I'm working to make it more central to my life</div>
+      <div class="opt" onclick="autoNext(this,3,3,'s-break1',26)"><div class="dot"></div>I'm still figuring out what faith means for my daily life</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+  INTERSTITIAL 1  (after Q4 — Catholic image break)
+══════════════════════════════════════════════════════ -->
+<div class="screen" id="s-break1" style="padding-bottom:0">
+  <div class="break-screen break-bg-1">
+    <!-- REPLACE break-bg-1 gradient with a real Catholic image:
+         .break-bg-1 { background-image: url('images/saint-peters-aerial.jpg'); }
+         Suggested image: Aerial view of St. Peter's Square with faithful gathered,
+         OR: Pope Francis blessing the crowd, wide shot. 1080×1920px portrait.
+         Add background-size:cover and filter:brightness(0.45) for the dark overlay effect. -->
+
+    <!-- Decorative Catholic cross watermark -->
+    <div class="break-deco">
+      <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="50" y1="5" x2="50" y2="95" stroke="#fff" stroke-width="4"/>
+        <line x1="5" y1="30" x2="95" y2="30" stroke="#fff" stroke-width="4"/>
+        <circle cx="50" cy="50" r="46" stroke="#fff" stroke-width="2"/>
+      </svg>
+    </div>
+
+    <div class="break-overlay"></div>
+    <div class="break-content">
+      <div class="break-badge">Faith Profile</div>
+      <h2>You're doing great.</h2>
+      <p>Based on what you've shared, we're beginning to understand where you are on your faith journey.<br><br>The next questions will look at your daily spiritual practices: your prayer life, your connection to the Church, and your relationship with the Pope's teachings.</p>
+      <button class="btn-break" onclick="nav('q-4',29)">Continue →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+  QUESTIONS 5–9  (Devotional Practices)
+══════════════════════════════════════════════════════ -->
+<div class="screen" id="q-4">
+  <div class="inner">
+    <div class="logo-bar"><button class="back-btn" onclick="goBack()">←</button><img src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
+    <div class="q-top">
+      <div class="q-counter">Question 5 of 18</div>
+      <div class="q-title">How often do you pray the Rosary?</div>
+    </div>
+    <div class="options">
+      <div class="opt" onclick="autoNext(this,4,0,'q-5',32)"><div class="dot"></div>Every day. It's a non-negotiable part of my life</div>
+      <div class="opt" onclick="autoNext(this,4,1,'q-5',32)"><div class="dot"></div>A few times a week</div>
+      <div class="opt" onclick="autoNext(this,4,2,'q-5',32)"><div class="dot"></div>Occasionally, when I remember or feel moved</div>
+      <div class="opt" onclick="autoNext(this,4,3,'q-5',32)"><div class="dot"></div>Rarely or never. I'd like to start</div>
+    </div>
+  </div>
+</div>
+
+<div class="screen" id="q-5">
+  <div class="inner">
+    <div class="logo-bar"><button class="back-btn" onclick="goBack()">←</button><img src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
+    <div class="q-top">
+      <div class="q-counter">Question 6 of 18</div>
+      <div class="q-title">Do you follow the liturgical year?</div>
+      <div class="q-sub">Advent, Lent, feasts of the saints, holy days...</div>
+    </div>
+    <div class="options">
+      <div class="opt" onclick="autoNext(this,5,0,'q-6',35)"><div class="dot"></div>Yes, I observe the seasons and feasts as part of my life</div>
+      <div class="opt" onclick="autoNext(this,5,1,'q-6',35)"><div class="dot"></div>I'm aware of it but don't follow it closely</div>
+      <div class="opt" onclick="autoNext(this,5,2,'q-6',35)"><div class="dot"></div>I know it exists but haven't engaged deeply</div>
+      <div class="opt" onclick="autoNext(this,5,3,'q-6',35)"><div class="dot"></div>I'm not very familiar with the liturgical calendar</div>
+    </div>
+  </div>
+</div>
+
+<div class="screen" id="q-6">
+  <div class="inner">
+    <div class="logo-bar"><button class="back-btn" onclick="goBack()">←</button><img src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
+    <div class="q-top">
+      <div class="q-counter">Question 7 of 18</div>
+      <div class="q-title">How often do you read Scripture or spiritual reflections?</div>
+    </div>
+    <div class="options">
+      <div class="opt" onclick="autoNext(this,6,0,'q-7',38)"><div class="dot"></div>Every day. It nourishes my faith</div>
+      <div class="opt" onclick="autoNext(this,6,1,'q-7',38)"><div class="dot"></div>A few times a week</div>
+      <div class="opt" onclick="autoNext(this,6,2,'q-7',38)"><div class="dot"></div>Occasionally, when I feel the need</div>
+      <div class="opt" onclick="autoNext(this,6,3,'q-7',38)"><div class="dot"></div>Rarely. I want to make this a habit</div>
+    </div>
+  </div>
+</div>
+
+<div class="screen" id="q-7">
+  <div class="inner">
+    <div class="logo-bar"><button class="back-btn" onclick="goBack()">←</button><img src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
+    <div class="q-top">
+      <div class="q-counter">Question 8 of 18</div>
+      <div class="q-title">Do you currently use any Catholic devotional tools?</div>
+      <div class="q-sub">Prayer calendar, novena guide, missal, rosary guide...</div>
+    </div>
+    <div class="options">
+      <div class="opt" onclick="autoNext(this,7,0,'q-8',41)"><div class="dot"></div>Yes, I use them regularly and they help me</div>
+      <div class="opt" onclick="autoNext(this,7,1,'q-8',41)"><div class="dot"></div>I use some, but not consistently</div>
+      <div class="opt" onclick="autoNext(this,7,2,'q-8',41)"><div class="dot"></div>I have them but rarely use them</div>
+      <div class="opt" onclick="autoNext(this,7,3,'q-8',41)"><div class="dot"></div>No, but I'd love to start with the right one</div>
+    </div>
+  </div>
+</div>
+
+<div class="screen" id="q-8">
+  <div class="inner">
+    <div class="logo-bar"><button class="back-btn" onclick="goBack()">←</button><img src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
+    <div class="q-top">
+      <div class="q-counter">Question 9 of 18</div>
+      <div class="q-title">How connected do you feel to the Pope's teachings and messages?</div>
+    </div>
+    <div class="options">
+      <div class="opt" onclick="autoNext(this,8,0,'s-break2',44)"><div class="dot"></div>Very connected. I follow them closely and they inspire me</div>
+      <div class="opt" onclick="autoNext(this,8,1,'s-break2',44)"><div class="dot"></div>Somewhat connected. I engage when something stands out</div>
+      <div class="opt" onclick="autoNext(this,8,2,'s-break2',44)"><div class="dot"></div>I know they exist but rarely read or listen to them</div>
+      <div class="opt" onclick="autoNext(this,8,3,'s-break2',44)"><div class="dot"></div>I'd love to understand them better but don't know where to start</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+  INTERSTITIAL 2  (after Q9 — second Catholic image break)
+══════════════════════════════════════════════════════ -->
+<div class="screen" id="s-break2" style="padding-bottom:0">
+  <div class="break-screen break-bg-2">
+    <!-- REPLACE break-bg-2 gradient with a real Catholic image:
+         .break-bg-2 { background-image: url('images/church-interior.jpg'); }
+         Suggested image: Interior of a beautiful Catholic cathedral, candlelit altar,
+         golden light pouring through stained glass. 1080×1920px portrait.
+         Add background-size:cover and filter:brightness(0.35) for the dark overlay effect. -->
+
+    <div class="break-deco">
+      <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="50" y1="5" x2="50" y2="95" stroke="#fff" stroke-width="4"/>
+        <line x1="5" y1="30" x2="95" y2="30" stroke="#fff" stroke-width="4"/>
+        <circle cx="50" cy="50" r="46" stroke="#fff" stroke-width="2"/>
+      </svg>
+    </div>
+
+    <div class="break-overlay"></div>
+    <div class="break-content">
+      <div class="break-badge">Almost There</div>
+      <h2>Just a few more questions.</h2>
+      <p>Now we'll understand what's holding you back from the spiritual life you truly want, and what would genuinely help you grow.<br><br>Be honest. This is for you.</p>
+      <button class="btn-break" onclick="nav('q-9',47)">Continue →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+  QUESTIONS 10–13  (Struggles & Pain Points)
+══════════════════════════════════════════════════════ -->
+<div class="screen" id="q-9">
+  <div class="inner">
+    <div class="logo-bar"><button class="back-btn" onclick="goBack()">←</button><img src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
+    <div class="q-top">
+      <div class="q-counter">Question 10 of 18</div>
+      <div class="q-title">What most prevents you from deepening your faith?</div>
+    </div>
+    <div class="options">
+      <div class="opt" onclick="autoNext(this,9,0,'q-10',50)"><div class="dot"></div>Lack of time</div>
+      <div class="opt" onclick="autoNext(this,9,1,'q-10',50)"><div class="dot"></div>Not knowing where to start or what to do</div>
+      <div class="opt" onclick="autoNext(this,9,2,'q-10',50)"><div class="dot"></div>Spiritual dryness. I feel distant from God</div>
+      <div class="opt" onclick="autoNext(this,9,3,'q-10',50)"><div class="dot"></div>Inconsistency. I start, then stop</div>
+      <div class="opt" onclick="autoNext(this,9,4,'q-10',50)"><div class="dot"></div>Life stress and distractions</div>
+      <div class="opt" onclick="autoNext(this,9,5,'q-10',50)"><div class="dot"></div>I'm not sure</div>
+    </div>
+  </div>
+</div>
+
+<div class="screen" id="q-10">
+  <div class="inner">
+    <div class="logo-bar"><button class="back-btn" onclick="goBack()">←</button><img src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
+    <div class="q-top">
+      <div class="q-counter">Question 11 of 18</div>
+      <div class="q-title">When faith comes up in conversation, what do you do?</div>
+    </div>
+    <div class="options">
+      <div class="opt" onclick="autoNext(this,10,0,'q-11',54)"><div class="dot"></div>Faith comes naturally to me in conversation</div>
+      <div class="opt" onclick="autoNext(this,10,1,'q-11',54)"><div class="dot"></div>I listen but feel I don't know enough to share deeply</div>
+      <div class="opt" onclick="autoNext(this,10,2,'q-11',54)"><div class="dot"></div>I try to share but feel I'm missing depth or knowledge</div>
+      <div class="opt" onclick="autoNext(this,10,3,'q-11',54)"><div class="dot"></div>I stay quiet. It feels very personal to me</div>
+    </div>
+  </div>
+</div>
+
+<div class="screen" id="q-11">
+  <div class="inner">
+    <div class="logo-bar"><button class="back-btn" onclick="goBack()">←</button><img src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
+    <div class="q-top">
+      <div class="q-counter">Question 12 of 18</div>
+      <div class="q-title">What spiritual area needs the most attention in your life right now?</div>
+    </div>
+    <div class="options">
+      <div class="opt" onclick="autoNext(this,11,0,'q-12',58)"><div class="dot"></div>My prayer life. I need more consistency</div>
+      <div class="opt" onclick="autoNext(this,11,1,'q-12',58)"><div class="dot"></div>My knowledge of the faith: Scripture, Church teaching, the Pope</div>
+      <div class="opt" onclick="autoNext(this,11,2,'q-12',58)"><div class="dot"></div>My devotion to Our Lady and the saints</div>
+      <div class="opt" onclick="autoNext(this,11,3,'q-12',58)"><div class="dot"></div>Living my faith in practical, everyday ways</div>
+      <div class="opt" onclick="autoNext(this,11,4,'q-12',58)"><div class="dot"></div>My sense of peace and trust in God's plan for me</div>
+    </div>
+  </div>
+</div>
+
+<div class="screen" id="q-12">
+  <div class="inner">
+    <div class="logo-bar"><button class="back-btn" onclick="goBack()">←</button><img src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
+    <div class="q-top">
+      <div class="q-counter">Question 13 of 18</div>
+      <div class="q-title">Is there someone you want to be a spiritual example for?</div>
+    </div>
+    <div class="options">
+      <div class="opt" onclick="autoNext(this,12,0,'q-13',62)"><div class="dot"></div>Yes, for my children</div>
+      <div class="opt" onclick="autoNext(this,12,1,'q-13',62)"><div class="dot"></div>Yes, for my spouse or family</div>
+      <div class="opt" onclick="autoNext(this,12,2,'q-13',62)"><div class="dot"></div>Yes, for my friends, neighbors or community</div>
+      <div class="opt" onclick="autoNext(this,12,3,'q-13',62)"><div class="dot"></div>Not particularly. This journey is for me</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+  QUESTIONS 14–18  (Vision & Commitment)
+══════════════════════════════════════════════════════ -->
+<div class="screen" id="q-13">
+  <div class="inner">
+    <div class="logo-bar"><button class="back-btn" onclick="goBack()">←</button><img src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
+    <div class="q-top">
+      <div class="q-counter">Question 14 of 18</div>
+      <div class="q-title">How much do you want to grow in your faith this year?</div>
+    </div>
+    <div class="options">
+      <div class="opt" onclick="autoNext(this,13,0,'q-14',66)"><div class="dot"></div>Curious. I'd like to learn a little more</div>
+      <div class="opt" onclick="autoNext(this,13,1,'q-14',66)"><div class="dot"></div>Motivated. I want a regular, consistent spiritual practice</div>
+      <div class="opt" onclick="autoNext(this,13,2,'q-14',66)"><div class="dot"></div>Committed. I want it to truly transform my daily life</div>
+      <div class="opt" onclick="autoNext(this,13,3,'q-14',66)"><div class="dot"></div>Deep hunger. I want to live my faith fully, every single day</div>
+    </div>
+  </div>
+</div>
+
+<div class="screen" id="q-14">
+  <div class="inner">
+    <div class="logo-bar"><button class="back-btn" onclick="goBack()">←</button><img src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
+    <div class="q-top">
+      <div class="q-counter">Question 15 of 18</div>
+      <div class="q-title">What do you want prayer to become in your life?</div>
+    </div>
+    <div class="options">
+      <div class="opt" onclick="autoNext(this,14,0,'q-15',70)"><div class="dot"></div>A brief moment of connection each morning</div>
+      <div class="opt" onclick="autoNext(this,14,1,'q-15',70)"><div class="dot"></div>A consistent daily habit that grounds and centers me</div>
+      <div class="opt" onclick="autoNext(this,14,2,'q-15',70)"><div class="dot"></div>A deep, ongoing conversation with God throughout my day</div>
+      <div class="opt" onclick="autoNext(this,14,3,'q-15',70)"><div class="dot"></div>A way to intercede and carry others to God</div>
+    </div>
+  </div>
+</div>
+
+<!-- Q16: MULTI-SELECT -->
+<div class="screen" id="q-15">
+  <div class="inner">
+    <div class="logo-bar"><button class="back-btn" onclick="goBack()">←</button><img src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
+    <div class="q-top">
+      <div class="q-counter">Question 16 of 18</div>
+      <div class="q-title">Which areas of your life do you most want God to transform?</div>
+    </div>
+    <p class="multi-note">Select up to 3, then tap Continue</p>
+    <div class="options" id="opts-multi">
+      <div class="opt" onclick="toggleMulti(this)"><div class="chk"></div>My family relationships</div>
+      <div class="opt" onclick="toggleMulti(this)"><div class="chk"></div>My emotional health and inner peace</div>
+      <div class="opt" onclick="toggleMulti(this)"><div class="chk"></div>My work and sense of purpose</div>
+      <div class="opt" onclick="toggleMulti(this)"><div class="chk"></div>My consistency in prayer and spiritual practices</div>
+      <div class="opt" onclick="toggleMulti(this)"><div class="chk"></div>My understanding of the faith and Church teaching</div>
+      <div class="opt" onclick="toggleMulti(this)"><div class="chk"></div>My ability to forgive, trust, and let go</div>
+    </div>
+  </div>
+  <div class="fixed-bottom">
+    <button class="btn-main dim" id="btn-multi" onclick="submitMulti()">Continue →</button>
+  </div>
+</div>
+
+<div class="screen" id="q-16">
+  <div class="inner">
+    <div class="logo-bar"><button class="back-btn" onclick="goBack()">←</button><img src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
+    <div class="q-top">
+      <div class="q-counter">Question 17 of 18</div>
+      <div class="q-title">What time of day are you most open to prayer?</div>
+    </div>
+    <div class="options">
+      <div class="opt" onclick="autoNext(this,16,0,'q-17',78)"><div class="dot"></div>Early morning, before the day starts</div>
+      <div class="opt" onclick="autoNext(this,16,1,'q-17',78)"><div class="dot"></div>During the day. I want moments of stillness</div>
+      <div class="opt" onclick="autoNext(this,16,2,'q-17',78)"><div class="dot"></div>Evening, when things quiet down</div>
+      <div class="opt" onclick="autoNext(this,16,3,'q-17',78)"><div class="dot"></div>Before sleep, when I reflect most naturally</div>
+    </div>
+  </div>
+</div>
+
+<div class="screen" id="q-17">
+  <div class="inner">
+    <div class="logo-bar"><button class="back-btn" onclick="goBack()">←</button><img src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
+    <div class="q-top">
+      <div class="q-counter">Question 18 of 18</div>
+      <div class="q-title">How much time could you dedicate to prayer and reflection daily?</div>
+    </div>
+    <div class="options">
+      <div class="opt" onclick="autoNext(this,17,0,'s-result',83)"><div class="dot"></div>5 minutes</div>
+      <div class="opt" onclick="autoNext(this,17,1,'s-result',83)"><div class="dot"></div>10 minutes</div>
+      <div class="opt" onclick="autoNext(this,17,2,'s-result',83)"><div class="dot"></div>15–20 minutes</div>
+      <div class="opt" onclick="autoNext(this,17,3,'s-result',83)"><div class="dot"></div>30 minutes or more</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+  RESULT SCREEN
+══════════════════════════════════════════════════════ -->
+<div class="screen" id="s-result">
+  <div class="inner">
+    <div class="logo-bar"><img src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
+    <div class="result-head">
+      <div class="pre">Your Profile</div>
+      <h2>Here is your<br><span class="blue" id="result-profile-name">Spiritual Growth Profile</span></h2>
+    </div>
+    <div class="spectrum-wrap">
+      <div class="spectrum-lbl">Your Faith Journey</div>
+      <div class="spec-bar-wrap">
+        <div class="spec-bar"></div>
+        <div class="spec-knob" id="spec-knob" style="left:50%"></div>
+      </div>
+      <div class="spec-ends"><span>Discovering</span><span>Growing</span><span>Deepening</span></div>
+    </div>
+    <div class="state-box">
+      <div class="state-icon">📖</div>
+      <div class="state-txt">
+        <strong>Spiritual State</strong>
+        <p id="result-state-text">You are on a genuine path, drawn toward God, but sometimes pulled back by the demands of everyday life.</p>
+      </div>
+    </div>
+    <div class="profile-rows">
+      <div class="prof-row">
+        <div class="prof-icon">✨</div>
+        <div class="prof-text"><div class="lbl">Motivation</div><div class="val" id="result-motivation">Spiritual closeness with God</div></div>
+      </div>
+      <div class="prof-row">
+        <div class="prof-icon">⚡</div>
+        <div class="prof-text"><div class="lbl">Main challenge</div><div class="val" id="result-challenge">Inconsistency</div></div>
+      </div>
+      <div class="prof-row">
+        <div class="prof-icon">🎯</div>
+        <div class="prof-text"><div class="lbl">Growth goal</div><div class="val" id="result-goal">Build a daily prayer habit</div></div>
+      </div>
+      <div class="prof-row">
+        <div class="prof-icon">🕊️</div>
+        <div class="prof-text"><div class="lbl">Recommended path</div><div class="val" id="result-path">Daily papal reflections + liturgical calendar</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="fixed-bottom">
+    <button class="btn-main" onclick="startLoading()">See my personalized plan →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+  LOADING SCREEN
+══════════════════════════════════════════════════════ -->
+<div class="screen" id="s-loading">
+  <div class="inner">
+    <div class="logo-bar"><img src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
+    <div class="loading-head">
+      <div class="h1">We're building your</div>
+      <div class="h2">Personalized Spiritual Plan</div>
+    </div>
+
+    <div class="prog-item">
+      <div class="prog-hdr">
+        <span class="prog-name" id="pn1">Aligning with your prayer intentions</span>
+        <div class="prog-right"><span class="prog-pct" id="pp1">0%</span><span class="prog-done" id="pd1">✓</span></div>
+      </div>
+      <div class="prog-track"><div class="prog-bar" id="pb1"></div></div>
+    </div>
+    <div class="prog-item">
+      <div class="prog-hdr">
+        <span class="prog-name" id="pn2">Identifying your spiritual growth areas</span>
+        <div class="prog-right"><span class="prog-pct" id="pp2">0%</span><span class="prog-done" id="pd2">✓</span></div>
+      </div>
+      <div class="prog-track"><div class="prog-bar" id="pb2"></div></div>
+    </div>
+    <div class="prog-item">
+      <div class="prog-hdr">
+        <span class="prog-name" id="pn3">Selecting your perfect Calendar prayers</span>
+        <div class="prog-right"><span class="prog-pct" id="pp3">0%</span><span class="prog-done" id="pd3">✓</span></div>
+      </div>
+      <div class="prog-track"><div class="prog-bar" id="pb3"></div></div>
+    </div>
+
+    <!-- Catholic image strip -->
+    <div class="loading-img-strip"></div>
+
+    <div class="testimon" id="testimon-box">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-title" id="t-title">A companion for my spiritual life</div>
+      <div class="testi-text" id="t-text">"This calendar completely changed my morning routine. I start every day with the pope's reflection and feel so much more connected to my faith."</div>
+      <div class="testi-author" id="t-author">— Mary K., Ohio</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+  EMAIL SCREEN
+══════════════════════════════════════════════════════ -->
+<div class="screen" id="s-email">
+  <div class="inner">
+    <div class="logo-bar"><img src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
+    <div class="email-head">
+      <div class="h1">Enter your email to receive your</div>
+      <div class="h2">Personalized Spiritual Plan</div>
+    </div>
+    <div class="email-field">
+      <span class="email-icon">✉</span>
+      <input type="email" id="email-input" placeholder="Enter your email address" autocomplete="email">
+    </div>
+    <div class="privacy-note">
+      <span class="lock">🔒</span>
+      <p>We respect your privacy. Your information is used only to deliver your spiritual plan and will never be sold. <a href="#">Privacy Policy</a>.</p>
+    </div>
+  </div>
+  <div class="fixed-bottom">
+    <button class="btn-main" onclick="submitEmail()">Reveal my plan →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+  OFFER PAGE  (full sales page, built into quiz)
+══════════════════════════════════════════════════════ -->
+<div class="screen" id="s-offer" style="padding-bottom:0">
+  <!-- Hero -->
+  <div class="offer-hero">
+    <div class="offer-badge">✝ The Catholic Daily 2026</div>
+    <h1>Your Spiritual Plan is Ready</h1>
+    <div class="profile-tag" id="offer-profile-tag">Spiritual Seeker: Growing Stage</div>
+  </div>
+
+  <!-- Countdown timer -->
+  <div class="timer-bar">
+    <span class="timer-label">⏰ Special offer expires in</span>
+    <span class="timer-digits" id="timer-display">10:00</span>
+  </div>
+
+  <!-- Product mockup -->
+  <div class="product-mockup">
+    <!--
+      ADD YOUR PRODUCT IMAGE HERE.
+      Replace the .mockup-placeholder div below with:
+      <img src="assets/bundle-abertura.webp" alt="The Catholic Daily 2026"
+           style="width:100%;height:100%;object-fit:cover;border-radius:12px">
+    -->
+    <div class="mockup-img">
+      <img src="images/bundle-abertura-en.webp" alt="The Catholic Daily 2026" style="width:100%;height:auto;display:block">
+    </div>
+  </div>
+
+  <!-- Personalized pitch (populated by JS) -->
+  <div class="personal-pitch">
+    <div class="icon">🕊️</div>
+    <p id="offer-pitch">A daily prayer routine organized for every day of 2026 to help you live with more faith, peace and clarity.</p>
+  </div>
+
+  <!-- What's included -->
+  <div class="offer-section">
+    <h3>What's inside The Catholic Daily 2026:</h3>
+    <div class="include-item"><span class="include-icon">✅</span><div><strong>Saint of the Day</strong> — every day you meet a saint: who they were, and one word from their life to inspire your faith</div></div>
+    <div class="include-item"><span class="include-icon">✅</span><div><strong>A Papal Teaching</strong> — a reflection drawn from encyclicals and papal speeches, bringing the voice of the Church into your morning</div></div>
+    <div class="include-item"><span class="include-icon">✅</span><div><strong>Daily Biblical Passage with Reflection</strong> — the liturgical reading of the day, with a brief reflection to carry with you through your hours</div></div>
+    <div class="include-item"><span class="include-icon">✅</span><div><strong>Liturgical Season Indicator</strong> — you always know where you are in the Church year: Advent, Christmas, Lent, Easter or Ordinary Time</div></div>
+    <div class="include-item"><span class="include-icon">✅</span><div><strong>Novenas and Seasonal Plans</strong> — complementary prayer paths synchronized with the liturgical calendar, so your faith deepens at exactly the right moments</div></div>
+  </div>
+
+  <!-- 3 Bonuses -->
+  <div class="offer-section">
+    <h3>🎁 Also included: 3 free spiritual bonuses</h3>
+
+    <div class="bonus-card">
+      <img src="images/bonus-novena.webp" alt="Spiritual Novena 2026" class="bonus-img">
+      <div class="bonus-body">
+        <div class="bonus-header">
+          <div class="bonus-tag">BONUS 1</div>
+          <div class="bonus-value"><s>$9</s>&nbsp;FREE</div>
+        </div>
+        <div class="bonus-title">Spiritual Novena 2026</div>
+        <p class="bonus-desc">9 days of simple, brief and profound prayer to return to God's presence and walk through the year with more awareness and serenity. Not a restart. A homecoming.</p>
+      </div>
+    </div>
+
+    <div class="bonus-card">
+      <img src="images/bonus-mary.webp" alt="Prayer Guide with Mary" class="bonus-img">
+      <div class="bonus-body">
+        <div class="bonus-header">
+          <div class="bonus-tag">BONUS 2</div>
+          <div class="bonus-value"><s>$9</s>&nbsp;FREE</div>
+        </div>
+        <div class="bonus-title">Prayer Guide with Mary
+          <small>30 Prayers for When Faith Wavers</small>
+        </div>
+        <p class="bonus-desc">30 prayers with Our Lady for the concrete difficult moments: grief, anxiety, spiritual fatigue, feeling abandoned. Short, practical, for any moment of the day.</p>
+      </div>
+    </div>
+
+    <div class="bonus-card">
+      <img src="images/bonus-psalms.webp" alt="Psalms That Sustain" class="bonus-img">
+      <div class="bonus-body">
+        <div class="bonus-header">
+          <div class="bonus-tag">BONUS 3</div>
+          <div class="bonus-value"><s>$9</s>&nbsp;FREE</div>
+        </div>
+        <div class="bonus-title">Psalms That Sustain
+          <small>30 Biblical Prayers for Protection, Peace &amp; Renewal</small>
+        </div>
+        <p class="bonus-desc">30 Psalms organized by need (protection, peace, health, family, trust) so you always know exactly which one to pray in the right moment.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Testimonials -->
+  <div class="offer-section">
+    <h3>What Catholics are saying:</h3>
+    <div class="offer-testi">
+      <img src="images/social-group.webp" class="testi-photo" alt="Customers with The Catholic Daily 2026">
+      <div class="stars">★★★★★</div>
+      <div class="ttext">"Four of us from our parish community ordered together. The daily prayers give us something meaningful to talk about after Mass every week. We already pre-ordered for next year."</div>
+      <div class="tauthor">— Sarah & friends, Texas</div>
+    </div>
+    <div class="offer-testi">
+      <img src="images/social-women.webp" class="testi-photo" alt="Customers with The Catholic Daily 2026">
+      <div class="stars">★★★★★</div>
+      <div class="ttext">"My best friend and I have been attending Mass together for over 30 years. This has become our morning ritual. We call each other after reading the daily prayer. It's a true gift for the soul."</div>
+      <div class="tauthor">— Margaret & Louise, Ohio</div>
+    </div>
+    <div class="offer-testi">
+      <img src="images/social-man.webp" class="testi-photo" alt="Customer with The Catholic Daily 2026">
+      <div class="stars">★★★★★</div>
+      <div class="ttext">"My daughter gave it to me and I was skeptical at first. But I haven't missed a single day since January. It's become the most important 5 minutes of my morning. I feel closer to God than I have in decades."</div>
+      <div class="tauthor">— John P., Pennsylvania</div>
+    </div>
+  </div>
+
+  <!-- Price section -->
+  <div class="offer-section">
+    <div class="price-section">
+      <div class="price-breakdown">
+        <div class="pb-row"><span>The Catholic Daily 2026</span><span><s>$29</s></span></div>
+        <div class="pb-row"><span>Bonus 1: Novena of Spiritual Restart</span><span><s>$9</s></span></div>
+        <div class="pb-row"><span>Bonus 2: Prayer Guide with Mary</span><span><s>$9</s></span></div>
+        <div class="pb-row"><span>Bonus 3: Psalms That Sustain</span><span><s>$9</s></span></div>
+        <div class="pb-total"><span>Total value</span><span><s>$56</s></span></div>
+      </div>
+      <div class="price-now-wrap">
+        <div class="price-now">$19</div>
+      </div>
+      <div class="price-tag">TODAY ONLY — SAVE 66%</div>
+      <div class="price-note">One-time payment · Instant digital access</div>
+    </div>
+
+    <div class="guarantee">
+      <div class="shield">🛡️</div>
+      <div class="gtxt">
+        <strong>7-Day Money-Back Guarantee</strong>
+        <p>If within 7 days you don't feel closer to God, we'll refund 100% of your investment. No questions asked.</p>
+      </div>
+    </div>
+
+    <div class="offer-cta-wrap">
+      <a href="https://pay.hotmart.com/J106401743H?checkoutMode=10" style="text-decoration:none" onclick="if(typeof fbq!=='undefined')fbq('track','AddToCart',{value:19,currency:'USD',content_name:'The Catholic Daily 2026'})">
+        <button class="offer-cta">Get My Catholic Daily + 3 Bonuses — $19 →</button>
+      </a>
+      <div class="offer-cta-sub">
+        🔒 Secure checkout<span>·</span>✝ Catholic content<span>·</span>📩 Instant access
+      </div>
+    </div>
+  </div>
+
+  <div style="height:40px"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+  MICRO-COMMIT MODALS
+══════════════════════════════════════════════════════ -->
+<div class="modal-bg" id="modal-1">
+  <div class="modal-box">
+    <div class="modal-pre">A moment of commitment</div>
+    <div class="modal-q">Do you want to take a step toward spiritual renewal this year?</div>
+    <div class="modal-btns">
+      <button class="modal-btn" onclick="closeModal(1)"><div class="mi">✗</div>No</button>
+      <button class="modal-btn yes" onclick="closeModal(1)"><div class="mi">✓</div>Yes</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-bg" id="modal-2">
+  <div class="modal-box">
+    <div class="modal-pre">A moment of commitment</div>
+    <div class="modal-q">Do you commit to making daily prayer a priority this year?</div>
+    <div class="modal-btns">
+      <button class="modal-btn" onclick="closeModal(2)"><div class="mi">✗</div>No</button>
+      <button class="modal-btn yes" onclick="closeModal(2)"><div class="mi">✓</div>Yes</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-bg" id="modal-3">
+  <div class="modal-box">
+    <div class="modal-pre">A moment of commitment</div>
+    <div class="modal-q">Do you commit to growing closer to God, one day at a time?</div>
+    <div class="modal-btns">
+      <button class="modal-btn" onclick="closeModal(3)"><div class="mi">✗</div>No</button>
+      <button class="modal-btn yes" onclick="closeModal(3)"><div class="mi">✓</div>Yes</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+  JAVASCRIPT
+══════════════════════════════════════════════════════ -->
+<script>
+/* ── STATE ── */
+const S = {
+  gender: null, age: null,
+  answers: Array(18).fill(null),
+  multi: [],
+  currentId: 's-gender',
+  history: [],
+  profile: null
+};
+
+/* ── PROGRESS ── */
+function setProgress(pct) {
+  document.getElementById('progress-fill').style.width = Math.min(100, pct) + '%';
+}
+
+/* ── NAVIGATION ── */
+function nav(id, pct) {
+  S.history.push({ id: S.currentId, pct: parseFloat(document.getElementById('progress-fill').style.width || '0') });
+  S.currentId = id;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  setProgress(pct);
+  window.scrollTo(0, 0);
+}
+
+function goBack() {
+  if (!S.history.length) return;
+  const prev = S.history.pop();
+  S.currentId = prev.id;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(prev.id).classList.add('active');
+  setProgress(prev.pct);
+  window.scrollTo(0, 0);
+}
+
+/* ── GENDER / AGE ── */
+function selectGender(g) {
+  S.gender = g;
+  // Show the correct age grid based on gender
+  document.getElementById('age-grid-male').style.display   = g === 'man'   ? 'grid' : 'none';
+  document.getElementById('age-grid-female').style.display = g === 'woman' ? 'grid' : 'none';
+  nav('s-age', 6);
+}
+function selectAge(a)    { S.age = a;    nav('s-affirm', 8); }
+
+/* ── SINGLE-SELECT AUTO-ADVANCE ── */
+function autoNext(el, qIdx, optIdx, nextId, pct) {
+  S.answers[qIdx] = optIdx;
+  el.closest('.options').querySelectorAll('.opt').forEach(o => o.classList.remove('sel'));
+  el.classList.add('sel');
+  setTimeout(() => {
+    if (nextId === 's-result') { computeProfile(); nav('s-result', pct); setTimeout(animateSpectrum, 300); }
+    else nav(nextId, pct);
+  }, 270);
+}
+
+/* ── MULTI-SELECT (Q16) ── */
+function toggleMulti(el) {
+  const label = el.querySelector('div:last-child').nextSibling || el.lastChild;
+  const text = el.innerText.trim();
+  if (el.classList.contains('sel')) {
+    el.classList.remove('sel');
+    S.multi = S.multi.filter(t => t !== text);
+  } else {
+    if (S.multi.length >= 3) return;
+    el.classList.add('sel');
+    S.multi.push(text);
+  }
+  const btn = document.getElementById('btn-multi');
+  if (S.multi.length > 0) { btn.classList.remove('dim'); }
+  else { btn.classList.add('dim'); }
+}
+function submitMulti() {
+  if (!S.multi.length) return;
+  S.answers[15] = S.multi.join(', ');
+  nav('q-16', 74);
+}
+
+/* ── PROFILE COMPUTATION ── */
+function computeProfile() {
+  const a = S.answers;
+  // Scoring from Q2 (spiritual self-desc), Q5 (rosary), Q7 (scripture)
+  const q2s = [3,2,1,0][a[1] ?? 1] ?? 1;
+  const q5s = [3,2,1,0][a[4] ?? 2] ?? 1;
+  const q7s = [3,2,1,0][a[6] ?? 2] ?? 1;
+  const total = q2s + q5s + q7s; // 0–9
+
+  let profile, specPct, stateTxt, motivation, goal, path, pitchTxt;
+
+  if (total <= 3) {
+    profile    = 'Pilgrim: Discovering Stage';
+    specPct    = 18;
+    stateTxt   = 'You are at the beginning of a beautiful journey, open, curious, and ready to take your first consistent steps in prayer and devotion.';
+    motivation = 'Spiritual curiosity and openness';
+    goal       = 'Start a simple, daily prayer habit';
+    path       = 'Daily prayer + guided rosary to build your first rhythm';
+    pitchTxt   = 'For someone beginning their faith journey, The Catholic Daily 2026 is the simplest and most powerful starting point: one prayer, one Bible verse, one reflection, one intention. Every day. No complexity. Just presence.';
+  } else if (total <= 6) {
+    profile    = 'Seeker: Growing Stage';
+    specPct    = 52;
+    stateTxt   = 'You are on a genuine path of faith, drawn toward God, but sometimes pulled back by the demands of daily life. The desire is real; you need the right structure.';
+    motivation = 'Spiritual closeness and consistency';
+    goal       = 'Build consistency in your prayer life';
+    path       = 'Daily prayer + liturgical calendar to create a lasting habit';
+    pitchTxt   = 'For someone in your stage, The Catholic Daily 2026 provides exactly the structure you\'ve been looking for: a daily prayer rhythm that fits into real life, with Scripture, reflection, and intention already prepared for you.';
+  } else {
+    profile    = 'Disciple: Deepening Stage';
+    specPct    = 84;
+    stateTxt   = 'Your faith runs deep. You are ready to move beyond routine into transformation, and to carry that faith outward into your family, community, and every daily decision.';
+    motivation = 'Transformation and spiritual mission';
+    goal       = 'Deepen faith and become a spiritual example';
+    path       = 'Daily prayer + full liturgical immersion for deeper formation';
+    pitchTxt   = 'For someone with your depth of faith, The Catholic Daily 2026 becomes a daily anchor with 366 prayers, the full liturgical year with saints and feasts, and a companion worthy of the spiritual life you\'re already living.';
+  }
+
+  // Main challenge from Q10
+  const challenges = ['Lack of time','Not knowing where to start','Spiritual dryness','Inconsistency','Life stress & distractions','Unclear'];
+  const challenge = challenges[a[9] ?? 3];
+
+  S.profile = { profile, specPct, pitchTxt };
+
+  document.getElementById('result-profile-name').textContent = profile;
+  document.getElementById('result-state-text').textContent   = stateTxt;
+  document.getElementById('result-motivation').textContent   = motivation;
+  document.getElementById('result-challenge').textContent    = challenge;
+  document.getElementById('result-goal').textContent         = goal;
+  document.getElementById('result-path').textContent         = path;
+}
+
+function animateSpectrum() {
+  document.getElementById('spec-knob').style.left = (S.profile?.specPct ?? 50) + '%';
+}
+
+/* ── LOADING SCREEN (single clean interval) ── */
+const TESTIMONIALS = [
+  { title:'A companion for my spiritual life',  text:'"This completely changed my morning routine. I start every day with the daily prayer and feel so much more connected to my faith. I haven\'t missed a single day."', author:'— Anna K., New York' },
+  { title:'Finally consistent in prayer',       text:'"I had tried many devotional books before. This is the first time I\'ve actually kept a daily habit. The prayers are short, powerful, and beautiful."', author:'— Patricia H., Texas' },
+  { title:'Peace I hadn\'t felt in years',      text:'"The daily prayer brought a calm and clarity I hadn\'t felt in years. I read it every morning before anything else. It sets the entire tone of my day."', author:'— Maria T., California' },
+  { title:'We do it together every morning',    text:'"I bought it as a gift for my wife. She reads the daily prayer aloud at breakfast. Now we both have one and do it together. Best purchase of the year."', author:'— Robert M., Florida' }
+];
+
+let loadingTick = 0;
+let loadingTimer = null;
+let modalsFired = [false, false, false];
+let testiIdx    = 0;
+let testiTimer  = null;
+
+const TOTAL_TICKS = 360; // 36 seconds at 100ms
+const BAR_TICKS   = 120; // 12 seconds per bar
+
+function updateBar(n, pct) {
+  document.getElementById('pb'+n).style.width = pct + '%';
+  document.getElementById('pp'+n).textContent  = pct + '%';
+}
+function completeBar(n) {
+  document.getElementById('pb'+n).style.width = '100%';
+  document.getElementById('pp'+n).style.display = 'none';
+  document.getElementById('pd'+n).style.display = 'inline';
+  document.getElementById('pn'+n).classList.add('done');
+}
+function showModal(n) {
+  if (!modalsFired[n-1]) { modalsFired[n-1] = true; document.getElementById('modal-'+n).classList.add('show'); }
+}
+function closeModal(n) { document.getElementById('modal-'+n).classList.remove('show'); }
+
+function rotateTesti() {
+  const t = TESTIMONIALS[testiIdx % TESTIMONIALS.length]; testiIdx++;
+  const box = document.getElementById('testimon-box');
+  box.style.opacity = '0';
+  setTimeout(() => {
+    document.getElementById('t-title').textContent  = t.title;
+    document.getElementById('t-text').textContent   = t.text;
+    document.getElementById('t-author').textContent = t.author;
+    box.style.opacity = '1';
+    box.style.transition = 'opacity .5s';
+  }, 300);
+}
+
+function startLoading() {
+  nav('s-loading', 88);
+  loadingTick    = 0;
+  modalsFired    = [false, false, false];
+  testiIdx       = 0;
+  rotateTesti();
+  testiTimer = setInterval(rotateTesti, 9000);
+
+  loadingTimer = setInterval(() => {
+    loadingTick++;
+
+    /* ── BAR 1 (ticks 1–120) ── */
+    if (loadingTick <= BAR_TICKS) {
+      const pct = Math.round(loadingTick / BAR_TICKS * 100);
+      updateBar(1, pct);
+      if (loadingTick === 24) showModal(1);
+      if (loadingTick === BAR_TICKS) completeBar(1);
+    }
+    /* ── BAR 2 (ticks 121–240) ── */
+    else if (loadingTick <= BAR_TICKS * 2) {
+      const pct = Math.round((loadingTick - BAR_TICKS) / BAR_TICKS * 100);
+      updateBar(2, pct);
+      if (loadingTick === BAR_TICKS + 60) showModal(2);
+      if (loadingTick === BAR_TICKS * 2)  completeBar(2);
+    }
+    /* ── BAR 3 (ticks 241–360) ── */
+    else if (loadingTick <= TOTAL_TICKS) {
+      const pct = Math.round((loadingTick - BAR_TICKS * 2) / BAR_TICKS * 100);
+      updateBar(3, pct);
+      if (loadingTick === BAR_TICKS * 2 + 66) showModal(3);
+      if (loadingTick === TOTAL_TICKS) {
+        completeBar(3);
+        clearInterval(loadingTimer);
+        clearInterval(testiTimer);
+        setProgress(94);
+        setTimeout(() => nav('s-email', 96), 900);
+      }
+    }
+  }, 100);
+}
+
+/* ── EMAIL SUBMIT ── */
+function submitEmail() {
+  const email = document.getElementById('email-input').value.trim();
+  const field = document.getElementById('email-input').parentElement;
+  if (!email || !email.includes('@') || !email.includes('.')) {
+    field.style.borderColor = '#ef4444';
+    document.getElementById('email-input').focus();
+    setTimeout(() => { field.style.borderColor = ''; }, 2000);
+    return;
+  }
+
+  // Populate offer page with personalized content
+  if (S.profile) {
+    document.getElementById('offer-profile-tag').textContent = S.profile.profile;
+    document.getElementById('offer-pitch').textContent       = S.profile.pitchTxt;
+  }
+
+  // Optional: send lead to your webhook / CRM
+  // fetch('https://your-crm.com/api/leads', {
+  //   method: 'POST', headers: {'Content-Type':'application/json'},
+  //   body: JSON.stringify({ email, gender: S.gender, age: S.age, profile: S.profile?.profile })
+  // });
+
+  if (typeof fbq !== 'undefined') fbq('track', 'Lead');
+  nav('s-offer', 100);
+  startCountdown();
+}
+
+/* ── OFFER COUNTDOWN ── */
+function startCountdown() {
+  const KEY = 'quiz_offer_expires';
+  let expires = sessionStorage.getItem(KEY);
+  if (!expires) {
+    expires = Date.now() + 10 * 60 * 1000;
+    sessionStorage.setItem(KEY, expires);
+  }
+  function tick() {
+    const rem = Math.max(0, expires - Date.now());
+    const m = Math.floor(rem / 60000);
+    const s = Math.floor((rem % 60000) / 1000);
+    document.getElementById('timer-display').textContent = m + ':' + String(s).padStart(2,'0');
+    if (rem <= 0) clearInterval(cdTimer);
+  }
+  tick();
+  const cdTimer = setInterval(tick, 1000);
+}
+</script>
+</body>
+</html>
