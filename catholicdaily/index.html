@@ -3,7 +3,7 @@
 <head>
 <base href="/catholicdaily/">
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Take this 2-minute quiz and discover your personalized Catholic spiritual plan for 2026. Daily prayer, saints, Scripture and papal teachings.">
 <title>The Catholic Daily 2026 — Discover Your Spiritual Profile</title>
 <style>
@@ -224,7 +224,7 @@ html,body{min-height:100vh;font-family:-apple-system,BlinkMacSystemFont,'Segoe U
    OFFER PAGE
 ══════════════════════════════ */
 .offer-hero{background:linear-gradient(160deg,#0d1f40 0%,#1a3a6e 100%);padding:32px 24px 28px;text-align:center;position:relative;overflow:hidden}
-.offer-hero::before{content:'✝';position:absolute;font-size:200px;color:rgba(255,255,255,.03);top:-30px;right:-20px;line-height:1;pointer-events:none}
+.offer-hero::before{content:'\271D\FE0E';font-family:'Times New Roman',Georgia,serif;position:absolute;font-size:200px;color:rgba(255,255,255,.06);top:-30px;right:-20px;line-height:1;pointer-events:none}
 .offer-badge{display:inline-block;background:rgba(201,168,76,.2);border:1px solid rgba(201,168,76,.5);color:#c9a84c;font-size:10px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;border-radius:20px;padding:5px 14px;margin-bottom:14px}
 .offer-hero h1{font-size:24px;font-weight:800;color:#fff;line-height:1.3;margin-bottom:6px}
 .offer-hero .profile-tag{display:inline-block;background:rgba(37,99,235,.3);border:1px solid rgba(37,99,235,.5);color:#93c5fd;font-size:12px;font-weight:700;border-radius:20px;padding:4px 14px;margin-top:4px}
@@ -322,6 +322,7 @@ src="https://www.facebook.com/tr?id=745685381942209&ev=PageView&noscript=1"/></n
 <body>
 
 <!-- TOP PROGRESS BAR -->
+<main id="quiz-main">
 <div id="progress-wrap"><div id="progress-fill"></div></div>
 
 <!-- ══════════════════════════════════════════════════════
@@ -337,12 +338,12 @@ src="https://www.facebook.com/tr?id=745685381942209&ev=PageView&noscript=1"/></n
     </div>
     <div class="portrait-pair">
       <div class="portrait-card" onclick="selectGender('man')" role="button" tabindex="0">
-        <img src="images/man.webp" alt="Man" fetchpriority="high" width="400" height="533" style="width:100%;height:100%;object-fit:cover;object-position:top center">
+        <img src="images/man.webp" alt="Man" fetchpriority="high" width="400" height="533" sizes="(max-width:480px) 45vw, 200px" style="width:100%;height:100%;object-fit:cover;object-position:top center">
         <div class="portrait-overlay"></div>
         <div class="portrait-label"><span>Man</span><div class="portrait-arrow">→</div></div>
       </div>
       <div class="portrait-card" onclick="selectGender('woman')" role="button" tabindex="0">
-        <img src="images/woman.webp" alt="Woman" fetchpriority="high" width="400" height="533" style="width:100%;height:100%;object-fit:cover;object-position:top center">
+        <img src="images/woman.webp" alt="Woman" fetchpriority="high" width="400" height="533" sizes="(max-width:480px) 45vw, 200px" style="width:100%;height:100%;object-fit:cover;object-position:top center">
         <div class="portrait-overlay"></div>
         <div class="portrait-label"><span>Woman</span><div class="portrait-arrow">→</div></div>
       </div>
@@ -367,22 +368,22 @@ src="https://www.facebook.com/tr?id=745685381942209&ev=PageView&noscript=1"/></n
     <!-- AGE GRID: MALE — shown when gender = male -->
     <div class="age-grid" id="age-grid-male" style="display:none">
       <div class="portrait-card" onclick="selectAge('18-34')" role="button" tabindex="0">
-        <img loading="lazy" src="images/age-m-18-34.webp" alt="18-34" style="width:100%;height:100%;object-fit:cover;object-position:top center">
+        <img sizes="(max-width:480px) 45vw, 200px" loading="lazy" src="images/age-m-18-34.webp" alt="18-34" style="width:100%;height:100%;object-fit:cover;object-position:top center">
         <div class="portrait-overlay"></div>
         <div class="portrait-label"><span>18 – 34</span><div class="portrait-arrow">→</div></div>
       </div>
       <div class="portrait-card" onclick="selectAge('35-44')" role="button" tabindex="0">
-        <img loading="lazy" src="images/age-m-35-44.webp" alt="35-44" style="width:100%;height:100%;object-fit:cover;object-position:top center">
+        <img sizes="(max-width:480px) 45vw, 200px" loading="lazy" src="images/age-m-35-44.webp" alt="35-44" style="width:100%;height:100%;object-fit:cover;object-position:top center">
         <div class="portrait-overlay"></div>
         <div class="portrait-label"><span>35 – 44</span><div class="portrait-arrow">→</div></div>
       </div>
       <div class="portrait-card" onclick="selectAge('45-54')" role="button" tabindex="0">
-        <img loading="lazy" src="images/age-m-45-54.webp" alt="45-54" style="width:100%;height:100%;object-fit:cover;object-position:top center">
+        <img sizes="(max-width:480px) 45vw, 200px" loading="lazy" src="images/age-m-45-54.webp" alt="45-54" style="width:100%;height:100%;object-fit:cover;object-position:top center">
         <div class="portrait-overlay"></div>
         <div class="portrait-label"><span>45 – 54</span><div class="portrait-arrow">→</div></div>
       </div>
       <div class="portrait-card" onclick="selectAge('55+')" role="button" tabindex="0">
-        <img loading="lazy" src="images/age-m-55plus.webp" alt="55+" style="width:100%;height:100%;object-fit:cover;object-position:top center">
+        <img sizes="(max-width:480px) 45vw, 200px" loading="lazy" src="images/age-m-55plus.webp" alt="55+" style="width:100%;height:100%;object-fit:cover;object-position:top center">
         <div class="portrait-overlay"></div>
         <div class="portrait-label"><span>55 +</span><div class="portrait-arrow">→</div></div>
       </div>
@@ -391,22 +392,22 @@ src="https://www.facebook.com/tr?id=745685381942209&ev=PageView&noscript=1"/></n
     <!-- AGE GRID: FEMALE — shown when gender = female -->
     <div class="age-grid" id="age-grid-female" style="display:none">
       <div class="portrait-card" onclick="selectAge('18-34')" role="button" tabindex="0">
-        <img loading="lazy" src="images/age-f-18-34.webp" alt="18-34" style="width:100%;height:100%;object-fit:cover;object-position:top center">
+        <img sizes="(max-width:480px) 45vw, 200px" loading="lazy" src="images/age-f-18-34.webp" alt="18-34" style="width:100%;height:100%;object-fit:cover;object-position:top center">
         <div class="portrait-overlay"></div>
         <div class="portrait-label"><span>18 – 34</span><div class="portrait-arrow">→</div></div>
       </div>
       <div class="portrait-card" onclick="selectAge('35-44')" role="button" tabindex="0">
-        <img loading="lazy" src="images/age-f-35-44.webp" alt="35-44" style="width:100%;height:100%;object-fit:cover;object-position:top center">
+        <img sizes="(max-width:480px) 45vw, 200px" loading="lazy" src="images/age-f-35-44.webp" alt="35-44" style="width:100%;height:100%;object-fit:cover;object-position:top center">
         <div class="portrait-overlay"></div>
         <div class="portrait-label"><span>35 – 44</span><div class="portrait-arrow">→</div></div>
       </div>
       <div class="portrait-card" onclick="selectAge('45-54')" role="button" tabindex="0">
-        <img loading="lazy" src="images/age-f-45-54.webp" alt="45-54" style="width:100%;height:100%;object-fit:cover;object-position:top center">
+        <img sizes="(max-width:480px) 45vw, 200px" loading="lazy" src="images/age-f-45-54.webp" alt="45-54" style="width:100%;height:100%;object-fit:cover;object-position:top center">
         <div class="portrait-overlay"></div>
         <div class="portrait-label"><span>45 – 54</span><div class="portrait-arrow">→</div></div>
       </div>
       <div class="portrait-card" onclick="selectAge('55+')" role="button" tabindex="0">
-        <img loading="lazy" src="images/age-f-55plus.webp" alt="55+" style="width:100%;height:100%;object-fit:cover;object-position:top center">
+        <img sizes="(max-width:480px) 45vw, 200px" loading="lazy" src="images/age-f-55plus.webp" alt="55+" style="width:100%;height:100%;object-fit:cover;object-position:top center">
         <div class="portrait-overlay"></div>
         <div class="portrait-label"><span>55 +</span><div class="portrait-arrow">→</div></div>
       </div>
@@ -914,6 +915,10 @@ src="https://www.facebook.com/tr?id=745685381942209&ev=PageView&noscript=1"/></n
       <div class="h1">Enter your email to receive your</div>
       <div class="h2">Personalized Spiritual Plan</div>
     </div>
+    <div class="name-field">
+      <span class="email-icon">👤</span>
+      <input type="text" id="name-input" placeholder="Your first name" autocomplete="given-name" style="flex:1;border:none;background:transparent;font-size:16px;outline:none;color:#111827">
+    </div>
     <div class="email-field">
       <span class="email-icon">✉</span>
       <input type="email" id="email-input" placeholder="Enter your email address" autocomplete="email">
@@ -934,7 +939,7 @@ src="https://www.facebook.com/tr?id=745685381942209&ev=PageView&noscript=1"/></n
 <div class="screen" id="s-offer" style="padding-bottom:0">
   <!-- Hero -->
   <div class="offer-hero">
-    <div class="offer-badge">✝ The Catholic Daily 2026</div>
+    <div class="offer-badge">&#x271D;&#xFE0E; The Catholic Daily 2026</div>
     <h1>Your Spiritual Plan is Ready</h1>
     <div class="profile-tag" id="offer-profile-tag">Spiritual Seeker: Growing Stage</div>
   </div>
@@ -1035,7 +1040,7 @@ src="https://www.facebook.com/tr?id=745685381942209&ev=PageView&noscript=1"/></n
       <div class="tauthor">— Margaret & Louise, Ohio</div>
     </div>
     <div class="offer-testi">
-      <img loading="lazy" src="images/social-man.webp" class="testi-photo" alt="Customer with The Catholic Daily 2026">
+      <img sizes="(max-width:480px) 45vw, 200px" loading="lazy" src="images/social-man.webp" class="testi-photo" alt="Customer with The Catholic Daily 2026">
       <div class="stars">★★★★★</div>
       <div class="ttext">"My daughter gave it to me and I was skeptical at first. But I haven't missed a single day since January. It's become the most important 5 minutes of my morning. I feel closer to God than I have in decades."</div>
       <div class="tauthor">— John P., Pennsylvania</div>
@@ -1068,9 +1073,7 @@ src="https://www.facebook.com/tr?id=745685381942209&ev=PageView&noscript=1"/></n
     </div>
 
     <div class="offer-cta-wrap">
-      <a href="https://pay.hotmart.com/J106401743H?checkoutMode=10" style="text-decoration:none" onclick="if(typeof fbq!=='undefined')fbq('track','AddToCart',{value:19,currency:'USD',content_name:'The Catholic Daily 2026'})">
-        <button class="offer-cta">Get My Catholic Daily + 3 Bonuses — $19 →</button>
-      </a>
+      <button class="offer-cta" onclick="goToCheckout()">Get My Catholic Daily + 3 Bonuses — $19 →</button>
       <div class="offer-cta-sub">
         🔒 Secure checkout<span>·</span>✝ Catholic content<span>·</span>📩 Instant access
       </div>
@@ -1143,6 +1146,7 @@ function nav(id, pct) {
   document.getElementById(id).classList.add('active');
   setProgress(pct);
   window.scrollTo(0, 0);
+  saveSession();
 }
 
 function goBack() {
@@ -1339,16 +1343,86 @@ function startLoading() {
   }, 100);
 }
 
+
+
+/* ── UTM CAPTURE ── */
+function captureUTMs() {
+  try {
+    const p = new URLSearchParams(window.location.search);
+    const keys = ['utm_source','utm_medium','utm_campaign','utm_term','utm_content','fbclid','sck'];
+    const parts = [];
+    keys.forEach(k => { const v = p.get(k); if (v) parts.push(k + '=' + encodeURIComponent(v)); });
+    if (parts.length) sessionStorage.setItem('quiz_utms', parts.join('&'));
+  } catch(e) {}
+}
+
+/* ── SESSION PERSISTENCE ── */
+function saveSession() {
+  try {
+    sessionStorage.setItem('cq_screen', S.currentId);
+    sessionStorage.setItem('cq_state', JSON.stringify(S));
+    sessionStorage.setItem('cq_pct', document.getElementById('progress-fill').style.width || '0%');
+  } catch(e) {}
+}
+function restoreSession() {
+  try {
+    const savedId = sessionStorage.getItem('cq_screen');
+    if (!savedId || savedId === 's-gender') return;
+    const savedS = sessionStorage.getItem('cq_state');
+    if (savedS) Object.assign(S, JSON.parse(savedS));
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    const target = document.getElementById(savedId);
+    if (target) { target.classList.add('active'); }
+    const pct = sessionStorage.getItem('cq_pct');
+    if (pct) document.getElementById('progress-fill').style.width = pct;
+    // Restore offer page personalization if on offer screen
+    if (savedId === 's-offer' && S.profile) {
+      document.getElementById('offer-profile-tag').textContent = S.profile.profile || '';
+      document.getElementById('offer-pitch').textContent = S.profile.pitchTxt || '';
+      startCountdown();
+    }
+    // Restore age grids if on age screen
+    if (savedId === 's-age' && S.gender) {
+      document.getElementById('age-grid-male').style.display   = S.gender === 'man'   ? 'grid' : 'none';
+      document.getElementById('age-grid-female').style.display = S.gender === 'woman' ? 'grid' : 'none';
+    }
+  } catch(e) {}
+}
+
+/* ── CHECKOUT ── */
+function goToCheckout() {
+  if (typeof fbq !== 'undefined') fbq('track','AddToCart',{value:19,currency:'USD',content_name:'The Catholic Daily 2026'});
+  let url = 'https://pay.hotmart.com/J106401743H?checkoutMode=10';
+  if (S.leadName)  url += '&name='  + encodeURIComponent(S.leadName);
+  if (S.leadEmail) url += '&email=' + encodeURIComponent(S.leadEmail);
+  // Append captured UTMs
+  try {
+    const utms = sessionStorage.getItem('quiz_utms');
+    if (utms) url += '&' + utms;
+  } catch(e) {}
+  window.open(url, '_blank');
+}
+
 /* ── EMAIL SUBMIT ── */
 function submitEmail() {
+  const name  = document.getElementById('name-input').value.trim();
   const email = document.getElementById('email-input').value.trim();
-  const field = document.getElementById('email-input').parentElement;
-  if (!email || !email.includes('@') || !email.includes('.')) {
-    field.style.borderColor = '#ef4444';
-    document.getElementById('email-input').focus();
-    setTimeout(() => { field.style.borderColor = ''; }, 2000);
+  const nameField  = document.getElementById('name-input').parentElement;
+  const emailField = document.getElementById('email-input').parentElement;
+  if (!name) {
+    nameField.style.borderColor = '#ef4444';
+    document.getElementById('name-input').focus();
+    setTimeout(() => { nameField.style.borderColor = ''; }, 2000);
     return;
   }
+  if (!email || !email.includes('@') || !email.includes('.')) {
+    emailField.style.borderColor = '#ef4444';
+    document.getElementById('email-input').focus();
+    setTimeout(() => { emailField.style.borderColor = ''; }, 2000);
+    return;
+  }
+  S.leadName  = name;
+  S.leadEmail = email;
 
   // Populate offer page with personalized content
   if (S.profile) {
@@ -1387,6 +1461,8 @@ function startCountdown() {
 }
 
 // Keyboard accessibility for role=button divs
+document.addEventListener('DOMContentLoaded', function() { captureUTMs(); restoreSession(); });
+
 document.addEventListener('keydown', function(e) {
   if ((e.key === 'Enter' || e.key === ' ') && e.target.getAttribute('role') === 'button') {
     e.preventDefault();
@@ -1395,5 +1471,18 @@ document.addEventListener('keydown', function(e) {
 });
 
 </script>
+</main>
+
+<!-- Utmify -->
+<script src="https://cdn.utmify.com.br/scripts/utms/latest.js" data-utmify-prevent-subids="" async defer></script>
+
+<!-- Microsoft Clarity -->
+<script>
+(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+})(window,document,"clarity","script","ksoj7nifzg");
+</script>
+
 </body>
 </html>
