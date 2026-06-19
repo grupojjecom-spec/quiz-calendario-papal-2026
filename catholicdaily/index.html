@@ -4,6 +4,7 @@
 <base href="/catholicdaily/">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="description" content="Take this 2-minute quiz and discover your personalized Catholic spiritual plan for 2026. Daily prayer, saints, Scripture and papal teachings.">
 <title>The Catholic Daily 2026 — Discover Your Spiritual Profile</title>
 <style>
 /* ══════════════════════════════
@@ -303,6 +304,7 @@ html,body{min-height:100vh;font-family:-apple-system,BlinkMacSystemFont,'Segoe U
 .pb-total s{color:#6b7280;font-weight:400}
 </style>
 <!-- Facebook Pixel -->
+<link rel="preconnect" href="https://connect.facebook.net" crossorigin>
 <link rel="preload" href="https://connect.facebook.net/en_US/fbevents.js" as="script">
 <script>
 !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -313,7 +315,7 @@ t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}
 fbq('init','745685381942209');
 fbq('track','PageView');
 </script>
-<noscript><img height="1" width="1" style="display:none"
+<noscript><img loading="lazy" height="1" width="1" style="display:none"
 src="https://www.facebook.com/tr?id=745685381942209&ev=PageView&noscript=1"/></noscript>
 <!-- End Facebook Pixel -->
 </head>
@@ -334,13 +336,13 @@ src="https://www.facebook.com/tr?id=745685381942209&ev=PageView&noscript=1"/></n
       <p>2-minute quiz · Discover your personalized spiritual plan</p>
     </div>
     <div class="portrait-pair">
-      <div class="portrait-card" onclick="selectGender('man')">
-        <img src="images/man.webp" alt="Man" style="width:100%;height:100%;object-fit:cover;object-position:top center">
+      <div class="portrait-card" onclick="selectGender('man')" role="button" tabindex="0">
+        <img src="images/man.webp" alt="Man" fetchpriority="high" width="400" height="533" style="width:100%;height:100%;object-fit:cover;object-position:top center">
         <div class="portrait-overlay"></div>
         <div class="portrait-label"><span>Man</span><div class="portrait-arrow">→</div></div>
       </div>
-      <div class="portrait-card" onclick="selectGender('woman')">
-        <img src="images/woman.webp" alt="Woman" style="width:100%;height:100%;object-fit:cover;object-position:top center">
+      <div class="portrait-card" onclick="selectGender('woman')" role="button" tabindex="0">
+        <img src="images/woman.webp" alt="Woman" fetchpriority="high" width="400" height="533" style="width:100%;height:100%;object-fit:cover;object-position:top center">
         <div class="portrait-overlay"></div>
         <div class="portrait-label"><span>Woman</span><div class="portrait-arrow">→</div></div>
       </div>
@@ -354,8 +356,8 @@ src="https://www.facebook.com/tr?id=745685381942209&ev=PageView&noscript=1"/></n
 <div class="screen" id="s-age">
   <div class="inner">
     <div class="logo-bar">
-      <button class="back-btn" onclick="goBack()">←</button>
-      <img src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img">
+      <button class="back-btn" onclick="goBack()" aria-label="Go back">←</button>
+      <img loading="lazy" src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img">
     </div>
     <div class="intro-section">
       <div class="badge">About you</div>
@@ -364,23 +366,23 @@ src="https://www.facebook.com/tr?id=745685381942209&ev=PageView&noscript=1"/></n
     </div>
     <!-- AGE GRID: MALE — shown when gender = male -->
     <div class="age-grid" id="age-grid-male" style="display:none">
-      <div class="portrait-card" onclick="selectAge('18-34')">
-        <img src="images/age-m-18-34.webp" alt="18-34" style="width:100%;height:100%;object-fit:cover;object-position:top center">
+      <div class="portrait-card" onclick="selectAge('18-34')" role="button" tabindex="0">
+        <img loading="lazy" src="images/age-m-18-34.webp" alt="18-34" style="width:100%;height:100%;object-fit:cover;object-position:top center">
         <div class="portrait-overlay"></div>
         <div class="portrait-label"><span>18 – 34</span><div class="portrait-arrow">→</div></div>
       </div>
-      <div class="portrait-card" onclick="selectAge('35-44')">
-        <img src="images/age-m-35-44.webp" alt="35-44" style="width:100%;height:100%;object-fit:cover;object-position:top center">
+      <div class="portrait-card" onclick="selectAge('35-44')" role="button" tabindex="0">
+        <img loading="lazy" src="images/age-m-35-44.webp" alt="35-44" style="width:100%;height:100%;object-fit:cover;object-position:top center">
         <div class="portrait-overlay"></div>
         <div class="portrait-label"><span>35 – 44</span><div class="portrait-arrow">→</div></div>
       </div>
-      <div class="portrait-card" onclick="selectAge('45-54')">
-        <img src="images/age-m-45-54.webp" alt="45-54" style="width:100%;height:100%;object-fit:cover;object-position:top center">
+      <div class="portrait-card" onclick="selectAge('45-54')" role="button" tabindex="0">
+        <img loading="lazy" src="images/age-m-45-54.webp" alt="45-54" style="width:100%;height:100%;object-fit:cover;object-position:top center">
         <div class="portrait-overlay"></div>
         <div class="portrait-label"><span>45 – 54</span><div class="portrait-arrow">→</div></div>
       </div>
-      <div class="portrait-card" onclick="selectAge('55+')">
-        <img src="images/age-m-55plus.webp" alt="55+" style="width:100%;height:100%;object-fit:cover;object-position:top center">
+      <div class="portrait-card" onclick="selectAge('55+')" role="button" tabindex="0">
+        <img loading="lazy" src="images/age-m-55plus.webp" alt="55+" style="width:100%;height:100%;object-fit:cover;object-position:top center">
         <div class="portrait-overlay"></div>
         <div class="portrait-label"><span>55 +</span><div class="portrait-arrow">→</div></div>
       </div>
@@ -388,23 +390,23 @@ src="https://www.facebook.com/tr?id=745685381942209&ev=PageView&noscript=1"/></n
 
     <!-- AGE GRID: FEMALE — shown when gender = female -->
     <div class="age-grid" id="age-grid-female" style="display:none">
-      <div class="portrait-card" onclick="selectAge('18-34')">
-        <img src="images/age-f-18-34.webp" alt="18-34" style="width:100%;height:100%;object-fit:cover;object-position:top center">
+      <div class="portrait-card" onclick="selectAge('18-34')" role="button" tabindex="0">
+        <img loading="lazy" src="images/age-f-18-34.webp" alt="18-34" style="width:100%;height:100%;object-fit:cover;object-position:top center">
         <div class="portrait-overlay"></div>
         <div class="portrait-label"><span>18 – 34</span><div class="portrait-arrow">→</div></div>
       </div>
-      <div class="portrait-card" onclick="selectAge('35-44')">
-        <img src="images/age-f-35-44.webp" alt="35-44" style="width:100%;height:100%;object-fit:cover;object-position:top center">
+      <div class="portrait-card" onclick="selectAge('35-44')" role="button" tabindex="0">
+        <img loading="lazy" src="images/age-f-35-44.webp" alt="35-44" style="width:100%;height:100%;object-fit:cover;object-position:top center">
         <div class="portrait-overlay"></div>
         <div class="portrait-label"><span>35 – 44</span><div class="portrait-arrow">→</div></div>
       </div>
-      <div class="portrait-card" onclick="selectAge('45-54')">
-        <img src="images/age-f-45-54.webp" alt="45-54" style="width:100%;height:100%;object-fit:cover;object-position:top center">
+      <div class="portrait-card" onclick="selectAge('45-54')" role="button" tabindex="0">
+        <img loading="lazy" src="images/age-f-45-54.webp" alt="45-54" style="width:100%;height:100%;object-fit:cover;object-position:top center">
         <div class="portrait-overlay"></div>
         <div class="portrait-label"><span>45 – 54</span><div class="portrait-arrow">→</div></div>
       </div>
-      <div class="portrait-card" onclick="selectAge('55+')">
-        <img src="images/age-f-55plus.webp" alt="55+" style="width:100%;height:100%;object-fit:cover;object-position:top center">
+      <div class="portrait-card" onclick="selectAge('55+')" role="button" tabindex="0">
+        <img loading="lazy" src="images/age-f-55plus.webp" alt="55+" style="width:100%;height:100%;object-fit:cover;object-position:top center">
         <div class="portrait-overlay"></div>
         <div class="portrait-label"><span>55 +</span><div class="portrait-arrow">→</div></div>
       </div>
@@ -418,8 +420,8 @@ src="https://www.facebook.com/tr?id=745685381942209&ev=PageView&noscript=1"/></n
 <div class="screen" id="s-affirm">
   <div class="inner" style="display:flex;flex-direction:column;min-height:calc(100vh - 90px)">
     <div class="logo-bar">
-      <button class="back-btn" onclick="goBack()">←</button>
-      <img src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img">
+      <button class="back-btn" onclick="goBack()" aria-label="Go back">←</button>
+      <img loading="lazy" src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img">
     </div>
     <div class="affirm-body">
       <div class="affirm-icon">
@@ -441,65 +443,65 @@ src="https://www.facebook.com/tr?id=745685381942209&ev=PageView&noscript=1"/></n
 ══════════════════════════════════════════════════════ -->
 <div class="screen" id="q-0">
   <div class="inner">
-    <div class="logo-bar"><button class="back-btn" onclick="goBack()">←</button><img src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
+    <div class="logo-bar"><button class="back-btn" onclick="goBack()" aria-label="Go back">←</button><img loading="lazy" src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
     <div class="q-top">
       <div class="q-counter">Question 1 of 18</div>
       <div class="q-title">How long have you been practicing the Catholic faith?</div>
     </div>
     <div class="options">
-      <div class="opt" onclick="autoNext(this,0,0,'q-1',14)"><div class="dot"></div>Since childhood, faith has always been part of my life</div>
-      <div class="opt" onclick="autoNext(this,0,1,'q-1',14)"><div class="dot"></div>I returned to faith as an adult</div>
-      <div class="opt" onclick="autoNext(this,0,2,'q-1',14)"><div class="dot"></div>I'm relatively new to the Catholic faith</div>
-      <div class="opt" onclick="autoNext(this,0,3,'q-1',14)"><div class="dot"></div>I'm still exploring what it means to me</div>
+      <div class="opt" onclick="autoNext(this,0,0,'q-1',14)" role="button" tabindex="0"><div class="dot"></div>Since childhood, faith has always been part of my life</div>
+      <div class="opt" onclick="autoNext(this,0,1,'q-1',14)" role="button" tabindex="0"><div class="dot"></div>I returned to faith as an adult</div>
+      <div class="opt" onclick="autoNext(this,0,2,'q-1',14)" role="button" tabindex="0"><div class="dot"></div>I'm relatively new to the Catholic faith</div>
+      <div class="opt" onclick="autoNext(this,0,3,'q-1',14)" role="button" tabindex="0"><div class="dot"></div>I'm still exploring what it means to me</div>
     </div>
   </div>
 </div>
 
 <div class="screen" id="q-1">
   <div class="inner">
-    <div class="logo-bar"><button class="back-btn" onclick="goBack()">←</button><img src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
+    <div class="logo-bar"><button class="back-btn" onclick="goBack()" aria-label="Go back">←</button><img loading="lazy" src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
     <div class="q-top">
       <div class="q-counter">Question 2 of 18</div>
       <div class="q-title">How would you describe your spiritual life right now?</div>
       <div class="q-sub">Be honest with yourself.</div>
     </div>
     <div class="options">
-      <div class="opt" onclick="autoNext(this,1,0,'q-2',18)"><div class="dot"></div>I feel close to God and engaged in my faith</div>
-      <div class="opt" onclick="autoNext(this,1,1,'q-2',18)"><div class="dot"></div>I'm on a growth path but still with doubts and inconsistency</div>
-      <div class="opt" onclick="autoNext(this,1,2,'q-2',18)"><div class="dot"></div>I feel distant from God but I miss that connection</div>
-      <div class="opt" onclick="autoNext(this,1,3,'q-2',18)"><div class="dot"></div>I'm searching and looking to reconnect or start fresh</div>
+      <div class="opt" onclick="autoNext(this,1,0,'q-2',18)" role="button" tabindex="0"><div class="dot"></div>I feel close to God and engaged in my faith</div>
+      <div class="opt" onclick="autoNext(this,1,1,'q-2',18)" role="button" tabindex="0"><div class="dot"></div>I'm on a growth path but still with doubts and inconsistency</div>
+      <div class="opt" onclick="autoNext(this,1,2,'q-2',18)" role="button" tabindex="0"><div class="dot"></div>I feel distant from God but I miss that connection</div>
+      <div class="opt" onclick="autoNext(this,1,3,'q-2',18)" role="button" tabindex="0"><div class="dot"></div>I'm searching and looking to reconnect or start fresh</div>
     </div>
   </div>
 </div>
 
 <div class="screen" id="q-2">
   <div class="inner">
-    <div class="logo-bar"><button class="back-btn" onclick="goBack()">←</button><img src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
+    <div class="logo-bar"><button class="back-btn" onclick="goBack()" aria-label="Go back">←</button><img loading="lazy" src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
     <div class="q-top">
       <div class="q-counter">Question 3 of 18</div>
       <div class="q-title">How often do you attend Mass?</div>
     </div>
     <div class="options">
-      <div class="opt" onclick="autoNext(this,2,0,'q-3',22)"><div class="dot"></div>Every week, without fail</div>
-      <div class="opt" onclick="autoNext(this,2,1,'q-3',22)"><div class="dot"></div>A few times a month</div>
-      <div class="opt" onclick="autoNext(this,2,2,'q-3',22)"><div class="dot"></div>Mostly on major holidays (Christmas, Easter)</div>
-      <div class="opt" onclick="autoNext(this,2,3,'q-3',22)"><div class="dot"></div>Rarely or not currently</div>
+      <div class="opt" onclick="autoNext(this,2,0,'q-3',22)" role="button" tabindex="0"><div class="dot"></div>Every week, without fail</div>
+      <div class="opt" onclick="autoNext(this,2,1,'q-3',22)" role="button" tabindex="0"><div class="dot"></div>A few times a month</div>
+      <div class="opt" onclick="autoNext(this,2,2,'q-3',22)" role="button" tabindex="0"><div class="dot"></div>Mostly on major holidays (Christmas, Easter)</div>
+      <div class="opt" onclick="autoNext(this,2,3,'q-3',22)" role="button" tabindex="0"><div class="dot"></div>Rarely or not currently</div>
     </div>
   </div>
 </div>
 
 <div class="screen" id="q-3">
   <div class="inner">
-    <div class="logo-bar"><button class="back-btn" onclick="goBack()">←</button><img src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
+    <div class="logo-bar"><button class="back-btn" onclick="goBack()" aria-label="Go back">←</button><img loading="lazy" src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
     <div class="q-top">
       <div class="q-counter">Question 4 of 18</div>
       <div class="q-title">How important is your faith in your daily decisions?</div>
     </div>
     <div class="options">
-      <div class="opt" onclick="autoNext(this,3,0,'s-break1',26)"><div class="dot"></div>Very important. It guides everything I do</div>
-      <div class="opt" onclick="autoNext(this,3,1,'s-break1',26)"><div class="dot"></div>Somewhat important. I think about it often</div>
-      <div class="opt" onclick="autoNext(this,3,2,'s-break1',26)"><div class="dot"></div>I'm working to make it more central to my life</div>
-      <div class="opt" onclick="autoNext(this,3,3,'s-break1',26)"><div class="dot"></div>I'm still figuring out what faith means for my daily life</div>
+      <div class="opt" onclick="autoNext(this,3,0,'s-break1',26)" role="button" tabindex="0"><div class="dot"></div>Very important. It guides everything I do</div>
+      <div class="opt" onclick="autoNext(this,3,1,'s-break1',26)" role="button" tabindex="0"><div class="dot"></div>Somewhat important. I think about it often</div>
+      <div class="opt" onclick="autoNext(this,3,2,'s-break1',26)" role="button" tabindex="0"><div class="dot"></div>I'm working to make it more central to my life</div>
+      <div class="opt" onclick="autoNext(this,3,3,'s-break1',26)" role="button" tabindex="0"><div class="dot"></div>I'm still figuring out what faith means for my daily life</div>
     </div>
   </div>
 </div>
@@ -539,82 +541,82 @@ src="https://www.facebook.com/tr?id=745685381942209&ev=PageView&noscript=1"/></n
 ══════════════════════════════════════════════════════ -->
 <div class="screen" id="q-4">
   <div class="inner">
-    <div class="logo-bar"><button class="back-btn" onclick="goBack()">←</button><img src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
+    <div class="logo-bar"><button class="back-btn" onclick="goBack()" aria-label="Go back">←</button><img loading="lazy" src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
     <div class="q-top">
       <div class="q-counter">Question 5 of 18</div>
       <div class="q-title">How often do you pray the Rosary?</div>
     </div>
     <div class="options">
-      <div class="opt" onclick="autoNext(this,4,0,'q-5',32)"><div class="dot"></div>Every day. It's a non-negotiable part of my life</div>
-      <div class="opt" onclick="autoNext(this,4,1,'q-5',32)"><div class="dot"></div>A few times a week</div>
-      <div class="opt" onclick="autoNext(this,4,2,'q-5',32)"><div class="dot"></div>Occasionally, when I remember or feel moved</div>
-      <div class="opt" onclick="autoNext(this,4,3,'q-5',32)"><div class="dot"></div>Rarely or never. I'd like to start</div>
+      <div class="opt" onclick="autoNext(this,4,0,'q-5',32)" role="button" tabindex="0"><div class="dot"></div>Every day. It's a non-negotiable part of my life</div>
+      <div class="opt" onclick="autoNext(this,4,1,'q-5',32)" role="button" tabindex="0"><div class="dot"></div>A few times a week</div>
+      <div class="opt" onclick="autoNext(this,4,2,'q-5',32)" role="button" tabindex="0"><div class="dot"></div>Occasionally, when I remember or feel moved</div>
+      <div class="opt" onclick="autoNext(this,4,3,'q-5',32)" role="button" tabindex="0"><div class="dot"></div>Rarely or never. I'd like to start</div>
     </div>
   </div>
 </div>
 
 <div class="screen" id="q-5">
   <div class="inner">
-    <div class="logo-bar"><button class="back-btn" onclick="goBack()">←</button><img src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
+    <div class="logo-bar"><button class="back-btn" onclick="goBack()" aria-label="Go back">←</button><img loading="lazy" src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
     <div class="q-top">
       <div class="q-counter">Question 6 of 18</div>
       <div class="q-title">Do you follow the liturgical year?</div>
       <div class="q-sub">Advent, Lent, feasts of the saints, holy days...</div>
     </div>
     <div class="options">
-      <div class="opt" onclick="autoNext(this,5,0,'q-6',35)"><div class="dot"></div>Yes, I observe the seasons and feasts as part of my life</div>
-      <div class="opt" onclick="autoNext(this,5,1,'q-6',35)"><div class="dot"></div>I'm aware of it but don't follow it closely</div>
-      <div class="opt" onclick="autoNext(this,5,2,'q-6',35)"><div class="dot"></div>I know it exists but haven't engaged deeply</div>
-      <div class="opt" onclick="autoNext(this,5,3,'q-6',35)"><div class="dot"></div>I'm not very familiar with the liturgical calendar</div>
+      <div class="opt" onclick="autoNext(this,5,0,'q-6',35)" role="button" tabindex="0"><div class="dot"></div>Yes, I observe the seasons and feasts as part of my life</div>
+      <div class="opt" onclick="autoNext(this,5,1,'q-6',35)" role="button" tabindex="0"><div class="dot"></div>I'm aware of it but don't follow it closely</div>
+      <div class="opt" onclick="autoNext(this,5,2,'q-6',35)" role="button" tabindex="0"><div class="dot"></div>I know it exists but haven't engaged deeply</div>
+      <div class="opt" onclick="autoNext(this,5,3,'q-6',35)" role="button" tabindex="0"><div class="dot"></div>I'm not very familiar with the liturgical calendar</div>
     </div>
   </div>
 </div>
 
 <div class="screen" id="q-6">
   <div class="inner">
-    <div class="logo-bar"><button class="back-btn" onclick="goBack()">←</button><img src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
+    <div class="logo-bar"><button class="back-btn" onclick="goBack()" aria-label="Go back">←</button><img loading="lazy" src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
     <div class="q-top">
       <div class="q-counter">Question 7 of 18</div>
       <div class="q-title">How often do you read Scripture or spiritual reflections?</div>
     </div>
     <div class="options">
-      <div class="opt" onclick="autoNext(this,6,0,'q-7',38)"><div class="dot"></div>Every day. It nourishes my faith</div>
-      <div class="opt" onclick="autoNext(this,6,1,'q-7',38)"><div class="dot"></div>A few times a week</div>
-      <div class="opt" onclick="autoNext(this,6,2,'q-7',38)"><div class="dot"></div>Occasionally, when I feel the need</div>
-      <div class="opt" onclick="autoNext(this,6,3,'q-7',38)"><div class="dot"></div>Rarely. I want to make this a habit</div>
+      <div class="opt" onclick="autoNext(this,6,0,'q-7',38)" role="button" tabindex="0"><div class="dot"></div>Every day. It nourishes my faith</div>
+      <div class="opt" onclick="autoNext(this,6,1,'q-7',38)" role="button" tabindex="0"><div class="dot"></div>A few times a week</div>
+      <div class="opt" onclick="autoNext(this,6,2,'q-7',38)" role="button" tabindex="0"><div class="dot"></div>Occasionally, when I feel the need</div>
+      <div class="opt" onclick="autoNext(this,6,3,'q-7',38)" role="button" tabindex="0"><div class="dot"></div>Rarely. I want to make this a habit</div>
     </div>
   </div>
 </div>
 
 <div class="screen" id="q-7">
   <div class="inner">
-    <div class="logo-bar"><button class="back-btn" onclick="goBack()">←</button><img src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
+    <div class="logo-bar"><button class="back-btn" onclick="goBack()" aria-label="Go back">←</button><img loading="lazy" src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
     <div class="q-top">
       <div class="q-counter">Question 8 of 18</div>
       <div class="q-title">Do you currently use any Catholic devotional tools?</div>
       <div class="q-sub">Prayer calendar, novena guide, missal, rosary guide...</div>
     </div>
     <div class="options">
-      <div class="opt" onclick="autoNext(this,7,0,'q-8',41)"><div class="dot"></div>Yes, I use them regularly and they help me</div>
-      <div class="opt" onclick="autoNext(this,7,1,'q-8',41)"><div class="dot"></div>I use some, but not consistently</div>
-      <div class="opt" onclick="autoNext(this,7,2,'q-8',41)"><div class="dot"></div>I have them but rarely use them</div>
-      <div class="opt" onclick="autoNext(this,7,3,'q-8',41)"><div class="dot"></div>No, but I'd love to start with the right one</div>
+      <div class="opt" onclick="autoNext(this,7,0,'q-8',41)" role="button" tabindex="0"><div class="dot"></div>Yes, I use them regularly and they help me</div>
+      <div class="opt" onclick="autoNext(this,7,1,'q-8',41)" role="button" tabindex="0"><div class="dot"></div>I use some, but not consistently</div>
+      <div class="opt" onclick="autoNext(this,7,2,'q-8',41)" role="button" tabindex="0"><div class="dot"></div>I have them but rarely use them</div>
+      <div class="opt" onclick="autoNext(this,7,3,'q-8',41)" role="button" tabindex="0"><div class="dot"></div>No, but I'd love to start with the right one</div>
     </div>
   </div>
 </div>
 
 <div class="screen" id="q-8">
   <div class="inner">
-    <div class="logo-bar"><button class="back-btn" onclick="goBack()">←</button><img src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
+    <div class="logo-bar"><button class="back-btn" onclick="goBack()" aria-label="Go back">←</button><img loading="lazy" src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
     <div class="q-top">
       <div class="q-counter">Question 9 of 18</div>
       <div class="q-title">How connected do you feel to the Pope's teachings and messages?</div>
     </div>
     <div class="options">
-      <div class="opt" onclick="autoNext(this,8,0,'s-break2',44)"><div class="dot"></div>Very connected. I follow them closely and they inspire me</div>
-      <div class="opt" onclick="autoNext(this,8,1,'s-break2',44)"><div class="dot"></div>Somewhat connected. I engage when something stands out</div>
-      <div class="opt" onclick="autoNext(this,8,2,'s-break2',44)"><div class="dot"></div>I know they exist but rarely read or listen to them</div>
-      <div class="opt" onclick="autoNext(this,8,3,'s-break2',44)"><div class="dot"></div>I'd love to understand them better but don't know where to start</div>
+      <div class="opt" onclick="autoNext(this,8,0,'s-break2',44)" role="button" tabindex="0"><div class="dot"></div>Very connected. I follow them closely and they inspire me</div>
+      <div class="opt" onclick="autoNext(this,8,1,'s-break2',44)" role="button" tabindex="0"><div class="dot"></div>Somewhat connected. I engage when something stands out</div>
+      <div class="opt" onclick="autoNext(this,8,2,'s-break2',44)" role="button" tabindex="0"><div class="dot"></div>I know they exist but rarely read or listen to them</div>
+      <div class="opt" onclick="autoNext(this,8,3,'s-break2',44)" role="button" tabindex="0"><div class="dot"></div>I'd love to understand them better but don't know where to start</div>
     </div>
   </div>
 </div>
@@ -653,67 +655,67 @@ src="https://www.facebook.com/tr?id=745685381942209&ev=PageView&noscript=1"/></n
 ══════════════════════════════════════════════════════ -->
 <div class="screen" id="q-9">
   <div class="inner">
-    <div class="logo-bar"><button class="back-btn" onclick="goBack()">←</button><img src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
+    <div class="logo-bar"><button class="back-btn" onclick="goBack()" aria-label="Go back">←</button><img loading="lazy" src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
     <div class="q-top">
       <div class="q-counter">Question 10 of 18</div>
       <div class="q-title">What most prevents you from deepening your faith?</div>
     </div>
     <div class="options">
-      <div class="opt" onclick="autoNext(this,9,0,'q-10',50)"><div class="dot"></div>Lack of time</div>
-      <div class="opt" onclick="autoNext(this,9,1,'q-10',50)"><div class="dot"></div>Not knowing where to start or what to do</div>
-      <div class="opt" onclick="autoNext(this,9,2,'q-10',50)"><div class="dot"></div>Spiritual dryness. I feel distant from God</div>
-      <div class="opt" onclick="autoNext(this,9,3,'q-10',50)"><div class="dot"></div>Inconsistency. I start, then stop</div>
-      <div class="opt" onclick="autoNext(this,9,4,'q-10',50)"><div class="dot"></div>Life stress and distractions</div>
-      <div class="opt" onclick="autoNext(this,9,5,'q-10',50)"><div class="dot"></div>I'm not sure</div>
+      <div class="opt" onclick="autoNext(this,9,0,'q-10',50)" role="button" tabindex="0"><div class="dot"></div>Lack of time</div>
+      <div class="opt" onclick="autoNext(this,9,1,'q-10',50)" role="button" tabindex="0"><div class="dot"></div>Not knowing where to start or what to do</div>
+      <div class="opt" onclick="autoNext(this,9,2,'q-10',50)" role="button" tabindex="0"><div class="dot"></div>Spiritual dryness. I feel distant from God</div>
+      <div class="opt" onclick="autoNext(this,9,3,'q-10',50)" role="button" tabindex="0"><div class="dot"></div>Inconsistency. I start, then stop</div>
+      <div class="opt" onclick="autoNext(this,9,4,'q-10',50)" role="button" tabindex="0"><div class="dot"></div>Life stress and distractions</div>
+      <div class="opt" onclick="autoNext(this,9,5,'q-10',50)" role="button" tabindex="0"><div class="dot"></div>I'm not sure</div>
     </div>
   </div>
 </div>
 
 <div class="screen" id="q-10">
   <div class="inner">
-    <div class="logo-bar"><button class="back-btn" onclick="goBack()">←</button><img src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
+    <div class="logo-bar"><button class="back-btn" onclick="goBack()" aria-label="Go back">←</button><img loading="lazy" src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
     <div class="q-top">
       <div class="q-counter">Question 11 of 18</div>
       <div class="q-title">When faith comes up in conversation, what do you do?</div>
     </div>
     <div class="options">
-      <div class="opt" onclick="autoNext(this,10,0,'q-11',54)"><div class="dot"></div>Faith comes naturally to me in conversation</div>
-      <div class="opt" onclick="autoNext(this,10,1,'q-11',54)"><div class="dot"></div>I listen but feel I don't know enough to share deeply</div>
-      <div class="opt" onclick="autoNext(this,10,2,'q-11',54)"><div class="dot"></div>I try to share but feel I'm missing depth or knowledge</div>
-      <div class="opt" onclick="autoNext(this,10,3,'q-11',54)"><div class="dot"></div>I stay quiet. It feels very personal to me</div>
+      <div class="opt" onclick="autoNext(this,10,0,'q-11',54)" role="button" tabindex="0"><div class="dot"></div>Faith comes naturally to me in conversation</div>
+      <div class="opt" onclick="autoNext(this,10,1,'q-11',54)" role="button" tabindex="0"><div class="dot"></div>I listen but feel I don't know enough to share deeply</div>
+      <div class="opt" onclick="autoNext(this,10,2,'q-11',54)" role="button" tabindex="0"><div class="dot"></div>I try to share but feel I'm missing depth or knowledge</div>
+      <div class="opt" onclick="autoNext(this,10,3,'q-11',54)" role="button" tabindex="0"><div class="dot"></div>I stay quiet. It feels very personal to me</div>
     </div>
   </div>
 </div>
 
 <div class="screen" id="q-11">
   <div class="inner">
-    <div class="logo-bar"><button class="back-btn" onclick="goBack()">←</button><img src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
+    <div class="logo-bar"><button class="back-btn" onclick="goBack()" aria-label="Go back">←</button><img loading="lazy" src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
     <div class="q-top">
       <div class="q-counter">Question 12 of 18</div>
       <div class="q-title">What spiritual area needs the most attention in your life right now?</div>
     </div>
     <div class="options">
-      <div class="opt" onclick="autoNext(this,11,0,'q-12',58)"><div class="dot"></div>My prayer life. I need more consistency</div>
-      <div class="opt" onclick="autoNext(this,11,1,'q-12',58)"><div class="dot"></div>My knowledge of the faith: Scripture, Church teaching, the Pope</div>
-      <div class="opt" onclick="autoNext(this,11,2,'q-12',58)"><div class="dot"></div>My devotion to Our Lady and the saints</div>
-      <div class="opt" onclick="autoNext(this,11,3,'q-12',58)"><div class="dot"></div>Living my faith in practical, everyday ways</div>
-      <div class="opt" onclick="autoNext(this,11,4,'q-12',58)"><div class="dot"></div>My sense of peace and trust in God's plan for me</div>
+      <div class="opt" onclick="autoNext(this,11,0,'q-12',58)" role="button" tabindex="0"><div class="dot"></div>My prayer life. I need more consistency</div>
+      <div class="opt" onclick="autoNext(this,11,1,'q-12',58)" role="button" tabindex="0"><div class="dot"></div>My knowledge of the faith: Scripture, Church teaching, the Pope</div>
+      <div class="opt" onclick="autoNext(this,11,2,'q-12',58)" role="button" tabindex="0"><div class="dot"></div>My devotion to Our Lady and the saints</div>
+      <div class="opt" onclick="autoNext(this,11,3,'q-12',58)" role="button" tabindex="0"><div class="dot"></div>Living my faith in practical, everyday ways</div>
+      <div class="opt" onclick="autoNext(this,11,4,'q-12',58)" role="button" tabindex="0"><div class="dot"></div>My sense of peace and trust in God's plan for me</div>
     </div>
   </div>
 </div>
 
 <div class="screen" id="q-12">
   <div class="inner">
-    <div class="logo-bar"><button class="back-btn" onclick="goBack()">←</button><img src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
+    <div class="logo-bar"><button class="back-btn" onclick="goBack()" aria-label="Go back">←</button><img loading="lazy" src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
     <div class="q-top">
       <div class="q-counter">Question 13 of 18</div>
       <div class="q-title">Is there someone you want to be a spiritual example for?</div>
     </div>
     <div class="options">
-      <div class="opt" onclick="autoNext(this,12,0,'q-13',62)"><div class="dot"></div>Yes, for my children</div>
-      <div class="opt" onclick="autoNext(this,12,1,'q-13',62)"><div class="dot"></div>Yes, for my spouse or family</div>
-      <div class="opt" onclick="autoNext(this,12,2,'q-13',62)"><div class="dot"></div>Yes, for my friends, neighbors or community</div>
-      <div class="opt" onclick="autoNext(this,12,3,'q-13',62)"><div class="dot"></div>Not particularly. This journey is for me</div>
+      <div class="opt" onclick="autoNext(this,12,0,'q-13',62)" role="button" tabindex="0"><div class="dot"></div>Yes, for my children</div>
+      <div class="opt" onclick="autoNext(this,12,1,'q-13',62)" role="button" tabindex="0"><div class="dot"></div>Yes, for my spouse or family</div>
+      <div class="opt" onclick="autoNext(this,12,2,'q-13',62)" role="button" tabindex="0"><div class="dot"></div>Yes, for my friends, neighbors or community</div>
+      <div class="opt" onclick="autoNext(this,12,3,'q-13',62)" role="button" tabindex="0"><div class="dot"></div>Not particularly. This journey is for me</div>
     </div>
   </div>
 </div>
@@ -723,32 +725,32 @@ src="https://www.facebook.com/tr?id=745685381942209&ev=PageView&noscript=1"/></n
 ══════════════════════════════════════════════════════ -->
 <div class="screen" id="q-13">
   <div class="inner">
-    <div class="logo-bar"><button class="back-btn" onclick="goBack()">←</button><img src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
+    <div class="logo-bar"><button class="back-btn" onclick="goBack()" aria-label="Go back">←</button><img loading="lazy" src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
     <div class="q-top">
       <div class="q-counter">Question 14 of 18</div>
       <div class="q-title">How much do you want to grow in your faith this year?</div>
     </div>
     <div class="options">
-      <div class="opt" onclick="autoNext(this,13,0,'q-14',66)"><div class="dot"></div>Curious. I'd like to learn a little more</div>
-      <div class="opt" onclick="autoNext(this,13,1,'q-14',66)"><div class="dot"></div>Motivated. I want a regular, consistent spiritual practice</div>
-      <div class="opt" onclick="autoNext(this,13,2,'q-14',66)"><div class="dot"></div>Committed. I want it to truly transform my daily life</div>
-      <div class="opt" onclick="autoNext(this,13,3,'q-14',66)"><div class="dot"></div>Deep hunger. I want to live my faith fully, every single day</div>
+      <div class="opt" onclick="autoNext(this,13,0,'q-14',66)" role="button" tabindex="0"><div class="dot"></div>Curious. I'd like to learn a little more</div>
+      <div class="opt" onclick="autoNext(this,13,1,'q-14',66)" role="button" tabindex="0"><div class="dot"></div>Motivated. I want a regular, consistent spiritual practice</div>
+      <div class="opt" onclick="autoNext(this,13,2,'q-14',66)" role="button" tabindex="0"><div class="dot"></div>Committed. I want it to truly transform my daily life</div>
+      <div class="opt" onclick="autoNext(this,13,3,'q-14',66)" role="button" tabindex="0"><div class="dot"></div>Deep hunger. I want to live my faith fully, every single day</div>
     </div>
   </div>
 </div>
 
 <div class="screen" id="q-14">
   <div class="inner">
-    <div class="logo-bar"><button class="back-btn" onclick="goBack()">←</button><img src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
+    <div class="logo-bar"><button class="back-btn" onclick="goBack()" aria-label="Go back">←</button><img loading="lazy" src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
     <div class="q-top">
       <div class="q-counter">Question 15 of 18</div>
       <div class="q-title">What do you want prayer to become in your life?</div>
     </div>
     <div class="options">
-      <div class="opt" onclick="autoNext(this,14,0,'q-15',70)"><div class="dot"></div>A brief moment of connection each morning</div>
-      <div class="opt" onclick="autoNext(this,14,1,'q-15',70)"><div class="dot"></div>A consistent daily habit that grounds and centers me</div>
-      <div class="opt" onclick="autoNext(this,14,2,'q-15',70)"><div class="dot"></div>A deep, ongoing conversation with God throughout my day</div>
-      <div class="opt" onclick="autoNext(this,14,3,'q-15',70)"><div class="dot"></div>A way to intercede and carry others to God</div>
+      <div class="opt" onclick="autoNext(this,14,0,'q-15',70)" role="button" tabindex="0"><div class="dot"></div>A brief moment of connection each morning</div>
+      <div class="opt" onclick="autoNext(this,14,1,'q-15',70)" role="button" tabindex="0"><div class="dot"></div>A consistent daily habit that grounds and centers me</div>
+      <div class="opt" onclick="autoNext(this,14,2,'q-15',70)" role="button" tabindex="0"><div class="dot"></div>A deep, ongoing conversation with God throughout my day</div>
+      <div class="opt" onclick="autoNext(this,14,3,'q-15',70)" role="button" tabindex="0"><div class="dot"></div>A way to intercede and carry others to God</div>
     </div>
   </div>
 </div>
@@ -756,19 +758,19 @@ src="https://www.facebook.com/tr?id=745685381942209&ev=PageView&noscript=1"/></n
 <!-- Q16: MULTI-SELECT -->
 <div class="screen" id="q-15">
   <div class="inner">
-    <div class="logo-bar"><button class="back-btn" onclick="goBack()">←</button><img src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
+    <div class="logo-bar"><button class="back-btn" onclick="goBack()" aria-label="Go back">←</button><img loading="lazy" src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
     <div class="q-top">
       <div class="q-counter">Question 16 of 18</div>
       <div class="q-title">Which areas of your life do you most want God to transform?</div>
     </div>
     <p class="multi-note">Select up to 3, then tap Continue</p>
     <div class="options" id="opts-multi">
-      <div class="opt" onclick="toggleMulti(this)"><div class="chk"></div>My family relationships</div>
-      <div class="opt" onclick="toggleMulti(this)"><div class="chk"></div>My emotional health and inner peace</div>
-      <div class="opt" onclick="toggleMulti(this)"><div class="chk"></div>My work and sense of purpose</div>
-      <div class="opt" onclick="toggleMulti(this)"><div class="chk"></div>My consistency in prayer and spiritual practices</div>
-      <div class="opt" onclick="toggleMulti(this)"><div class="chk"></div>My understanding of the faith and Church teaching</div>
-      <div class="opt" onclick="toggleMulti(this)"><div class="chk"></div>My ability to forgive, trust, and let go</div>
+      <div class="opt" onclick="toggleMulti(this)" role="button" tabindex="0"><div class="chk"></div>My family relationships</div>
+      <div class="opt" onclick="toggleMulti(this)" role="button" tabindex="0"><div class="chk"></div>My emotional health and inner peace</div>
+      <div class="opt" onclick="toggleMulti(this)" role="button" tabindex="0"><div class="chk"></div>My work and sense of purpose</div>
+      <div class="opt" onclick="toggleMulti(this)" role="button" tabindex="0"><div class="chk"></div>My consistency in prayer and spiritual practices</div>
+      <div class="opt" onclick="toggleMulti(this)" role="button" tabindex="0"><div class="chk"></div>My understanding of the faith and Church teaching</div>
+      <div class="opt" onclick="toggleMulti(this)" role="button" tabindex="0"><div class="chk"></div>My ability to forgive, trust, and let go</div>
     </div>
   </div>
   <div class="fixed-bottom">
@@ -778,32 +780,32 @@ src="https://www.facebook.com/tr?id=745685381942209&ev=PageView&noscript=1"/></n
 
 <div class="screen" id="q-16">
   <div class="inner">
-    <div class="logo-bar"><button class="back-btn" onclick="goBack()">←</button><img src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
+    <div class="logo-bar"><button class="back-btn" onclick="goBack()" aria-label="Go back">←</button><img loading="lazy" src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
     <div class="q-top">
       <div class="q-counter">Question 17 of 18</div>
       <div class="q-title">What time of day are you most open to prayer?</div>
     </div>
     <div class="options">
-      <div class="opt" onclick="autoNext(this,16,0,'q-17',78)"><div class="dot"></div>Early morning, before the day starts</div>
-      <div class="opt" onclick="autoNext(this,16,1,'q-17',78)"><div class="dot"></div>During the day. I want moments of stillness</div>
-      <div class="opt" onclick="autoNext(this,16,2,'q-17',78)"><div class="dot"></div>Evening, when things quiet down</div>
-      <div class="opt" onclick="autoNext(this,16,3,'q-17',78)"><div class="dot"></div>Before sleep, when I reflect most naturally</div>
+      <div class="opt" onclick="autoNext(this,16,0,'q-17',78)" role="button" tabindex="0"><div class="dot"></div>Early morning, before the day starts</div>
+      <div class="opt" onclick="autoNext(this,16,1,'q-17',78)" role="button" tabindex="0"><div class="dot"></div>During the day. I want moments of stillness</div>
+      <div class="opt" onclick="autoNext(this,16,2,'q-17',78)" role="button" tabindex="0"><div class="dot"></div>Evening, when things quiet down</div>
+      <div class="opt" onclick="autoNext(this,16,3,'q-17',78)" role="button" tabindex="0"><div class="dot"></div>Before sleep, when I reflect most naturally</div>
     </div>
   </div>
 </div>
 
 <div class="screen" id="q-17">
   <div class="inner">
-    <div class="logo-bar"><button class="back-btn" onclick="goBack()">←</button><img src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
+    <div class="logo-bar"><button class="back-btn" onclick="goBack()" aria-label="Go back">←</button><img loading="lazy" src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
     <div class="q-top">
       <div class="q-counter">Question 18 of 18</div>
       <div class="q-title">How much time could you dedicate to prayer and reflection daily?</div>
     </div>
     <div class="options">
-      <div class="opt" onclick="autoNext(this,17,0,'s-result',83)"><div class="dot"></div>5 minutes</div>
-      <div class="opt" onclick="autoNext(this,17,1,'s-result',83)"><div class="dot"></div>10 minutes</div>
-      <div class="opt" onclick="autoNext(this,17,2,'s-result',83)"><div class="dot"></div>15–20 minutes</div>
-      <div class="opt" onclick="autoNext(this,17,3,'s-result',83)"><div class="dot"></div>30 minutes or more</div>
+      <div class="opt" onclick="autoNext(this,17,0,'s-result',83)" role="button" tabindex="0"><div class="dot"></div>5 minutes</div>
+      <div class="opt" onclick="autoNext(this,17,1,'s-result',83)" role="button" tabindex="0"><div class="dot"></div>10 minutes</div>
+      <div class="opt" onclick="autoNext(this,17,2,'s-result',83)" role="button" tabindex="0"><div class="dot"></div>15–20 minutes</div>
+      <div class="opt" onclick="autoNext(this,17,3,'s-result',83)" role="button" tabindex="0"><div class="dot"></div>30 minutes or more</div>
     </div>
   </div>
 </div>
@@ -813,7 +815,7 @@ src="https://www.facebook.com/tr?id=745685381942209&ev=PageView&noscript=1"/></n
 ══════════════════════════════════════════════════════ -->
 <div class="screen" id="s-result">
   <div class="inner">
-    <div class="logo-bar"><img src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
+    <div class="logo-bar"><img loading="lazy" src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
     <div class="result-head">
       <div class="pre">Your Profile</div>
       <h2>Here is your<br><span class="blue" id="result-profile-name">Spiritual Growth Profile</span></h2>
@@ -862,7 +864,7 @@ src="https://www.facebook.com/tr?id=745685381942209&ev=PageView&noscript=1"/></n
 ══════════════════════════════════════════════════════ -->
 <div class="screen" id="s-loading">
   <div class="inner">
-    <div class="logo-bar"><img src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
+    <div class="logo-bar"><img loading="lazy" src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
     <div class="loading-head">
       <div class="h1">We're building your</div>
       <div class="h2">Personalized Spiritual Plan</div>
@@ -907,7 +909,7 @@ src="https://www.facebook.com/tr?id=745685381942209&ev=PageView&noscript=1"/></n
 ══════════════════════════════════════════════════════ -->
 <div class="screen" id="s-email">
   <div class="inner">
-    <div class="logo-bar"><img src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
+    <div class="logo-bar"><img loading="lazy" src="images/logo.webp" alt="The Catholic Daily 2026" class="logo-img"></div>
     <div class="email-head">
       <div class="h1">Enter your email to receive your</div>
       <div class="h2">Personalized Spiritual Plan</div>
@@ -948,11 +950,11 @@ src="https://www.facebook.com/tr?id=745685381942209&ev=PageView&noscript=1"/></n
     <!--
       ADD YOUR PRODUCT IMAGE HERE.
       Replace the .mockup-placeholder div below with:
-      <img src="assets/bundle-abertura.webp" alt="The Catholic Daily 2026"
+      <img loading="lazy" src="assets/bundle-abertura.webp" alt="The Catholic Daily 2026"
            style="width:100%;height:100%;object-fit:cover;border-radius:12px">
     -->
     <div class="mockup-img">
-      <img src="images/bundle-abertura-en.webp" alt="The Catholic Daily 2026" style="width:100%;height:auto;display:block">
+      <img loading="lazy" src="images/bundle-abertura-en.webp" alt="The Catholic Daily 2026" style="width:100%;height:auto;display:block">
     </div>
   </div>
 
@@ -977,7 +979,7 @@ src="https://www.facebook.com/tr?id=745685381942209&ev=PageView&noscript=1"/></n
     <h3>🎁 Also included: 3 free spiritual bonuses</h3>
 
     <div class="bonus-card">
-      <img src="images/bonus-novena.webp" alt="Spiritual Novena 2026" class="bonus-img">
+      <img loading="lazy" src="images/bonus-novena.webp" alt="Spiritual Novena 2026" class="bonus-img">
       <div class="bonus-body">
         <div class="bonus-header">
           <div class="bonus-tag">BONUS 1</div>
@@ -989,7 +991,7 @@ src="https://www.facebook.com/tr?id=745685381942209&ev=PageView&noscript=1"/></n
     </div>
 
     <div class="bonus-card">
-      <img src="images/bonus-mary.webp" alt="Prayer Guide with Mary" class="bonus-img">
+      <img loading="lazy" src="images/bonus-mary.webp" alt="Prayer Guide with Mary" class="bonus-img">
       <div class="bonus-body">
         <div class="bonus-header">
           <div class="bonus-tag">BONUS 2</div>
@@ -1003,7 +1005,7 @@ src="https://www.facebook.com/tr?id=745685381942209&ev=PageView&noscript=1"/></n
     </div>
 
     <div class="bonus-card">
-      <img src="images/bonus-psalms.webp" alt="Psalms That Sustain" class="bonus-img">
+      <img loading="lazy" src="images/bonus-psalms.webp" alt="Psalms That Sustain" class="bonus-img">
       <div class="bonus-body">
         <div class="bonus-header">
           <div class="bonus-tag">BONUS 3</div>
@@ -1021,19 +1023,19 @@ src="https://www.facebook.com/tr?id=745685381942209&ev=PageView&noscript=1"/></n
   <div class="offer-section">
     <h3>What Catholics are saying:</h3>
     <div class="offer-testi">
-      <img src="images/social-group.webp" class="testi-photo" alt="Customers with The Catholic Daily 2026">
+      <img loading="lazy" src="images/social-group.webp" class="testi-photo" alt="Customers with The Catholic Daily 2026">
       <div class="stars">★★★★★</div>
       <div class="ttext">"Four of us from our parish community ordered together. The daily prayers give us something meaningful to talk about after Mass every week. We already pre-ordered for next year."</div>
       <div class="tauthor">— Sarah & friends, Texas</div>
     </div>
     <div class="offer-testi">
-      <img src="images/social-women.webp" class="testi-photo" alt="Customers with The Catholic Daily 2026">
+      <img loading="lazy" src="images/social-women.webp" class="testi-photo" alt="Customers with The Catholic Daily 2026">
       <div class="stars">★★★★★</div>
       <div class="ttext">"My best friend and I have been attending Mass together for over 30 years. This has become our morning ritual. We call each other after reading the daily prayer. It's a true gift for the soul."</div>
       <div class="tauthor">— Margaret & Louise, Ohio</div>
     </div>
     <div class="offer-testi">
-      <img src="images/social-man.webp" class="testi-photo" alt="Customer with The Catholic Daily 2026">
+      <img loading="lazy" src="images/social-man.webp" class="testi-photo" alt="Customer with The Catholic Daily 2026">
       <div class="stars">★★★★★</div>
       <div class="ttext">"My daughter gave it to me and I was skeptical at first. But I haven't missed a single day since January. It's become the most important 5 minutes of my morning. I feel closer to God than I have in decades."</div>
       <div class="tauthor">— John P., Pennsylvania</div>
@@ -1383,6 +1385,15 @@ function startCountdown() {
   tick();
   const cdTimer = setInterval(tick, 1000);
 }
+
+// Keyboard accessibility for role=button divs
+document.addEventListener('keydown', function(e) {
+  if ((e.key === 'Enter' || e.key === ' ') && e.target.getAttribute('role') === 'button') {
+    e.preventDefault();
+    e.target.click();
+  }
+});
+
 </script>
 </body>
 </html>
