@@ -1404,17 +1404,6 @@ function submitEmail() {
   nav('s-offer', 100);
 }
 
-  function tick() {
-    const rem = Math.max(0, expires - Date.now());
-    const m = Math.floor(rem / 60000);
-    const s = Math.floor((rem % 60000) / 1000);
-    document.getElementById('timer-display').textContent = m + ':' + String(s).padStart(2,'0');
-    if (rem <= 0) clearInterval(cdTimer);
-  }
-  tick();
-  const cdTimer = setInterval(tick, 1000);
-}
-
 // Keyboard accessibility for role=button divs
 document.addEventListener('DOMContentLoaded', function() { captureUTMs(); restoreSession(); });
 
