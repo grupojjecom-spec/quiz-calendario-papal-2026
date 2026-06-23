@@ -1,5 +1,18 @@
 {
+  "trailingSlash": true,
   "headers": [
+    {
+      "source": "/catholicdaily",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }
+      ]
+    },
+    {
+      "source": "/catholicdaily/",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }
+      ]
+    },
     {
       "source": "/(.*)\\.webp",
       "headers": [
