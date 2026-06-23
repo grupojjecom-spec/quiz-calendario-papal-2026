@@ -1074,17 +1074,6 @@ src="https://www.facebook.com/tr?id=745685381942209&ev=PageView&noscript=1"/></n
   <div style="height:40px"></div>
 </div>
 
-<!-- ══════════════════════════════════════════════════════
-  MICRO-COMMIT MODALS
-══════════════════════════════════════════════════════ -->
-<div class="modal-bg" id="modal-intent">
-  <div class="modal-box">
-    <div class="modal-pre">A moment before your plan</div>
-    <div class="modal-q">Before we reveal your personalized spiritual plan, take a moment to set your intention for 2026.</div>
-    <div class="modal-affirm">"My intention is to grow closer to God, one day at a time."</div>
-    <button class="modal-btn-single" onclick="closeIntentModal()">I'm ready — show my plan →</button>
-  </div>
-</div>
 
 <!-- ══════════════════════════════════════════════════════
   JAVASCRIPT
@@ -1234,7 +1223,6 @@ const TESTIMONIALS = [
 
 let loadingTick = 0;
 let loadingTimer = null;
-let modalsFired = [false];
 let testiIdx    = 0;
 let testiTimer  = null;
 
@@ -1251,10 +1239,6 @@ function completeBar(n) {
   document.getElementById('pd'+n).style.display = 'inline';
   document.getElementById('pn'+n).classList.add('done');
 }
-function showIntentModal() {
-  if (!modalsFired[0]) { modalsFired[0] = true; document.getElementById('modal-intent').classList.add('show'); }
-}
-function closeIntentModal() { document.getElementById('modal-intent').classList.remove('show'); }
 
 function rotateTesti() {
   const t = TESTIMONIALS[testiIdx % TESTIMONIALS.length]; testiIdx++;
@@ -1272,7 +1256,6 @@ function rotateTesti() {
 function startLoading() {
   nav('s-loading', 88);
   loadingTick    = 0;
-  modalsFired    = [false, false, false];
   testiIdx       = 0;
   rotateTesti();
   testiTimer = setInterval(rotateTesti, 9000);
@@ -1284,7 +1267,6 @@ function startLoading() {
     if (loadingTick <= BAR_TICKS) {
       const pct = Math.round(loadingTick / BAR_TICKS * 100);
       updateBar(1, pct);
-      if (loadingTick === 24) showIntentModal();
       if (loadingTick === BAR_TICKS) completeBar(1);
     }
     /* ── BAR 2 (ticks 121–240) ── */
