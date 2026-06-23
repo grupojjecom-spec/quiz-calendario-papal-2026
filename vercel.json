@@ -1,5 +1,8 @@
 {
   "trailingSlash": true,
+  "rewrites": [
+    { "source": "/tcd2026/images/:path*", "destination": "/catholicdaily/images/:path*" }
+  ],
   "headers": [
     {
       "source": "/catholicdaily",
