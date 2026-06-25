@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — OSG Marketing</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{--bg:#f8f7f5;--surface:#fff;--border:#e5e3df;--text:#1a1a1a;--muted:#888;--accent:#2563eb;--success:#16a34a;--danger:#dc2626;--warn:#d97706}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
+  /* ── LOGIN ── */
+  #login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:2rem}
+  .login-box{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:2.5rem;width:100%;max-width:380px;text-align:center}
+  .login-logo{font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:1.5rem}
+  .login-box h1{font-size:20px;font-weight:600;margin-bottom:.4rem}
+  .login-box p{font-size:14px;color:var(--muted);margin-bottom:1.75rem}
+  .login-box input{width:100%;padding:11px 14px;border:1px solid var(--border);border-radius:8px;font-size:15px;outline:none;transition:border .2s;margin-bottom:.75rem}
+  .login-box input:focus{border-color:var(--accent)}
+  .btn{width:100%;padding:12px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:500;cursor:pointer;transition:opacity .2s}
+  .btn:hover{opacity:.9}
+  .btn:disabled{opacity:.6;cursor:not-allowed}
+  .login-err{color:var(--danger);font-size:13px;margin-top:.5rem;min-height:18px}
+
+  /* ── DASHBOARD ── */
+  #dash-screen{display:none;padding:1.5rem;max-width:1100px;margin:0 auto}
+  .top-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:.75rem}
+  .top-bar h1{font-size:18px;font-weight:600}
+  .top-bar-right{display:flex;gap:.5rem;align-items:center}
+  .btn-sm{padding:7px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:13px;cursor:pointer;transition:background .2s;color:var(--text)}
+  .btn-sm:hover{background:var(--bg)}
+  .last-upd{font-size:12px;color:var(--muted)}
+
+  /* metric cards */
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:1.5rem}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1rem 1.25rem}
+  .card-label{font-size:12px;color:var(--muted);margin-bottom:6px}
+  .card-val{font-size:26px;font-weight:600;line-height:1}
+  .card-sub{font-size:12px;color:var(--muted);margin-top:4px}
+
+  /* sections */
+  .section{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem;margin-bottom:1.25rem}
+  .section-title{font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:1rem}
+
+  /* funnel */
+  .funnel-row{display:flex;align-items:center;gap:10px;margin-bottom:9px;font-size:13px}
+  .f-label{width:140px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex-shrink:0}
+  .f-track{flex:1;background:var(--bg);border-radius:6px;height:22px;overflow:hidden}
+  .f-bar{height:100%;background:var(--accent);border-radius:6px;transition:width .5s ease}
+  .f-bar.drop{background:var(--warn)}
+  .f-num{min-width:30px;text-align:right;font-weight:500}
+  .f-pct{min-width:38px;text-align:right;color:var(--muted);font-size:12px}
+
+  /* leads table */
+  .tbl-wrap{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  thead th{text-align:left;font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;padding:8px 10px;border-bottom:1px solid var(--border);white-space:nowrap}
+  tbody td{padding:10px 10px;border-bottom:1px solid var(--border);vertical-align:middle}
+  tbody tr:last-child td{border-bottom:none}
+  tbody tr:hover{background:var(--bg)}
+  .badge{display:inline-block;padding:3px 9px;border-radius:6px;font-size:11px;font-weight:600}
+  .b-p{background:#dbeafe;color:#1e40af}
+  .b-s{background:#dcfce7;color:#166534}
+  .b-d{background:#ede9fe;color:#5b21b6}
+  .tag{font-size:11px;background:var(--bg);border:1px solid var(--border);border-radius:5px;padding:2px 7px;color:var(--muted)}
+
+  .loader{text-align:center;padding:2rem;color:var(--muted);font-size:14px}
+  .err-box{color:var(--danger);font-size:13px;padding:.75rem 1rem;background:#fef2f2;border-radius:8px;margin-bottom:1rem}
+
+  @media(max-width:600px){
+    .f-label{width:100px}
+    .card-val{font-size:22px}
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ LOGIN ═══ -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">✦ O Sagrado · OSG Marketing</div>
+    <h1>Dashboard de Leads</h1>
+    <p>El Calendario Papal 2026</p>
+    <input type="password" id="pass-input" placeholder="Senha do dashboard" autocomplete="current-password">
+    <button class="btn" id="login-btn" onclick="doLogin()">Entrar</button>
+    <div class="login-err" id="login-err"></div>
+  </div>
+</div>
+
+<!-- ═══ DASHBOARD ═══ -->
+<div id="dash-screen">
+  <div class="top-bar">
+    <h1>Dashboard — El Calendario Papal 2026 <span style="font-size:13px;color:var(--muted);font-weight:400">(ES)</span></h1>
+    <div class="top-bar-right">
+      <span class="last-upd" id="last-upd"></span>
+      <button class="btn-sm" onclick="loadData()">↻ Actualizar</button>
+      <button class="btn-sm" onclick="doLogout()">Sair</button>
+    </div>
+  </div>
+
+  <div id="err-area"></div>
+
+  <div class="cards">
+    <div class="card"><div class="card-label">Total leads</div><div class="card-val" id="m-total">—</div></div>
+    <div class="card"><div class="card-label">Hoje</div><div class="card-val" id="m-hoje">—</div></div>
+    <div class="card"><div class="card-label">Esta semana</div><div class="card-val" id="m-week">—</div></div>
+    <div class="card"><div class="card-label">Perfil top</div><div class="card-val" id="m-profile" style="font-size:16px;padding-top:4px">—</div></div>
+    <div class="card"><div class="card-label">Fonte top</div><div class="card-val" id="m-src" style="font-size:16px;padding-top:4px">—</div></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Funil de conversão</div>
+    <div id="funnel-area"><div class="loader">Carregando…</div></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Leads recentes <span id="lead-count" style="font-weight:400;text-transform:none;letter-spacing:0"></span></div>
+    <div class="tbl-wrap">
+      <div id="table-area"><div class="loader">Carregando…</div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const SB   = 'https://ktoajznsnwidftprrjcs.supabase.co';
+const AKEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt0b2Fqem5zbndpZGZ0cHJyamNzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIzOTc1NzksImV4cCI6MjA5Nzk3MzU3OX0.4dCew46ZiYZOZEcLsdLATFBWINciJ_LE4mhClhkuL4Q';
+const HDRS = {'apikey':AKEY,'Authorization':'Bearer '+AKEY,'Content-Type':'application/json'};
+
+const STEPS = [
+  {id:'s-gender', label:'Abriu o quiz'},
+  {id:'s-age',    label:'Selecionou género'},
+  {id:'s-affirm', label:'Selecionou idade'},
+  {id:'q-5',      label:'Q5 — Rosário'},
+  {id:'q-10',     label:'Q10 — Desafio'},
+  {id:'s-result', label:'Viu resultado'},
+  {id:'s-loading',label:'Análise (loading)'},
+  {id:'s-email',  label:'Tela de email'},
+  {id:'s-offer',  label:'✓ Lead captado'},
+];
+
+let _pass = sessionStorage.getItem('osg_dash_pass') || '';
+
+/* ─ LOGIN ─ */
+function doLogin() {
+  const p = document.getElementById('pass-input').value.trim();
+  if (!p) return;
+  const btn = document.getElementById('login-btn');
+  btn.disabled = true; btn.textContent = 'Verificando…';
+  _pass = p;
+  loadData(true);
+}
+function doLogout() {
+  sessionStorage.removeItem('osg_dash_pass');
+  _pass = '';
+  document.getElementById('dash-screen').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('pass-input').value = '';
+}
+
+/* ─ DATA ─ */
+async function loadData(fromLogin) {
+  try {
+    const resp = await fetch(SB + '/rest/v1/rpc/get_leads_dashboard', {
+      method: 'POST', headers: HDRS,
+      body: JSON.stringify({ p_pass: _pass })
+    });
+    if (!resp.ok) {
+      const e = await resp.json().catch(() => ({}));
+      throw new Error(e.message || 'Senha incorreta ou erro de servidor');
+    }
+    const data = await resp.json();
+
+    if (fromLogin) {
+      sessionStorage.setItem('osg_dash_pass', _pass);
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('dash-screen').style.display = 'block';
+    }
+    document.getElementById('err-area').innerHTML = '';
+    renderDash(data);
+
+  } catch(e) {
+    if (fromLogin) {
+      const btn = document.getElementById('login-btn');
+      btn.disabled = false; btn.textContent = 'Entrar';
+      document.getElementById('login-err').textContent = 'Senha incorreta. Tente novamente.';
+    } else {
+      document.getElementById('err-area').innerHTML =
+        '<div class="err-box">Erro ao carregar dados: ' + e.message + '</div>';
+    }
+  }
+}
+
+/* ─ RENDER ─ */
+function renderDash(data) {
+  const leads  = data.leads  || [];
+  const funnel = data.funnel || [];
+
+  // Métricas
+  const today   = new Date().toISOString().slice(0,10);
+  const weekAgo = new Date(Date.now() - 7*86400000).toISOString();
+  const todayN  = leads.filter(l => l.created_at?.startsWith(today)).length;
+  const weekN   = leads.filter(l => l.created_at >= weekAgo).length;
+
+  document.getElementById('m-total').textContent = leads.length;
+  document.getElementById('m-hoje').textContent  = todayN;
+  document.getElementById('m-week').textContent  = weekN;
+
+  const pCnt = {}; leads.forEach(l => { const k=(l.profile||'').split(':')[0].trim()||'—'; pCnt[k]=(pCnt[k]||0)+1; });
+  const topP = Object.entries(pCnt).sort((a,b)=>b[1]-a[1])[0];
+  document.getElementById('m-profile').textContent = topP ? topP[0] + ' (' + topP[1] + ')' : '—';
+
+  const sCnt = {}; leads.forEach(l => { const s=l.utm_source||'directo'; sCnt[s]=(sCnt[s]||0)+1; });
+  const topS = Object.entries(sCnt).sort((a,b)=>b[1]-a[1])[0];
+  document.getElementById('m-src').textContent = topS ? topS[0] + ' (' + topS[1] + ')' : '—';
+
+  document.getElementById('last-upd').textContent =
+    'Atualizado: ' + new Date().toLocaleTimeString('pt-BR', {hour:'2-digit',minute:'2-digit'});
+
+  // Funil
+  const bySess = {};
+  funnel.forEach(f => { if(!bySess[f.session_id]) bySess[f.session_id]=new Set(); bySess[f.session_id].add(f.step_name); });
+  const sessions = Object.values(bySess);
+  const baseline = Math.max(sessions.filter(s=>s.has('s-gender')).length, 1);
+
+  let fhtml = '';
+  STEPS.forEach((step, i) => {
+    const cnt = step.id === 's-offer' ? leads.length
+      : sessions.filter(s => s.has(step.id)).length;
+    const pct = Math.round(cnt / baseline * 100);
+    const drop = i > 0 && pct < 70;
+    fhtml += `<div class="funnel-row">
+      <div class="f-label" title="${step.label}">${step.label}</div>
+      <div class="f-track"><div class="f-bar${drop?' drop':''}" style="width:${Math.max(pct,1)}%"></div></div>
+      <div class="f-num">${cnt}</div>
+      <div class="f-pct">${pct}%</div>
+    </div>`;
+  });
+  document.getElementById('funnel-area').innerHTML = fhtml ||
+    '<div class="loader">Sem dados de funil ainda. Faça o quiz para testar!</div>';
+
+  // Tabela
+  document.getElementById('lead-count').textContent = leads.length ? '— ' + leads.length + ' registros' : '';
+  if (!leads.length) {
+    document.getElementById('table-area').innerHTML =
+      '<div class="loader">Nenhum lead ainda. Quando alguém completar o quiz, aparecerá aqui.</div>';
+    return;
+  }
+  let thtml = `<table>
+    <thead><tr>
+      <th>#</th><th>Nome</th><th>Email</th><th>Perfil</th>
+      <th>Gênero</th><th>Idade</th><th>Fonte</th><th>Campanha</th><th>Data</th>
+    </tr></thead><tbody>`;
+
+  leads.slice(0, 100).forEach((l, i) => {
+    const prof = (l.profile || '').split(':')[0].trim();
+    const bClass = prof.includes('Peregrino')||prof.includes('Pilgrim') ? 'b-p'
+                 : prof.includes('Buscador')||prof.includes('Seeker') ? 'b-s' : 'b-d';
+    const profShort = prof || '—';
+    const dt = l.created_at ? new Date(l.created_at) : null;
+    const dtStr = dt ? dt.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',year:'2-digit'})
+                     + ' ' + dt.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}) : '—';
+    thtml += `<tr>
+      <td style="color:var(--muted);font-size:12px">${i+1}</td>
+      <td style="font-weight:500">${esc(l.name||'—')}</td>
+      <td style="color:var(--muted)">${esc(l.email||'—')}</td>
+      <td>${prof ? '<span class="badge '+bClass+'">'+esc(profShort)+'</span>' : '—'}</td>
+      <td>${l.gender==='woman'?'F':l.gender==='man'?'M':'—'}</td>
+      <td style="color:var(--muted);font-size:12px">${esc(l.age_range||'—')}</td>
+      <td><span class="tag">${esc(l.utm_source||'directo')}</span></td>
+      <td style="color:var(--muted);font-size:12px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(l.utm_campaign||'—')}</td>
+      <td style="color:var(--muted);font-size:12px;white-space:nowrap">${dtStr}</td>
+    </tr>`;
+  });
+  thtml += '</tbody></table>';
+  document.getElementById('table-area').innerHTML = thtml;
+}
+
+function esc(s){ const d=document.createElement('div'); d.textContent=String(s); return d.innerHTML; }
+
+/* ─ AUTO-LOGIN (se senha guardada na sessão) ─ */
+window.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('pass-input').addEventListener('keydown', e => {
+    if (e.key === 'Enter') doLogin();
+  });
+  if (_pass) {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('dash-screen').style.display = 'block';
+    loadData(false);
+  }
+});
+</script>
+</body>
+</html>
