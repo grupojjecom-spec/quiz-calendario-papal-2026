@@ -128,15 +128,34 @@ const AKEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZ
 const HDRS = {'apikey':AKEY,'Authorization':'Bearer '+AKEY,'Content-Type':'application/json'};
 
 const STEPS = [
-  {id:'s-gender', label:'Abriu o quiz'},
-  {id:'s-age',    label:'Selecionou género'},
-  {id:'s-affirm', label:'Selecionou idade'},
-  {id:'q-5',      label:'Q5 — Rosário'},
-  {id:'q-10',     label:'Q10 — Desafio'},
-  {id:'s-result', label:'Viu resultado'},
-  {id:'s-loading',label:'Análise (loading)'},
-  {id:'s-email',  label:'Tela de email'},
-  {id:'s-offer',  label:'✓ Lead captado'},
+  {id:'s-gender',       label:'Abriu o quiz'},
+  {id:'s-age',          label:'Selecionou género'},
+  {id:'s-affirm',       label:'Selecionou idade'},
+  {id:'q-0',            label:'Q1 — Origem da fé'},
+  {id:'q-1',            label:'Q2 — Estado espiritual'},
+  {id:'q-2',            label:'Q3 — Frequência na missa'},
+  {id:'q-3',            label:'Q4 — Importância da fé'},
+  {id:'s-break1',       label:'⏸ Pausa 1'},
+  {id:'q-4',            label:'Q5 — Oração diária'},
+  {id:'q-5',            label:'Q6 — Calendário litúrgico'},
+  {id:'q-6',            label:'Q7 — Leitura da Escritura'},
+  {id:'q-7',            label:'Q8 — Materiais devocionais'},
+  {id:'q-8',            label:'Q9 — Ensinamentos do Papa'},
+  {id:'s-break2',       label:'⏸ Pausa 2'},
+  {id:'q-9',            label:'Q10 — Desafio espiritual'},
+  {id:'q-10',           label:'Q11 — Compartilhar a fé'},
+  {id:'q-11',           label:'Q12 — Área de crescimento'},
+  {id:'q-12',           label:'Q13 — Intercessão'},
+  {id:'q-13',           label:'Q14 — Motivação'},
+  {id:'q-14',           label:'Q15 — Vida de oração desejada'},
+  {id:'q-15',           label:'Q16 — Bônus (multi-select)'},
+  {id:'q-16',           label:'Q17 — Horário de oração'},
+  {id:'q-17',           label:'Q18 — Tempo disponível'},
+  {id:'s-result',       label:'Viu resultado'},
+  {id:'s-loading',      label:'Análise (loading)'},
+  {id:'s-email',        label:'Tela de email'},
+  {id:'s-offer',        label:'✓ Lead captado'},
+  {id:'checkout-click', label:'🛒 Clicou em comprar'},
 ];
 
 let _pass = sessionStorage.getItem('osg_dash_pass') || '';
@@ -225,8 +244,7 @@ function renderDash(data) {
 
   let fhtml = '';
   STEPS.forEach((step, i) => {
-    const cnt = step.id === 's-offer' ? leads.length
-      : sessions.filter(s => s.has(step.id)).length;
+    const cnt = sessions.filter(s => s.has(step.id)).length;
     const pct = Math.round(cnt / baseline * 100);
     const drop = i > 0 && pct < 70;
     fhtml += `<div class="funnel-row">
