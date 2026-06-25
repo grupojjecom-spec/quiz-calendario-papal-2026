@@ -1106,6 +1106,7 @@ function nav(id, pct) {
   setProgress(pct);
   window.scrollTo(0, 0);
   saveSession();
+  sbTrackStep(id, pct);
 }
 
 function goBack() {
@@ -1313,6 +1314,45 @@ function captureUTMs() {
   } catch(e) {}
 }
 
+/* ── SUPABASE TRACKING ── */
+const SB_URL = 'https://ktoajznsnwidftprrjcs.supabase.co';
+const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt0b2Fqem5zbndpZGZ0cHJyamNzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIzOTc1NzksImV4cCI6MjA5Nzk3MzU3OX0.4dCew46ZiYZOZEcLsdLATFBWINciJ_LE4mhClhkuL4Q';
+const SB_HDRS = { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' };
+const SB_SESSION = (() => {
+  try {
+    let id = sessionStorage.getItem('sb_sid');
+    if (!id) { id = 'sb_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7); sessionStorage.setItem('sb_sid', id); }
+    return id;
+  } catch(e) { return 'sb_' + Date.now(); }
+})();
+
+function sbTrackStep(stepName, stepNumber) {
+  try {
+    fetch(SB_URL + '/rest/v1/funnel_steps', {
+      method: 'POST', headers: SB_HDRS,
+      body: JSON.stringify({ session_id: SB_SESSION, step_name: stepName, step_number: stepNumber, quiz_url: window.location.href, language: 'es' })
+    }).catch(() => {});
+  } catch(e) {}
+}
+
+function sbSaveLead(name, email) {
+  try {
+    const utmP = new URLSearchParams(sessionStorage.getItem('quiz_utms') || '');
+    fetch(SB_URL + '/rest/v1/leads', {
+      method: 'POST', headers: SB_HDRS,
+      body: JSON.stringify({
+        session_id: SB_SESSION, email, name,
+        gender: S.gender, age_range: S.age,
+        profile: S.profile ? S.profile.profile : null,
+        answers: S.answers,
+        utm_source: utmP.get('utm_source') || '', utm_medium: utmP.get('utm_medium') || '',
+        utm_campaign: utmP.get('utm_campaign') || '', utm_content: utmP.get('utm_content') || '',
+        quiz_url: window.location.href, language: 'es'
+      })
+    }).catch(() => {});
+  } catch(e) {}
+}
+
 /* ── SESSION PERSISTENCE ── */
 function saveSession() {
   try {
@@ -1379,6 +1419,7 @@ function submitEmail() {
   }
   S.leadName  = name;
   S.leadEmail = email;
+  sbSaveLead(name, email);
 
   // Populate offer page with personalized content
   if (S.profile) {
