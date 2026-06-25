@@ -4,130 +4,206 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dashboard — OSG Marketing</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
-  *{box-sizing:border-box;margin:0;padding:0}
-  :root{--bg:#f8f7f5;--surface:#fff;--border:#e5e3df;--text:#1a1a1a;--muted:#888;--accent:#2563eb;--success:#16a34a;--danger:#dc2626;--warn:#d97706}
-  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#f5f4f0;--surface:#fff;--border:#e2e0db;--text:#1a1a1a;--muted:#888;--muted2:#bbb;--accent:#2563eb;--warn:#d97706;--danger:#dc2626;--success:#16a34a}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:14px}
 
-  /* ── LOGIN ── */
-  #login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:2rem}
-  .login-box{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:2.5rem;width:100%;max-width:380px;text-align:center}
-  .login-logo{font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:1.5rem}
-  .login-box h1{font-size:20px;font-weight:600;margin-bottom:.4rem}
-  .login-box p{font-size:14px;color:var(--muted);margin-bottom:1.75rem}
-  .login-box input{width:100%;padding:11px 14px;border:1px solid var(--border);border-radius:8px;font-size:15px;outline:none;transition:border .2s;margin-bottom:.75rem}
-  .login-box input:focus{border-color:var(--accent)}
-  .btn{width:100%;padding:12px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:500;cursor:pointer;transition:opacity .2s}
-  .btn:hover{opacity:.9}
-  .btn:disabled{opacity:.6;cursor:not-allowed}
-  .login-err{color:var(--danger);font-size:13px;margin-top:.5rem;min-height:18px}
+/* LOGIN */
+#login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:2rem}
+.login-box{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:2.5rem;width:100%;max-width:360px;text-align:center}
+.login-logo{font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:1.5rem}
+.login-box h1{font-size:20px;font-weight:600;margin-bottom:.35rem}
+.login-box p{font-size:13px;color:var(--muted);margin-bottom:1.75rem}
+.login-box input{width:100%;padding:11px 14px;border:1px solid var(--border);border-radius:8px;font-size:14px;outline:none;margin-bottom:.75rem;transition:border .15s}
+.login-box input:focus{border-color:var(--accent)}
+.btn-primary{width:100%;padding:11px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:500;cursor:pointer}
+.btn-primary:disabled{opacity:.55;cursor:not-allowed}
+.login-err{color:var(--danger);font-size:12px;margin-top:.5rem;min-height:16px}
 
-  /* ── DASHBOARD ── */
-  #dash-screen{display:none;padding:1.5rem;max-width:1100px;margin:0 auto}
-  .top-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:.75rem}
-  .top-bar h1{font-size:18px;font-weight:600}
-  .top-bar-right{display:flex;gap:.5rem;align-items:center}
-  .btn-sm{padding:7px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:13px;cursor:pointer;transition:background .2s;color:var(--text)}
-  .btn-sm:hover{background:var(--bg)}
-  .last-upd{font-size:12px;color:var(--muted)}
+/* LAYOUT */
+#dash-screen{display:none}
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:.75rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;position:sticky;top:0;z-index:10}
+.topbar-title{font-size:15px;font-weight:600}
+.topbar-right{display:flex;align-items:center;gap:.5rem}
+.btn-sm{padding:6px 12px;background:var(--surface);border:1px solid var(--border);border-radius:7px;font-size:13px;cursor:pointer;color:var(--text);white-space:nowrap;transition:background .15s}
+.btn-sm:hover{background:var(--bg)}
+.badge-live{background:#dcfce7;color:#166534;font-size:11px;font-weight:600;padding:3px 8px;border-radius:20px}
+.upd-time{font-size:12px;color:var(--muted)}
 
-  /* metric cards */
-  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:1.5rem}
-  .card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1rem 1.25rem}
-  .card-label{font-size:12px;color:var(--muted);margin-bottom:6px}
-  .card-val{font-size:26px;font-weight:600;line-height:1}
-  .card-sub{font-size:12px;color:var(--muted);margin-top:4px}
+.content{padding:1.25rem 1.5rem;max-width:1200px;margin:0 auto}
 
-  /* sections */
-  .section{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem;margin-bottom:1.25rem}
-  .section-title{font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:1rem}
+/* DATE SELECTOR */
+.date-bar{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;margin-bottom:1.25rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:.6rem .75rem}
+.date-presets{display:flex;gap:4px}
+.preset-btn{padding:5px 12px;border-radius:6px;border:1px solid var(--border);background:transparent;font-size:12px;font-weight:500;cursor:pointer;color:var(--muted);transition:all .15s}
+.preset-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.date-sep{width:1px;background:var(--border);height:24px;margin:0 .25rem}
+.date-inputs{display:flex;align-items:center;gap:.4rem;font-size:12px;color:var(--muted)}
+.date-inputs input[type=date]{padding:4px 8px;border:1px solid var(--border);border-radius:6px;font-size:12px;color:var(--text);background:var(--surface);cursor:pointer;outline:none}
+.date-inputs input[type=date]:focus{border-color:var(--accent)}
+.filter-info{margin-left:auto;font-size:11px;color:var(--muted);font-style:italic}
 
-  /* funnel */
-  .funnel-row{display:flex;align-items:center;gap:10px;margin-bottom:9px;font-size:13px}
-  .f-label{width:140px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex-shrink:0}
-  .f-track{flex:1;background:var(--bg);border-radius:6px;height:22px;overflow:hidden}
-  .f-bar{height:100%;background:var(--accent);border-radius:6px;transition:width .5s ease}
-  .f-bar.drop{background:var(--warn)}
-  .f-num{min-width:30px;text-align:right;font-weight:500}
-  .f-pct{min-width:38px;text-align:right;color:var(--muted);font-size:12px}
+/* METRIC CARDS */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:1.25rem}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:.9rem 1rem}
+.card-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px}
+.card-val{font-size:28px;font-weight:600;line-height:1}
+.card-sub{font-size:11px;color:var(--muted);margin-top:4px}
+.card-delta{font-size:12px;margin-top:3px;font-weight:500}
+.delta-up{color:var(--success)}
+.delta-dn{color:var(--danger)}
 
-  /* leads table */
-  .tbl-wrap{overflow-x:auto}
-  table{width:100%;border-collapse:collapse;font-size:13px}
-  thead th{text-align:left;font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;padding:8px 10px;border-bottom:1px solid var(--border);white-space:nowrap}
-  tbody td{padding:10px 10px;border-bottom:1px solid var(--border);vertical-align:middle}
-  tbody tr:last-child td{border-bottom:none}
-  tbody tr:hover{background:var(--bg)}
-  .badge{display:inline-block;padding:3px 9px;border-radius:6px;font-size:11px;font-weight:600}
-  .b-p{background:#dbeafe;color:#1e40af}
-  .b-s{background:#dcfce7;color:#166534}
-  .b-d{background:#ede9fe;color:#5b21b6}
-  .tag{font-size:11px;background:var(--bg);border:1px solid var(--border);border-radius:5px;padding:2px 7px;color:var(--muted)}
+/* GRID 2COL */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+@media(max-width:780px){.grid2{grid-template-columns:1fr}}
 
-  .loader{text-align:center;padding:2rem;color:var(--muted);font-size:14px}
-  .err-box{color:var(--danger);font-size:13px;padding:.75rem 1rem;background:#fef2f2;border-radius:8px;margin-bottom:1rem}
+/* SECTION */
+.section{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.25rem}
+.section-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:1rem}
 
-  @media(max-width:600px){
-    .f-label{width:100px}
-    .card-val{font-size:22px}
-  }
+/* VISUAL FUNNEL */
+.vfunnel{display:flex;flex-direction:column;gap:2px}
+.vf-row{display:flex;align-items:center;gap:0;position:relative}
+.vf-bar-wrap{flex:1;display:flex;justify-content:center}
+.vf-bar{border-radius:4px;height:32px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:#fff;transition:width .5s ease;min-width:4px;white-space:nowrap;overflow:hidden;padding:0 8px}
+.vf-label{width:160px;font-size:12px;color:var(--muted);text-align:right;padding-right:10px;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.vf-stats{width:90px;font-size:12px;text-align:left;padding-left:10px;flex-shrink:0}
+.vf-count{font-weight:600;color:var(--text)}
+.vf-pct{color:var(--muted);font-size:11px}
+.vf-drop{font-size:10px;color:var(--danger);text-align:center;padding:1px 0}
+
+/* FULL FUNNEL BARS */
+.funnel-row{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+.f-label{width:185px;font-size:12px;color:var(--muted);flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.f-track{flex:1;background:var(--bg);border-radius:5px;height:18px;overflow:hidden}
+.f-bar{height:100%;border-radius:5px;transition:width .4s ease}
+.f-bar.ok{background:#3b82f6}
+.f-bar.warn{background:var(--warn)}
+.f-bar.crit{background:var(--danger)}
+.f-num{min-width:28px;text-align:right;font-weight:600;font-size:12px}
+.f-pct{min-width:36px;text-align:right;font-size:11px;color:var(--muted)}
+
+/* TABLE */
+.tbl-wrap{overflow-x:auto;margin-top:.25rem}
+table{width:100%;border-collapse:collapse;font-size:12px}
+thead th{text-align:left;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;padding:7px 10px;border-bottom:1px solid var(--border);white-space:nowrap}
+tbody td{padding:9px 10px;border-bottom:1px solid var(--border);vertical-align:middle}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:var(--bg)}
+.badge{display:inline-block;padding:2px 8px;border-radius:5px;font-size:11px;font-weight:600}
+.b-p{background:#dbeafe;color:#1e40af}
+.b-s{background:#dcfce7;color:#166534}
+.b-d{background:#ede9fe;color:#5b21b6}
+.tag{font-size:11px;background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:2px 6px;color:var(--muted)}
+.empty{text-align:center;padding:2rem;color:var(--muted);font-size:13px}
+
+/* SECTION full width */
+.section-full{margin-bottom:1rem}
 </style>
 </head>
 <body>
 
-<!-- ═══ LOGIN ═══ -->
+<!-- LOGIN -->
 <div id="login-screen">
   <div class="login-box">
     <div class="login-logo">✦ O Sagrado · OSG Marketing</div>
     <h1>Dashboard de Leads</h1>
     <p>El Calendario Papal 2026</p>
     <input type="password" id="pass-input" placeholder="Senha do dashboard" autocomplete="current-password">
-    <button class="btn" id="login-btn" onclick="doLogin()">Entrar</button>
+    <button class="btn-primary" id="login-btn" onclick="doLogin()">Entrar</button>
     <div class="login-err" id="login-err"></div>
   </div>
 </div>
 
-<!-- ═══ DASHBOARD ═══ -->
+<!-- DASHBOARD -->
 <div id="dash-screen">
-  <div class="top-bar">
-    <h1>Dashboard — El Calendario Papal 2026 <span style="font-size:13px;color:var(--muted);font-weight:400">(ES)</span></h1>
-    <div class="top-bar-right">
-      <span class="last-upd" id="last-upd"></span>
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <div style="display:flex;align-items:center;gap:.75rem">
+      <span class="topbar-title">El Calendario Papal 2026 <span style="font-weight:400;color:var(--muted);font-size:13px">(ES)</span></span>
+      <span class="badge-live">● Ao vivo</span>
+    </div>
+    <div class="topbar-right">
+      <span class="upd-time" id="upd-time"></span>
       <button class="btn-sm" onclick="loadData()">↻ Actualizar</button>
       <button class="btn-sm" onclick="doLogout()">Sair</button>
     </div>
   </div>
 
-  <div id="err-area"></div>
+  <div class="content">
 
-  <div class="cards">
-    <div class="card"><div class="card-label">Total leads</div><div class="card-val" id="m-total">—</div></div>
-    <div class="card"><div class="card-label">Hoje</div><div class="card-val" id="m-hoje">—</div></div>
-    <div class="card"><div class="card-label">Esta semana</div><div class="card-val" id="m-week">—</div></div>
-    <div class="card"><div class="card-label">Perfil top</div><div class="card-val" id="m-profile" style="font-size:16px;padding-top:4px">—</div></div>
-    <div class="card"><div class="card-label">Fonte top</div><div class="card-val" id="m-src" style="font-size:16px;padding-top:4px">—</div></div>
-  </div>
-
-  <div class="section">
-    <div class="section-title">Funil de conversão</div>
-    <div id="funnel-area"><div class="loader">Carregando…</div></div>
-  </div>
-
-  <div class="section">
-    <div class="section-title">Leads recentes <span id="lead-count" style="font-weight:400;text-transform:none;letter-spacing:0"></span></div>
-    <div class="tbl-wrap">
-      <div id="table-area"><div class="loader">Carregando…</div></div>
+    <!-- Date selector -->
+    <div class="date-bar">
+      <div class="date-presets">
+        <button class="preset-btn" onclick="setPreset('today')">Hoje</button>
+        <button class="preset-btn" onclick="setPreset('7d')">7 dias</button>
+        <button class="preset-btn" onclick="setPreset('30d')">30 dias</button>
+        <button class="preset-btn active" onclick="setPreset('all')">Todo período</button>
+      </div>
+      <div class="date-sep"></div>
+      <div class="date-inputs">
+        <input type="date" id="date-from" onchange="setCustom()">
+        <span>até</span>
+        <input type="date" id="date-to" onchange="setCustom()">
+      </div>
+      <span class="filter-info" id="filter-info"></span>
     </div>
-  </div>
-</div>
+
+    <!-- Metric cards -->
+    <div class="cards">
+      <div class="card"><div class="card-label">Total leads</div><div class="card-val" id="m-total">—</div><div class="card-sub" id="m-total-sub"></div></div>
+      <div class="card"><div class="card-label">Abriram o quiz</div><div class="card-val" id="m-opens">—</div><div class="card-sub" id="m-opens-sub"></div></div>
+      <div class="card"><div class="card-label">Taxa email→lead</div><div class="card-val" id="m-conv">—</div><div class="card-sub">chegaram ao form</div></div>
+      <div class="card"><div class="card-label">Clicaram comprar</div><div class="card-val" id="m-checkout">—</div><div class="card-sub" id="m-checkout-sub"></div></div>
+      <div class="card"><div class="card-label">Perfil top</div><div class="card-val" id="m-profile" style="font-size:15px;padding-top:5px">—</div><div class="card-sub" id="m-profile-sub"></div></div>
+      <div class="card"><div class="card-label">Fonte top</div><div class="card-val" id="m-src" style="font-size:15px;padding-top:5px">—</div><div class="card-sub" id="m-src-sub"></div></div>
+    </div>
+
+    <!-- Funil visual (etapas-chave) -->
+    <div class="section section-full">
+      <div class="section-title">Funil de conversão</div>
+      <div class="vfunnel" id="vfunnel"><div class="empty">Carregando…</div></div>
+    </div>
+
+    <!-- Funil completo (todas as etapas) -->
+    <div class="section section-full">
+      <div class="section-title">Todas as etapas — 28 passos</div>
+      <div id="all-steps"><div class="empty">Carregando…</div></div>
+    </div>
+
+    <!-- Leads table -->
+    <div class="section section-full">
+      <div class="section-title">Leads recentes <span id="lead-count" style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted)"></span></div>
+      <div class="tbl-wrap" id="table-area"><div class="empty">Carregando…</div></div>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /dash -->
 
 <script>
 const SB   = 'https://ktoajznsnwidftprrjcs.supabase.co';
 const AKEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt0b2Fqem5zbndpZGZ0cHJyamNzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIzOTc1NzksImV4cCI6MjA5Nzk3MzU3OX0.4dCew46ZiYZOZEcLsdLATFBWINciJ_LE4mhClhkuL4Q';
 const HDRS = {'apikey':AKEY,'Authorization':'Bearer '+AKEY,'Content-Type':'application/json'};
 
-const STEPS = [
+// Etapas-chave para o funil visual
+const KEY_STAGES = [
+  {id:'s-gender',       label:'Abriu o quiz'},
+  {id:'s-age',          label:'Selecionou género'},
+  {id:'s-affirm',       label:'Selecionou idade'},
+  {id:'q-0',            label:'Iniciou perguntas'},
+  {id:'s-break1',       label:'Chegou à pausa 1 (Q4)'},
+  {id:'s-break2',       label:'Chegou à pausa 2 (Q9)'},
+  {id:'s-result',       label:'Viu resultado'},
+  {id:'s-loading',      label:'Análise iniciada'},
+  {id:'s-email',        label:'Tela de email'},
+  {id:'s-offer',        label:'✓ Lead captado'},
+  {id:'checkout-click', label:'🛒 Clicou em comprar'},
+];
+
+// Todas as 28 etapas
+const ALL_STEPS = [
   {id:'s-gender',       label:'Abriu o quiz'},
   {id:'s-age',          label:'Selecionou género'},
   {id:'s-affirm',       label:'Selecionou idade'},
@@ -147,7 +223,7 @@ const STEPS = [
   {id:'q-11',           label:'Q12 — Área de crescimento'},
   {id:'q-12',           label:'Q13 — Intercessão'},
   {id:'q-13',           label:'Q14 — Motivação'},
-  {id:'q-14',           label:'Q15 — Vida de oração desejada'},
+  {id:'q-14',           label:'Q15 — Vida de oração'},
   {id:'q-15',           label:'Q16 — Bônus (multi-select)'},
   {id:'q-16',           label:'Q17 — Horário de oração'},
   {id:'q-17',           label:'Q18 — Tempo disponível'},
@@ -158,9 +234,16 @@ const STEPS = [
   {id:'checkout-click', label:'🛒 Clicou em comprar'},
 ];
 
-let _pass = sessionStorage.getItem('osg_dash_pass') || '';
+// Colors for visual funnel
+const FUNNEL_COLORS = ['#2563eb','#3b82f6','#60a5fa','#818cf8','#a78bfa','#c084fc','#e879f9','#f472b6','#fb7185','#f87171','#dc2626'];
 
-/* ─ LOGIN ─ */
+let _pass = sessionStorage.getItem('osg_dash_pass') || '';
+let _allData = null;
+let _dateFrom = null;
+let _dateTo   = null;
+let _preset   = 'all';
+
+/* ── LOGIN ── */
 function doLogin() {
   const p = document.getElementById('pass-input').value.trim();
   if (!p) return;
@@ -171,139 +254,237 @@ function doLogin() {
 }
 function doLogout() {
   sessionStorage.removeItem('osg_dash_pass');
-  _pass = '';
+  _pass = ''; _allData = null;
   document.getElementById('dash-screen').style.display = 'none';
   document.getElementById('login-screen').style.display = 'flex';
   document.getElementById('pass-input').value = '';
 }
 
-/* ─ DATA ─ */
+/* ── DATE SELECTOR ── */
+function setPreset(p) {
+  _preset = p;
+  document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  const now = new Date();
+  const toDate = now.toISOString().slice(0,10);
+  let fromDate = null;
+  if (p === 'today') fromDate = toDate;
+  else if (p === '7d') { const d = new Date(now - 6*86400000); fromDate = d.toISOString().slice(0,10); }
+  else if (p === '30d') { const d = new Date(now - 29*86400000); fromDate = d.toISOString().slice(0,10); }
+  _dateFrom = fromDate;
+  _dateTo   = p === 'all' ? null : toDate;
+  document.getElementById('date-from').value = fromDate || '';
+  document.getElementById('date-to').value   = p === 'all' ? '' : toDate;
+  applyFilter();
+}
+function setCustom() {
+  _dateFrom = document.getElementById('date-from').value || null;
+  _dateTo   = document.getElementById('date-to').value   || null;
+  document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+  _preset = 'custom';
+  applyFilter();
+}
+function applyFilter() {
+  if (!_allData) return;
+  const fd = filterData(_allData);
+  renderDash(fd);
+  updateFilterInfo();
+}
+function filterData(data) {
+  if (!_dateFrom && !_dateTo) return data;
+  const from = _dateFrom ? _dateFrom + 'T00:00:00' : null;
+  const to   = _dateTo   ? _dateTo   + 'T23:59:59' : null;
+  const flt = arr => arr.filter(r => {
+    const d = r.created_at || '';
+    if (from && d < from) return false;
+    if (to   && d > to)   return false;
+    return true;
+  });
+  return { leads: flt(data.leads), funnel: flt(data.funnel) };
+}
+function updateFilterInfo() {
+  const el = document.getElementById('filter-info');
+  if (!_dateFrom && !_dateTo) { el.textContent = ''; return; }
+  const parts = [];
+  if (_dateFrom) parts.push('de ' + fmtDateShort(_dateFrom));
+  if (_dateTo)   parts.push('até ' + fmtDateShort(_dateTo));
+  el.textContent = parts.join(' ');
+}
+
+/* ── DATA FETCH ── */
 async function loadData(fromLogin) {
   try {
     const resp = await fetch(SB + '/rest/v1/rpc/get_leads_dashboard', {
-      method: 'POST', headers: HDRS,
-      body: JSON.stringify({ p_pass: _pass })
+      method:'POST', headers:HDRS, body:JSON.stringify({p_pass:_pass})
     });
-    if (!resp.ok) {
-      const e = await resp.json().catch(() => ({}));
-      throw new Error(e.message || 'Senha incorreta ou erro de servidor');
-    }
-    const data = await resp.json();
-
+    if (!resp.ok) throw new Error('Senha incorreta');
+    _allData = await resp.json();
     if (fromLogin) {
       sessionStorage.setItem('osg_dash_pass', _pass);
       document.getElementById('login-screen').style.display = 'none';
-      document.getElementById('dash-screen').style.display = 'block';
+      document.getElementById('dash-screen').style.display  = 'block';
     }
-    document.getElementById('err-area').innerHTML = '';
-    renderDash(data);
-
+    document.getElementById('login-err') && (document.getElementById('login-err').textContent = '');
+    const fd = filterData(_allData);
+    renderDash(fd);
+    document.getElementById('upd-time').textContent =
+      'Atualizado ' + new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
   } catch(e) {
     if (fromLogin) {
       const btn = document.getElementById('login-btn');
       btn.disabled = false; btn.textContent = 'Entrar';
       document.getElementById('login-err').textContent = 'Senha incorreta. Tente novamente.';
-    } else {
-      document.getElementById('err-area').innerHTML =
-        '<div class="err-box">Erro ao carregar dados: ' + e.message + '</div>';
     }
   }
 }
 
-/* ─ RENDER ─ */
+/* ── RENDER ── */
 function renderDash(data) {
   const leads  = data.leads  || [];
   const funnel = data.funnel || [];
 
-  // Métricas
-  const today   = new Date().toISOString().slice(0,10);
-  const weekAgo = new Date(Date.now() - 7*86400000).toISOString();
-  const todayN  = leads.filter(l => l.created_at?.startsWith(today)).length;
-  const weekN   = leads.filter(l => l.created_at >= weekAgo).length;
+  // Build session map
+  const bySess = {};
+  funnel.forEach(f => {
+    if (!bySess[f.session_id]) bySess[f.session_id] = new Set();
+    bySess[f.session_id].add(f.step_name);
+  });
+  const sessions = Object.values(bySess);
+  const baseline = Math.max(sessions.filter(s => s.has('s-gender')).length, 1);
 
-  document.getElementById('m-total').textContent = leads.length;
-  document.getElementById('m-hoje').textContent  = todayN;
-  document.getElementById('m-week').textContent  = weekN;
+  // --- METRICS ---
+  const emailSessions = sessions.filter(s => s.has('s-email')).length;
+  const checkoutSess  = sessions.filter(s => s.has('checkout-click')).length;
+  const convRate = emailSessions > 0 ? Math.round(leads.length / emailSessions * 100) : 0;
+  const checkoutRate = leads.length > 0 ? Math.round(checkoutSess / leads.length * 100) : 0;
+
+  set('m-total', leads.length);
+  set('m-total-sub', '');
+  set('m-opens', baseline);
+  set('m-opens-sub', '');
+  set('m-conv', convRate + '%');
+  set('m-checkout', checkoutSess);
+  set('m-checkout-sub', leads.length > 0 ? checkoutRate + '% dos leads' : '');
 
   const pCnt = {}; leads.forEach(l => { const k=(l.profile||'').split(':')[0].trim()||'—'; pCnt[k]=(pCnt[k]||0)+1; });
-  const topP = Object.entries(pCnt).sort((a,b)=>b[1]-a[1])[0];
-  document.getElementById('m-profile').textContent = topP ? topP[0] + ' (' + topP[1] + ')' : '—';
+  const topP = best(pCnt);
+  set('m-profile', topP ? topP[0] : '—');
+  set('m-profile-sub', topP ? topP[1] + ' leads' : '');
 
   const sCnt = {}; leads.forEach(l => { const s=l.utm_source||'directo'; sCnt[s]=(sCnt[s]||0)+1; });
-  const topS = Object.entries(sCnt).sort((a,b)=>b[1]-a[1])[0];
-  document.getElementById('m-src').textContent = topS ? topS[0] + ' (' + topS[1] + ')' : '—';
+  const topS = best(sCnt);
+  set('m-src', topS ? topS[0] : '—');
+  set('m-src-sub', topS ? topS[1] + ' leads' : '');
 
-  document.getElementById('last-upd').textContent =
-    'Atualizado: ' + new Date().toLocaleTimeString('pt-BR', {hour:'2-digit',minute:'2-digit'});
+  // --- FUNIL VISUAL ---
+  const stageCounts = KEY_STAGES.map(s => ({
+    ...s,
+    cnt: sessions.filter(sess => sess.has(s.id)).length
+  }));
 
-  // Funil
-  const bySess = {};
-  funnel.forEach(f => { if(!bySess[f.session_id]) bySess[f.session_id]=new Set(); bySess[f.session_id].add(f.step_name); });
-  const sessions = Object.values(bySess);
-  const baseline = Math.max(sessions.filter(s=>s.has('s-gender')).length, 1);
+  let vhtml = '';
+  stageCounts.forEach((s, i) => {
+    const pct = Math.round(s.cnt / baseline * 100);
+    const barW = Math.max(pct, 2);
+    const color = FUNNEL_COLORS[Math.min(i, FUNNEL_COLORS.length-1)];
 
-  let fhtml = '';
-  STEPS.forEach((step, i) => {
+    // dropoff vs previous stage
+    let dropHtml = '';
+    if (i > 0) {
+      const prevCnt = stageCounts[i-1].cnt;
+      const dropped = prevCnt - s.cnt;
+      if (dropped > 0) {
+        const dropPct = Math.round(dropped / prevCnt * 100);
+        dropHtml = `<div class="vf-drop">▼ ${dropped} saíram aqui (${dropPct}%)</div>`;
+      }
+    }
+
+    vhtml += `
+    ${dropHtml}
+    <div class="vf-row">
+      <div class="vf-label" title="${s.label}">${s.label}</div>
+      <div class="vf-bar-wrap">
+        <div class="vf-bar" style="width:${barW}%;background:${color}">
+          ${pct > 8 ? pct + '%' : ''}
+        </div>
+      </div>
+      <div class="vf-stats">
+        <span class="vf-count">${s.cnt}</span>
+        <span class="vf-pct"> (${pct}%)</span>
+      </div>
+    </div>`;
+  });
+  document.getElementById('vfunnel').innerHTML = vhtml ||
+    '<div class="empty">Nenhum dado para este período.</div>';
+
+  // --- TODAS AS ETAPAS ---
+  let ahtml = '';
+  ALL_STEPS.forEach((step, i) => {
     const cnt = sessions.filter(s => s.has(step.id)).length;
     const pct = Math.round(cnt / baseline * 100);
-    const drop = i > 0 && pct < 70;
-    fhtml += `<div class="funnel-row">
+    const cls = pct >= 70 ? 'ok' : pct >= 40 ? 'warn' : 'crit';
+    ahtml += `<div class="funnel-row">
       <div class="f-label" title="${step.label}">${step.label}</div>
-      <div class="f-track"><div class="f-bar${drop?' drop':''}" style="width:${Math.max(pct,1)}%"></div></div>
+      <div class="f-track"><div class="f-bar ${cls}" style="width:${Math.max(pct,1)}%"></div></div>
       <div class="f-num">${cnt}</div>
       <div class="f-pct">${pct}%</div>
     </div>`;
   });
-  document.getElementById('funnel-area').innerHTML = fhtml ||
-    '<div class="loader">Sem dados de funil ainda. Faça o quiz para testar!</div>';
+  document.getElementById('all-steps').innerHTML = ahtml ||
+    '<div class="empty">Nenhum dado para este período.</div>';
 
-  // Tabela
-  document.getElementById('lead-count').textContent = leads.length ? '— ' + leads.length + ' registros' : '';
+  // --- TABELA ---
+  set('lead-count', leads.length ? '— ' + leads.length + ' registros' : '');
   if (!leads.length) {
     document.getElementById('table-area').innerHTML =
-      '<div class="loader">Nenhum lead ainda. Quando alguém completar o quiz, aparecerá aqui.</div>';
+      '<div class="empty">Nenhum lead neste período.</div>';
     return;
   }
-  let thtml = `<table>
-    <thead><tr>
-      <th>#</th><th>Nome</th><th>Email</th><th>Perfil</th>
-      <th>Gênero</th><th>Idade</th><th>Fonte</th><th>Campanha</th><th>Data</th>
-    </tr></thead><tbody>`;
-
-  leads.slice(0, 100).forEach((l, i) => {
-    const prof = (l.profile || '').split(':')[0].trim();
-    const bClass = prof.includes('Peregrino')||prof.includes('Pilgrim') ? 'b-p'
-                 : prof.includes('Buscador')||prof.includes('Seeker') ? 'b-s' : 'b-d';
-    const profShort = prof || '—';
+  let thtml = `<table><thead><tr>
+    <th>#</th><th>Nome</th><th>Email</th><th>Perfil</th>
+    <th>Gênero</th><th>Idade</th><th>Fonte</th><th>Campanha</th><th>Data</th>
+  </tr></thead><tbody>`;
+  leads.slice(0,100).forEach((l,i) => {
+    const prof = (l.profile||'').split(':')[0].trim();
+    const bc = prof.includes('Peregrino')||prof.includes('Pilgrim') ? 'b-p'
+             : prof.includes('Buscador')||prof.includes('Seeker') ? 'b-s' : 'b-d';
     const dt = l.created_at ? new Date(l.created_at) : null;
     const dtStr = dt ? dt.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',year:'2-digit'})
                      + ' ' + dt.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}) : '—';
     thtml += `<tr>
-      <td style="color:var(--muted);font-size:12px">${i+1}</td>
+      <td style="color:var(--muted)">${i+1}</td>
       <td style="font-weight:500">${esc(l.name||'—')}</td>
       <td style="color:var(--muted)">${esc(l.email||'—')}</td>
-      <td>${prof ? '<span class="badge '+bClass+'">'+esc(profShort)+'</span>' : '—'}</td>
+      <td>${prof ? '<span class="badge '+bc+'">'+esc(prof)+'</span>' : '—'}</td>
       <td>${l.gender==='woman'?'F':l.gender==='man'?'M':'—'}</td>
-      <td style="color:var(--muted);font-size:12px">${esc(l.age_range||'—')}</td>
+      <td style="color:var(--muted)">${esc(l.age_range||'—')}</td>
       <td><span class="tag">${esc(l.utm_source||'directo')}</span></td>
-      <td style="color:var(--muted);font-size:12px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(l.utm_campaign||'—')}</td>
-      <td style="color:var(--muted);font-size:12px;white-space:nowrap">${dtStr}</td>
+      <td style="color:var(--muted);max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(l.utm_campaign||'—')}</td>
+      <td style="color:var(--muted);white-space:nowrap">${dtStr}</td>
     </tr>`;
   });
   thtml += '</tbody></table>';
   document.getElementById('table-area').innerHTML = thtml;
 }
 
-function esc(s){ const d=document.createElement('div'); d.textContent=String(s); return d.innerHTML; }
+/* ── HELPERS ── */
+function set(id, val) { const el = document.getElementById(id); if(el) el.textContent = val; }
+function esc(s) { const d = document.createElement('div'); d.textContent = String(s); return d.innerHTML; }
+function best(obj) { const e = Object.entries(obj).sort((a,b)=>b[1]-a[1]); return e.length ? e[0] : null; }
+function fmtDateShort(s) {
+  if (!s) return '';
+  const [y,m,d] = s.split('-');
+  return d+'/'+m+'/'+y.slice(2);
+}
 
-/* ─ AUTO-LOGIN (se senha guardada na sessão) ─ */
+/* ── BOOT ── */
 window.addEventListener('DOMContentLoaded', () => {
   document.getElementById('pass-input').addEventListener('keydown', e => {
     if (e.key === 'Enter') doLogin();
   });
   if (_pass) {
     document.getElementById('login-screen').style.display = 'none';
-    document.getElementById('dash-screen').style.display = 'block';
+    document.getElementById('dash-screen').style.display  = 'block';
     loadData(false);
   }
 });
