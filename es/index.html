@@ -1387,6 +1387,7 @@ function restoreSession() {
 
 /* ── CHECKOUT ── */
 function goToCheckout() {
+  sbTrackStep('checkout-click', 100);
   if (typeof fbq !== 'undefined') fbq('track','AddToCart',{value:19,currency:'USD',content_name:'El Calendario Papal 2026'});
   let url = 'https://pay.hotmart.com/J106401743H?checkoutMode=10';
   if (S.leadName)  url += '&name='  + encodeURIComponent(S.leadName);
@@ -1438,7 +1439,11 @@ function submitEmail() {
 }
 
 // Keyboard accessibility for role=button divs
-document.addEventListener('DOMContentLoaded', function() { captureUTMs(); restoreSession(); });
+document.addEventListener('DOMContentLoaded', function() {
+  captureUTMs();
+  restoreSession();
+  sbTrackStep('s-gender', 0); // rastreia abertura do quiz
+});
 
 document.addEventListener('keydown', function(e) {
   if ((e.key === 'Enter' || e.key === ' ') && e.target.getAttribute('role') === 'button') {
