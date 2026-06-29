@@ -13,8 +13,11 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://editoraosagrado.com/calendariopapal2026-es/">
 <link rel="canonical" href="https://editoraosagrado.com/calendariopapal2026-es/">
-<link rel="preload" as="script" href="https://connect.facebook.net/en_US/fbevents.js">
-<link rel="preload" as="image" href="https://editoraosagrado.com/es/images/bundle-abertura-es.webp" fetchpriority="high">
+<!-- Preconnect critical external domains -->
+<link rel="preconnect" href="https://connect.facebook.net" crossorigin>
+<link rel="preconnect" href="https://www.clarity.ms" crossorigin>
+<link rel="preconnect" href="https://cdn.utmify.com.br" crossorigin>
+<link rel="preload" as="image" href="bundle-abertura-es.webp" fetchpriority="high" type="image/webp">
 <style>
 /* ═══ RESET & BASE ═══ */
 *{box-sizing:border-box;margin:0;padding:0}
@@ -281,21 +284,13 @@ img{max-width:100%;height:auto;display:block}
   .cd-num,.cd-sep{font-size:40px}
 }
 </style>
-<!-- Facebook Pixel -->
+<!-- Facebook Pixel stub (non-blocking) -->
 <script>
-!function(f,b,e,v,n,t,s){
-  if(f.fbq)return;
-  n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-  if(!f._fbq)f._fbq=n;
-  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];
-  t=b.createElement(e);t.async=!0;t.src=v;
-  s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)
-}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
-fbq('init','745685381942209');
+window.fbq=window.fbq||function(){(window._fbq=window._fbq||[]).push(arguments)};
+window._fbq=window._fbq||[];
 </script>
 </head>
 <body>
-<script>fbq('track','PageView');</script>
 <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=745685381942209&ev=PageView&noscript=1"/></noscript>
 <div class="wrap">
 
@@ -329,7 +324,7 @@ fbq('init','745685381942209');
   <h1>Una rutina diaria de oración para vivir la fe con constancia a lo largo del año</h1>
   <p class="hero-sub">Un calendario espiritual inspirado en las enseñanzas del Papa León XIII.</p>
 
-  <img src="bundle-abertura-es.webp" alt="Calendario Papal 2026 — Kit Completo" class="hero-img" width="900" height="1599" fetchpriority="high">
+  <img src="bundle-abertura-es.webp" alt="Calendario Papal 2026 — Kit Completo" class="hero-img" width="520" height="779" fetchpriority="high">
 
   <ul class="hero-bullets">
     <li>Oraciones organizadas para cada día del año</li>
@@ -490,7 +485,7 @@ fbq('init','745685381942209');
   <p class="offer-sub">Un camino espiritual ya organizado para ti — para nunca más tener que decidir qué orar.</p>
 
   <div class="offer-img-wrap">
-    <img src="bundle-abertura-es.webp" alt="Kit Calendario Papal 2026" class="offer-img" width="900" height="1599" loading="lazy" decoding="async">
+    <img src="bundle-abertura-es.webp" alt="Kit Calendario Papal 2026" class="offer-img" width="520" height="779" loading="lazy" decoding="async">
   </div>
 
   <!-- PRICE CARD -->
@@ -638,14 +633,42 @@ fbq('init','745685381942209');
 })();
 </script>
 
-<!-- UTMify -->
-<script src="https://cdn.utmify.com.br/scripts/utms/latest.js" data-utmify-prevent-subids="" async defer></script>
-
-<!-- Clarity -->
+<!-- Facebook Pixel SDK + UTMify + Clarity — load after page interactive -->
 <script>
 (function(){
-  function lc(){(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src='https://www.clarity.ms/tag/'+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,'clarity','script','ksoj7nifzg');}
-  'requestIdleCallback' in window?requestIdleCallback(lc,{timeout:3000}):setTimeout(lc,2000);
+  function loadThirdParty(){
+    // Facebook Pixel SDK
+    (function(f,b,e,v,n,t,s){
+      if(f.fbq&&f.fbq.version)return;
+      n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;
+      n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];
+      t=b.createElement(e);t.async=!0;t.src=v;
+      s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s);
+    })(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init','745685381942209');
+    fbq('track','PageView');
+
+    // UTMify
+    var u=document.createElement('script');
+    u.src='https://cdn.utmify.com.br/scripts/utms/latest.js';
+    u.async=true;u.defer=true;
+    u.setAttribute('data-utmify-prevent-subids','');
+    document.body.appendChild(u);
+
+    // Clarity
+    (function(c,l,a,r,i,t,y){
+      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+      t=l.createElement(r);t.async=1;t.src='https://www.clarity.ms/tag/'+i;
+      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window,document,'clarity','script','ksoj7nifzg');
+  }
+  // Load after page is interactive
+  if(document.readyState==='complete'){
+    setTimeout(loadThirdParty,1000);
+  } else {
+    window.addEventListener('load',function(){ setTimeout(loadThirdParty,1000); });
+  }
 })();
 </script>
 </body>
