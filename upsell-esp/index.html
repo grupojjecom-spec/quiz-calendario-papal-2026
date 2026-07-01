@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>¡Felicidades! Has sido elegido — Editora O Sagrado</title>
+<style>
+:root{--navy:#0a1a3d;--gold:#c9a86a;--bg:#f5f1e6;--green:#22a843}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--navy);color:#fff;overflow-x:hidden}
+
+/* ====== OVERLAYS ====== */
+.overlay{position:fixed;inset:0;background:var(--navy);z-index:1000;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px 20px;text-align:center;transition:opacity .7s ease}
+.overlay.hidden{opacity:0;pointer-events:none}
+
+.spinner{width:60px;height:60px;border:4px solid rgba(201,168,106,.2);border-top-color:var(--gold);border-radius:50%;animation:rot 1s linear infinite;margin-bottom:28px}
+@keyframes rot{to{transform:rotate(360deg)}}
+
+.cross-divider{font-size:28px;letter-spacing:12px;color:var(--gold);margin:10px 0}
+
+/* ====== CARD FLIP ====== */
+.cards-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;width:100%;max-width:340px;margin:20px auto 0}
+.card-wrap{perspective:900px;cursor:pointer}
+.card-inner{position:relative;width:100%;padding-bottom:150%;transform-style:preserve-3d;transition:transform .65s cubic-bezier(.4,0,.2,1)}
+.card-inner.flipped{transform:rotateY(180deg)}
+.card-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:12px;overflow:hidden}
+
+/* FRONT: saint image */
+.card-front{background:#0d1f4a;border:2px solid var(--gold)}
+.card-front img{width:100%;height:100%;object-fit:cover;display:block}
+.card-front-label{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(10,26,61,.97));padding:10px 8px 10px;text-align:center;font-size:12px;font-weight:700;color:var(--gold);letter-spacing:.04em;line-height:1.3}
+
+/* BACK: blessing reveal */
+.card-back{transform:rotateY(180deg);background:linear-gradient(160deg,#0a1a3d,#1a3a6d);border:2px solid var(--gold);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px 10px;text-align:center}
+.card-back-cross{font-size:36px;color:var(--gold);margin-bottom:10px}
+.card-back-title{font-size:12px;font-weight:800;color:var(--gold);letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px}
+.card-back-pct{font-size:38px;font-weight:900;color:#fff;line-height:1;margin-bottom:4px}
+.card-back-sub{font-size:10px;color:rgba(255,255,255,.7);line-height:1.4}
+
+.card-wrap:not(.chosen):hover .card-inner{transform:translateY(-4px) scale(1.02)}
+.card-wrap.chosen .card-inner{pointer-events:none}
+.card-instruction{font-size:13px;color:rgba(255,255,255,.6);margin-top:14px;text-align:center}
+
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
+
+@keyframes bounceIn{0%{transform:scale(0)}60%{transform:scale(1.2)}100%{transform:scale(1)}}
+.win-icon{font-size:72px;margin-bottom:12px;animation:bounceIn .6s ease}
+.btn-claim{display:inline-block;background:var(--green);color:#fff;font-size:17px;font-weight:800;border-radius:50px;padding:18px 36px;margin-top:24px;cursor:pointer;text-decoration:none;width:100%;max-width:340px;animation:pulse 1.6s ease-in-out infinite}
+
+.cf{position:fixed;width:10px;height:14px;top:-20px;animation:fall linear forwards;pointer-events:none}
+@keyframes fall{to{transform:translateY(115vh) rotate(720deg);opacity:0}}
+
+/* ====== MAIN PAGE ====== */
+#main-page{display:none}
+#main-page.visible{display:block}
+.page{max-width:560px;margin:0 auto}
+
+/* Top urgency bar */
+.urgency-bar{background:#8b0000;padding:14px 20px;text-align:center;position:sticky;top:0;z-index:100;border-bottom:2px solid var(--gold)}
+.urgency-bar p{font-size:13px;font-weight:700;color:#fff;margin-bottom:6px}
+.urgency-digits{display:flex;justify-content:center;gap:8px}
+.u-box{background:rgba(0,0,0,.3);border:1px solid rgba(201,168,106,.5);border-radius:6px;padding:6px 12px;text-align:center}
+.u-num{font-size:20px;font-weight:800;color:var(--gold);display:block;line-height:1}
+.u-lbl{font-size:9px;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:.08em}
+
+.hero{background:linear-gradient(160deg,#0a1a3d,#1a3060);padding:28px 20px;text-align:center;border-bottom:3px solid var(--gold)}
+.hero .eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.hero h1{font-size:23px;line-height:1.25;margin-bottom:10px}
+.hero h1 em{color:var(--gold);font-style:normal}
+.hero p{font-size:14px;color:rgba(255,255,255,.75)}
+
+.prize-box{background:#122050;border:2px solid var(--gold);margin:18px 16px;border-radius:14px;padding:18px;text-align:center}
+.prize-box .pb-icon{font-size:36px;margin-bottom:6px}
+.prize-box h2{font-size:18px;color:var(--gold);margin-bottom:4px}
+.prize-box p{font-size:13px;color:rgba(255,255,255,.75)}
+
+.bundle-wrap{background:#0d2250;padding:20px 16px;text-align:center}
+.bundle-img{display:block;width:100%;max-width:500px;margin:0 auto;border-radius:12px}
+
+/* Ebooks grid */
+.section{padding:24px 16px;background:var(--bg);color:#1a1a1a}
+.section h2{font-size:21px;color:var(--navy);margin-bottom:6px;line-height:1.3}
+.section blockquote{border-left:3px solid var(--gold);padding-left:14px;font-size:14px;color:#444;line-height:1.6;margin:14px 0 20px}
+
+.ebooks-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.eb-card{background:#fff;border-radius:10px;border:1px solid #e8dfc9;overflow:hidden;display:flex;flex-direction:column}
+.eb-card img{width:100%;aspect-ratio:2/3;object-fit:cover}
+.eb-info{padding:10px;flex:1;display:flex;flex-direction:column;gap:4px}
+.eb-info strong{font-size:13px;color:var(--navy);display:block;line-height:1.3}
+.eb-info span{font-size:12px;color:#666;line-height:1.4;flex:1}
+.eb-price{font-size:12px;margin-top:6px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.eb-price s{color:#999;font-size:11px}
+.eb-badge{background:var(--gold);color:var(--navy);font-size:12px;font-weight:900;padding:5px 10px;border-radius:6px;letter-spacing:.05em;text-transform:uppercase;display:inline-block;margin-top:2px}
+
+/* Price block */
+.price-section{background:var(--navy);padding:32px 20px;text-align:center}
+.price-section .eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+.price-section h2{font-size:19px;color:#fff;margin-bottom:20px;line-height:1.3}
+
+.value-breakdown{background:rgba(255,255,255,.05);border:1px solid rgba(201,168,106,.25);border-radius:10px;padding:14px 16px;margin-bottom:20px;font-size:13px;color:rgba(255,255,255,.7);text-align:left}
+.value-breakdown .vb-row{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid rgba(255,255,255,.07)}
+.value-breakdown .vb-row:last-child{border:none;padding-top:8px;margin-top:4px;color:#fff;font-weight:700;font-size:14px}
+.value-breakdown .vb-row span:last-child{color:var(--gold)}
+.value-breakdown s{color:rgba(255,255,255,.4)}
+
+.p-was{font-size:15px;color:rgba(255,255,255,.45);text-decoration:line-through;margin-bottom:4px}
+.p-now{font-size:46px;font-weight:900;color:var(--gold);margin-bottom:4px}
+.p-desc{font-size:13px;color:rgba(255,255,255,.6);margin-bottom:24px}
+
+.btn-cta{display:block;background:var(--green);color:#fff;font-size:17px;font-weight:800;border-radius:50px;padding:20px 28px;cursor:pointer;text-decoration:none;animation:pulse 1.6s ease-in-out infinite;line-height:1.3}
+.security{font-size:12px;color:rgba(255,255,255,.45);margin-top:14px}
+
+.guarantee{display:flex;gap:14px;align-items:center;background:var(--bg);padding:20px 16px;border-top:1px solid #e8dfc9}
+.g-seal{background:var(--navy);color:var(--gold);font-size:11px;font-weight:800;width:58px;height:58px;border-radius:50%;display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.2;flex-shrink:0;border:2px solid var(--gold)}
+.g-text h4{font-size:15px;color:var(--navy);margin-bottom:4px}
+.g-text p{font-size:13px;color:#555;line-height:1.5}
+
+.footer{background:var(--navy);padding:20px 16px;text-align:center;font-size:12px;color:rgba(255,255,255,.4)}
+.footer p+p{margin-top:6px}
+</style>
+</head>
+<body>
+
+<!-- ====== PANTALLA 1: CARGANDO ====== -->
+<div class="overlay" id="s-loading">
+  <div style="font-size:48px;margin-bottom:20px;">✝️</div>
+  <div class="spinner"></div>
+  <h2 style="font-size:22px;margin-bottom:10px;line-height:1.3;">Esperando confirmación<br>de tu compra...</h2>
+  <p style="font-size:13px;color:rgba(255,255,255,.55);">Por favor, no cierres esta página</p>
+</div>
+
+<!-- ====== PANTALLA 2: CARTAS DE LOS SANTOS ====== -->
+<div class="overlay hidden" id="s-spin" style="overflow-y:auto;padding-top:36px;padding-bottom:40px">
+  <p style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;">✝ Editora O Sagrado · Bendición exclusiva ✝</p>
+  <h2 style="font-size:22px;margin-bottom:8px;line-height:1.25;">🙏 ¡Fuiste elegido!</h2>
+  <p style="font-size:14px;color:rgba(255,255,255,.8);max-width:300px;line-height:1.5;margin-bottom:4px;">La Editora reservó un regalo especial para ti.</p>
+  <p style="font-size:15px;font-weight:700;color:var(--gold);max-width:300px;line-height:1.4;margin-bottom:2px;">Elige el santo que más te inspira —</p>
+  <p style="font-size:13px;color:rgba(255,255,255,.65);max-width:300px;line-height:1.5;margin-bottom:4px;">que interceda por tu bendición hoy.</p>
+
+  <div class="cards-grid">
+
+    <div class="card-wrap" onclick="chooseCard(this,'Virgen de Guadalupe')">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <img src="assets/s-guadalupe.webp" alt="Virgen de Guadalupe" loading="eager" onerror="this.src='https://quiz.editoraosagrado.com/upsell-brasil/assets/s-aparecida.webp'">
+          <div class="card-front-label">Virgen de<br>Guadalupe</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="card-back-cross">✝</div>
+          <div class="card-back-title">Bendición revelada</div>
+          <div class="card-back-pct">70%</div>
+          <div class="card-back-sub">de descuento en el<br>Itinerario Espiritual 2026</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-wrap" onclick="chooseCard(this,'San Francisco de Asís')">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <img src="assets/s-francisco.webp" alt="San Francisco de Asís" loading="eager" onerror="this.src='https://quiz.editoraosagrado.com/upsell-brasil/assets/s-francisco.webp'">
+          <div class="card-front-label">San Francisco<br>de Asís</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="card-back-cross">✝</div>
+          <div class="card-back-title">Bendición revelada</div>
+          <div class="card-back-pct">70%</div>
+          <div class="card-back-sub">de descuento en el<br>Itinerario Espiritual 2026</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-wrap" onclick="chooseCard(this,'San Martín de Porres')">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <img src="assets/s-martin.webp" alt="San Martín de Porres" loading="eager" onerror="this.src='https://quiz.editoraosagrado.com/upsell-brasil/assets/s-antonio.webp'">
+          <div class="card-front-label">San Martín<br>de Porres</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="card-back-cross">✝</div>
+          <div class="card-back-title">Bendición revelada</div>
+          <div class="card-back-pct">70%</div>
+          <div class="card-back-sub">de descuento en el<br>Itinerario Espiritual 2026</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-wrap" onclick="chooseCard(this,'Santa Rosa de Lima')">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <img src="assets/s-rosa.webp" alt="Santa Rosa de Lima" loading="eager" onerror="this.src='https://quiz.editoraosagrado.com/upsell-brasil/assets/s-jorge.webp'">
+          <div class="card-front-label">Santa Rosa<br>de Lima</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="card-back-cross">✝</div>
+          <div class="card-back-title">Bendición revelada</div>
+          <div class="card-back-pct">70%</div>
+          <div class="card-back-sub">de descuento en el<br>Itinerario Espiritual 2026</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <p class="card-instruction">✦ Elige tu santo favorito para revelar tu bendición ✦</p>
+</div>
+
+<!-- ====== PANTALLA 3: GANASTE ====== -->
+<div class="overlay hidden" id="s-win">
+  <div class="win-icon">🕊️</div>
+  <p style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;">✝ ¡Felicitaciones! ✝</p>
+  <p id="win-saint" style="font-size:16px;font-weight:700;color:rgba(255,255,255,.85);margin-bottom:10px;line-height:1.4;max-width:300px;text-align:center"></p>
+  <h2 style="font-size:23px;margin-bottom:10px;line-height:1.2;">¡Ganaste <span style="color:var(--gold)">70% de descuento</span><br>en el <span style="color:var(--gold)">Itinerario Espiritual 2026!</span></h2>
+  <p style="font-size:14px;color:rgba(255,255,255,.8);margin-bottom:6px;max-width:320px;">Una guía anual para mantener tu fe según el tiempo litúrgico de la Iglesia</p>
+  <p style="font-size:15px;color:rgba(255,255,255,.85);margin-bottom:6px;max-width:310px;">Accede a las 8 guías por solo <strong style="color:var(--gold)">$19 USD</strong> en vez de $63.30</p>
+  <p style="font-size:12px;color:rgba(255,255,255,.5);max-width:290px;margin-bottom:16px;">⚠️ Este descuento expira pronto. Confirma ahora para asegurarlo.</p>
+  <a href="#oferta" class="btn-claim" onclick="claimPrize(event)">🙏 RECLAMAR MI DESCUENTO AHORA</a>
+</div>
+
+<!-- ====== PÁGINA PRINCIPAL ====== -->
+<div id="main-page">
+  <div class="page">
+
+    <!-- URGENCIA AL INICIO -->
+    <div class="urgency-bar">
+      <p>⚠️ Tu descuento expira en:</p>
+      <div class="urgency-digits">
+        <div class="u-box"><span class="u-num" id="u-min">15</span><span class="u-lbl">min</span></div>
+        <div class="u-box"><span class="u-num" id="u-sec">00</span><span class="u-lbl">seg</span></div>
+      </div>
+    </div>
+
+    <div class="hero">
+      <div class="eyebrow">✝ Editora O Sagrado · Oferta exclusiva post-compra ✝</div>
+      <h1>¡Ganaste <em>70% de descuento</em> en el <em>Itinerario Espiritual 2026!</em></h1>
+      <p>Una guía anual para mantener tu fe según el tiempo litúrgico de la Iglesia — por solo <strong style="color:var(--gold)">$19 USD</strong></p>
+    </div>
+
+    <div class="prize-box">
+      <div class="pb-icon">🕊️</div>
+      <h2>Tu descuento está reservado</h2>
+      <p>Completa abajo para asegurar tus 8 guías antes de que el tiempo expire</p>
+    </div>
+
+    <!-- Bundle mockup -->
+    <div class="bundle-wrap">
+      <img src="assets/bundle-ebooks.webp" alt="Kit Itinerario Espiritual 2026 — 8 guías" class="bundle-img" onerror="this.src='https://quiz.editoraosagrado.com/upsell-brasil/assets/bundle-ebooks.webp';this.onerror=null;">
+    </div>
+
+    <div class="section">
+      <h2>Al confirmar, recibes inmediatamente:</h2>
+      <blockquote>
+        No es una colección aleatoria de ebooks.<br>
+        Es un <strong>itinerario espiritual completo</strong>, alineado con el calendario litúrgico de la Iglesia.<br>
+        Cada guía fue hecho para que vivas <strong>el tiempo correcto, en el momento correcto</strong>.
+      </blockquote>
+
+      <div class="ebooks-grid">
+
+        <div class="eb-card">
+          <img src="https://quiz.editoraosagrado.com/upsell-brasil/assets/novena-nossa-senhora.webp" alt="Novena a Nuestra Señora" loading="lazy">
+          <div class="eb-info">
+            <strong>Novena a Nuestra Señora</strong>
+            <span>9 días de intercesión mariana para gracias especiales</span>
+            <div class="eb-price"><s>$7.91</s><span class="eb-badge">INCLUIDO</span></div>
+          </div>
+        </div>
+
+        <div class="eb-card">
+          <img src="https://quiz.editoraosagrado.com/upsell-brasil/assets/50-oracoes-marianas.webp" alt="50 Oraciones Marianas" loading="lazy">
+          <div class="eb-info">
+            <strong>50 Oraciones Marianas</strong>
+            <span>Las oraciones más poderosas a la Virgen María de la tradición católica</span>
+            <div class="eb-price"><s>$7.91</s><span class="eb-badge">INCLUIDO</span></div>
+          </div>
+        </div>
+
+        <div class="eb-card">
+          <img src="https://quiz.editoraosagrado.com/upsell-brasil/assets/luz-ressureicao.webp" alt="Luz de la Resurrección" loading="lazy">
+          <div class="eb-info">
+            <strong>Luz de la Resurrección</strong>
+            <span>Para prolongar la alegría pascual en la vida cotidiana</span>
+            <div class="eb-price"><s>$7.91</s><span class="eb-badge">INCLUIDO</span></div>
+          </div>
+        </div>
+
+        <div class="eb-card">
+          <img src="https://quiz.editoraosagrado.com/upsell-brasil/assets/pao-do-ceu.webp" alt="Pan del Cielo" loading="lazy">
+          <div class="eb-info">
+            <strong>Pan del Cielo</strong>
+            <span>Profundización del misterio de la Eucaristía, centro de la vida cristiana</span>
+            <div class="eb-price"><s>$7.91</s><span class="eb-badge">INCLUIDO</span></div>
+          </div>
+        </div>
+
+        <div class="eb-card">
+          <img src="https://quiz.editoraosagrado.com/upsell-brasil/assets/coracao-ama.webp" alt="Corazón que Ama hasta el Final" loading="lazy">
+          <div class="eb-info">
+            <strong>Corazón que Ama hasta el Final</strong>
+            <span>Novena al Sagrado Corazón de Jesús</span>
+            <div class="eb-price"><s>$7.91</s><span class="eb-badge">INCLUIDO</span></div>
+          </div>
+        </div>
+
+        <div class="eb-card">
+          <img src="https://quiz.editoraosagrado.com/upsell-brasil/assets/elevada-gloria.webp" alt="Elevada a la Gloria" loading="lazy">
+          <div class="eb-info">
+            <strong>Elevada a la Gloria</strong>
+            <span>Contemplación de la Asunción de Nuestra Señora</span>
+            <div class="eb-price"><s>$7.91</s><span class="eb-badge">INCLUIDO</span></div>
+          </div>
+        </div>
+
+        <div class="eb-card">
+          <img src="https://quiz.editoraosagrado.com/upsell-brasil/assets/elevai-olhar.webp" alt="Levanta la Mirada" loading="lazy">
+          <div class="eb-info">
+            <strong>Levanta la Mirada</strong>
+            <span>Comprensión espiritual de la Ascensión del Señor</span>
+            <div class="eb-price"><s>$7.91</s><span class="eb-badge">INCLUIDO</span></div>
+          </div>
+        </div>
+
+        <div class="eb-card">
+          <img src="https://quiz.editoraosagrado.com/upsell-brasil/assets/vigiai-preparai.webp" alt="Velad y Preparaos" loading="lazy">
+          <div class="eb-info">
+            <strong>Velad y Preparaos</strong>
+            <span>Guía completa para vivir el Adviento con esperanza</span>
+            <div class="eb-price"><s>$7.91</s><span class="eb-badge">INCLUIDO</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="price-section" id="oferta">
+      <div class="eyebrow">✝ Reclama tu descuento ✝</div>
+      <h2>Itinerario Espiritual 2026 — 8 guías para todo el año litúrgico</h2>
+
+      <div class="value-breakdown">
+        <div class="vb-row"><span>8 guías × $7.91 USD</span><span><s>$63.30 USD</s></span></div>
+        <div class="vb-row"><span>Descuento del sorteo (70%)</span><span style="color:#22a843">− $44.30 USD</span></div>
+        <div class="vb-row"><span>✝ Pagas hoy</span><span>$19.00 USD</span></div>
+      </div>
+
+      <p class="p-was">Valor normal: $63.30 USD</p>
+      <p class="p-now">$19<span style="font-size:26px">.00</span></p>
+      <p class="p-desc">Pago único · Acceso inmediato por email</p>
+
+      <div style="text-align:center">
+        <!-- ⚠️ SUSTITUIR: reemplaza LINK_HOTMART_ESP con el link real de Hotmart del producto en español -->
+        <a href="LINK_HOTMART_ESP" class="btn-cta">🙏🏼 ¡SÍ! ¡QUIERO RECLAMAR MI DESCUENTO!</a>
+      </div>
+      <p class="security">🔒 Pago 100% seguro · Garantía incondicional de 7 días</p>
+      <div style="text-align:center;margin-top:16px">
+        <!-- ⚠️ SUSTITUIR: reemplaza con el link del downsell en español cuando esté listo -->
+        <a href="https://quiz.editoraosagrado.com/downsell-brasil/" style="display:inline-block;border:2px solid #c0392b;color:#c0392b;background:transparent;font-size:14px;font-weight:700;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;padding:12px 24px;border-radius:50px;text-decoration:none;letter-spacing:.02em;opacity:.85">No, quiero renunciar a esta bendición.</a>
+      </div>
+    </div>
+
+    <div class="guarantee">
+      <div class="g-seal">7<br>DÍAS</div>
+      <div class="g-text">
+        <h4>Garantía incondicional</h4>
+        <p>Si no sientes que valió cada centavo, te devolvemos el dinero íntegramente. Sin preguntas, sin complicaciones.</p>
+      </div>
+    </div>
+
+    <div class="footer">
+      <p>✝ Editora O Sagrado · suporte@editoraosagrado.com</p>
+      <p>Contenido digital entregado por email tras confirmación del pago.</p>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ====== FLUJO ======
+setTimeout(function(){
+  document.getElementById('s-loading').classList.add('hidden');
+  document.getElementById('s-spin').classList.remove('hidden');
+},3800);
+
+function claimPrize(e){
+  if(e) e.preventDefault();
+  document.getElementById('s-win').classList.add('hidden');
+  document.getElementById('main-page').classList.add('visible');
+  setTimeout(function(){document.getElementById('oferta').scrollIntoView({behavior:'smooth'});},200);
+}
+
+// ====== ELECCIÓN DE CARTA ======
+var _cardChosen = false;
+function chooseCard(wrap, saintName) {
+  if (_cardChosen) return;
+  _cardChosen = true;
+
+  // Flip chosen card
+  wrap.classList.add('chosen');
+  wrap.querySelector('.card-inner').classList.add('flipped');
+
+  // Dim other cards
+  var allCards = document.querySelectorAll('.card-wrap');
+  allCards.forEach(function(c){ if(c !== wrap){ c.style.opacity='.35'; c.style.pointerEvents='none'; } });
+
+  // After flip — confetti + win screen
+  setTimeout(function(){
+    confetti();
+    document.getElementById('win-saint').textContent = saintName + ' intercedió por ti! 🙏';
+    setTimeout(function(){
+      document.getElementById('s-spin').classList.add('hidden');
+      document.getElementById('s-win').classList.remove('hidden');
+    }, 700);
+  }, 700);
+}
+
+// ====== CONFETI (cruces + partículas) ======
+function confetti(){
+  var colors=['#c9a86a','#ffffff','#22a843','#ffd700'];
+  for(var i=0;i<70;i++){
+    (function(){
+      var el=document.createElement('div');
+      el.className='cf';
+      var isText=Math.random()>.5;
+      if(isText){
+        el.style.cssText='left:'+(Math.random()*100)+'vw;width:auto;height:auto;background:none;color:'+colors[Math.floor(Math.random()*colors.length)]+';font-size:'+(14+Math.random()*10)+'px;animation-duration:'+(1.5+Math.random()*2.5)+'s;animation-delay:'+(Math.random()*.6)+'s;';
+        el.textContent='✝';
+      } else {
+        el.style.cssText='left:'+(Math.random()*100)+'vw;background:'+colors[Math.floor(Math.random()*colors.length)]+';animation-duration:'+(1.5+Math.random()*2.5)+'s;animation-delay:'+(Math.random()*.6)+'s;border-radius:'+(Math.random()>.5?'50%':'2px')+';width:'+(6+Math.random()*8)+'px;height:'+(8+Math.random()*10)+'px;';
+      }
+      document.body.appendChild(el);
+      setTimeout(function(){el.remove();},5000);
+    })();
+  }
+}
+
+// ====== TEMPORIZADOR (15 min) ======
+var END=Date.now()+15*60*1000;
+function tick(){
+  var r=Math.max(0,END-Date.now());
+  var m=Math.floor(r/60000),s=Math.floor((r%60000)/1000);
+  var ms=String(m).padStart(2,'0'),ss=String(s).padStart(2,'0');
+  var um=document.getElementById('u-min'),us=document.getElementById('u-sec');
+  if(um) um.textContent=ms;
+  if(us) us.textContent=ss;
+}
+setInterval(tick,1000);tick();
+</script>
+
+<!-- Tracking: Clarity + Facebook Pixel (interaction-first) -->
+<script>
+function _loadThirdParty(){
+  (function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","ksoj7nifzg");
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init','745685381942209');
+  fbq('track','PageView');
+}
+var _tpLoaded=false;
+function _runOnce(){
+  if(_tpLoaded)return;_tpLoaded=true;
+  ['click','touchstart','scroll','keydown','mousemove'].forEach(function(ev){document.removeEventListener(ev,_runOnce,{passive:true,capture:true})});
+  if('requestIdleCallback' in window){requestIdleCallback(_loadThirdParty,{timeout:2000})}else{_loadThirdParty()}
+}
+['click','touchstart','scroll','keydown','mousemove'].forEach(function(ev){document.addEventListener(ev,_runOnce,{passive:true,capture:true,once:true})});
+setTimeout(_runOnce,5500);
+</script>
+</body>
+</html>
