@@ -344,10 +344,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <p class="p-now">$19<span style="font-size:26px">.00</span></p>
       <p class="p-desc">Pago único · Acceso inmediato por email</p>
 
-      <div style="text-align:center">
-        <!-- ⚠️ SUSTITUIR: reemplaza LINK_HOTMART_ESP con el link real de Hotmart del producto en español -->
-        <a href="LINK_HOTMART_ESP" class="btn-cta">🙏🏼 ¡SÍ! ¡QUIERO RECLAMAR MI DESCUENTO!</a>
-      </div>
+      <!-- HOTMART - Sales Funnel Widget -->
+      <div id="hotmart-sales-funnel"></div>
+      <script src="https://checkout.hotmart.com/lib/hotmart-checkout-elements.js"></script>
+      <script>
+        checkoutElements.init('salesFunnel').mount('#hotmart-sales-funnel')
+      </script>
+      <!-- HOTMART - Sales Funnel Widget -->
       <p class="security">🔒 Pago 100% seguro · Garantía incondicional de 7 días</p>
       <div style="text-align:center;margin-top:16px">
         <!-- ⚠️ SUSTITUIR: reemplaza con el link del downsell en español cuando esté listo -->
