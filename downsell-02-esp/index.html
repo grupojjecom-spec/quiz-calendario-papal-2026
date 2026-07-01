@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Última Oportunidad — Guías del 2° Semestre Litúrgico 2026</title>
+<style>
+:root{--navy:#0a1a3d;--gold:#c9a86a;--bg:#f5f1e6;--green:#22a843;--red:#c0392b}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:#1a1a1a;overflow-x:hidden}
+
+/* Top urgency bar */
+.urgency-bar{background:var(--red);padding:12px 20px;text-align:center;position:sticky;top:0;z-index:100;border-bottom:2px solid #8b0000}
+.urgency-bar p{font-size:13px;font-weight:700;color:#fff;margin-bottom:5px}
+.urgency-digits{display:flex;justify-content:center;gap:8px}
+.u-box{background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.3);border-radius:6px;padding:5px 10px;text-align:center}
+.u-num{font-size:18px;font-weight:800;color:#fff;display:block;line-height:1}
+.u-lbl{font-size:9px;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:.08em}
+
+.page{max-width:560px;margin:0 auto}
+
+/* Exit hook */
+.exit-hook{background:linear-gradient(160deg,#0a1a3d,#1a3060);padding:32px 20px 24px;text-align:center;border-bottom:3px solid var(--gold)}
+.exit-hook .tag{display:inline-block;background:var(--red);color:#fff;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 12px;border-radius:20px;margin-bottom:14px}
+.exit-hook h1{font-size:22px;line-height:1.3;color:#fff;margin-bottom:10px}
+.exit-hook h1 em{color:var(--gold);font-style:normal}
+.exit-hook p{font-size:14px;color:rgba(255,255,255,.75);line-height:1.6}
+
+/* Semester badge */
+.semester-badge{background:rgba(201,168,106,.12);border:1px solid rgba(201,168,106,.35);border-radius:10px;padding:14px 16px;margin:20px 16px 0;text-align:center}
+.semester-badge .sb-title{font-size:13px;font-weight:800;color:var(--gold);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}
+.semester-badge .sb-months{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+.sb-month{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:6px;font-size:11px;color:rgba(255,255,255,.8);padding:3px 9px;font-weight:600}
+.semester-badge .sb-desc{font-size:12px;color:rgba(255,255,255,.55);line-height:1.5}
+
+/* Bundle img */
+.bundle-wrap{background:#0d2250;padding:20px 16px;text-align:center}
+.bundle-img{display:block;width:100%;max-width:500px;margin:0 auto;border-radius:12px}
+.bundle-wrap p{font-size:12px;color:rgba(255,255,255,.5);margin-top:8px}
+
+/* What's included */
+.included{background:#fff;padding:24px 16px}
+.included h2{font-size:20px;color:var(--navy);margin-bottom:6px;text-align:center;line-height:1.3}
+.included .sub{font-size:13px;color:#888;text-align:center;margin-bottom:16px;line-height:1.5}
+.ebooks-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.eb-card{background:#fff;border-radius:10px;border:1px solid #e8dfc9;overflow:hidden;display:flex;flex-direction:column}
+.eb-card img{width:100%;aspect-ratio:2/3;object-fit:cover}
+.eb-info{padding:9px;flex:1;display:flex;flex-direction:column;gap:3px}
+.eb-info strong{font-size:12px;color:var(--navy);display:block;line-height:1.3}
+.eb-info span{font-size:11px;color:#666;line-height:1.4;flex:1}
+.eb-price{font-size:11px;margin-top:5px}
+.eb-price s{color:#999;font-size:10px}
+.eb-badge{background:var(--gold);color:var(--navy);font-size:11px;font-weight:900;padding:4px 8px;border-radius:5px;letter-spacing:.04em;text-transform:uppercase;display:inline-block;margin-top:2px}
+
+/* Liturgical timeline */
+.timeline{background:#f9f5ec;padding:20px 16px;border-top:1px solid #e8dfc9}
+.timeline h3{font-size:15px;color:var(--navy);margin-bottom:14px;text-align:center;font-weight:700}
+.tl-item{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px}
+.tl-month{min-width:62px;font-size:10px;font-weight:800;color:var(--navy);text-transform:uppercase;letter-spacing:.06em;background:#e8dfc9;border-radius:5px;padding:4px 6px;text-align:center;line-height:1.3;margin-top:1px}
+.tl-text{font-size:13px;color:#444;line-height:1.5}
+.tl-text strong{color:var(--navy)}
+
+/* Price */
+.price-section{background:var(--navy);padding:32px 20px;text-align:center}
+.price-section .eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+.price-section h2{font-size:19px;color:#fff;margin-bottom:20px;line-height:1.3}
+
+.price-stack{margin-bottom:20px}
+.p-original{font-size:14px;color:rgba(255,255,255,.35);text-decoration:line-through;margin-bottom:2px}
+.p-was{font-size:15px;color:rgba(255,255,255,.45);text-decoration:line-through;margin-bottom:4px}
+.p-now{font-size:50px;font-weight:900;color:var(--gold);margin-bottom:4px;line-height:1}
+.p-desc{font-size:13px;color:rgba(255,255,255,.6);margin-bottom:8px}
+
+.discount-pill{display:inline-block;background:var(--red);color:#fff;font-size:12px;font-weight:800;padding:5px 14px;border-radius:20px;letter-spacing:.06em;margin-bottom:20px}
+
+.value-breakdown{background:rgba(255,255,255,.05);border:1px solid rgba(201,168,106,.2);border-radius:10px;padding:14px 16px;margin-bottom:22px;font-size:13px;color:rgba(255,255,255,.65);text-align:left}
+.vb-row{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.vb-row:last-child{border:none;padding-top:8px;margin-top:4px;color:#fff;font-weight:700;font-size:14px}
+.vb-row span:last-child{color:var(--gold)}
+.vb-row s{color:rgba(255,255,255,.35)}
+
+.security{font-size:12px;color:rgba(255,255,255,.45);margin-top:14px}
+
+/* Guarantee */
+.guarantee{display:flex;gap:14px;align-items:center;background:var(--bg);padding:20px 16px;border-top:1px solid #e8dfc9}
+.g-seal{background:var(--navy);color:var(--gold);font-size:11px;font-weight:800;width:58px;height:58px;border-radius:50%;display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.2;flex-shrink:0;border:2px solid var(--gold)}
+.g-text h4{font-size:15px;color:var(--navy);margin-bottom:4px}
+.g-text p{font-size:13px;color:#555;line-height:1.5}
+
+.footer{background:var(--navy);padding:20px 16px;text-align:center}
+.footer p{font-size:12px;color:rgba(255,255,255,.35);line-height:1.6}
+</style>
+</head>
+<body>
+
+<!-- Urgency Bar -->
+<div class="urgency-bar">
+  <p>⏳ Esta oferta expira en:</p>
+  <div class="urgency-digits">
+    <div class="u-box"><span class="u-num" id="ud-m">09</span><span class="u-lbl">min</span></div>
+    <div class="u-box"><span class="u-num" id="ud-s">59</span><span class="u-lbl">seg</span></div>
+  </div>
+</div>
+
+<div class="page">
+
+  <!-- Exit Hook -->
+  <div class="exit-hook">
+    <div class="tag">✝ Oferta Final — Solo para ti</div>
+    <h1>¿Empezar con lo que<br>necesitas <em>ahora mismo?</em></h1>
+    <p>El segundo semestre litúrgico ya está llegando. Llévate solo las <strong style="color:var(--gold)">4 guías del 2° semestre</strong> — desde julio hasta diciembre — por un valor que cabe en tu bolsillo.</p>
+
+    <!-- Semester months badge -->
+    <div class="semester-badge">
+      <div class="sb-title">📅 Guías del 2° Semestre</div>
+      <div class="sb-months">
+        <span class="sb-month">Jul</span>
+        <span class="sb-month">Ago</span>
+        <span class="sb-month">Sep</span>
+        <span class="sb-month">Oct</span>
+        <span class="sb-month">Nov</span>
+        <span class="sb-month">Dic</span>
+      </div>
+      <div class="sb-desc">Asunción · Mes del Rosario · Adviento · Navidad</div>
+    </div>
+  </div>
+
+  <!-- Bundle Image -->
+  <div class="bundle-wrap">
+    <img src="../upsell-esp/assets/bundle-ebooks.webp" alt="Kit 2° Semestre Litúrgico 2026 — 4 guías" class="bundle-img" onerror="this.src='https://quiz.editoraosagrado.com/upsell-brasil/assets/bundle-ebooks.webp';this.onerror=null;">
+    <p>Kit 2° Semestre Litúrgico — julio a diciembre 2026</p>
+  </div>
+
+  <!-- What's included -->
+  <div class="included">
+    <h2>✝️ Las 4 guías del 2° semestre:</h2>
+    <p class="sub">Seleccionadas para los tiempos litúrgicos de julio a diciembre</p>
+    <div class="ebooks-grid">
+
+      <div class="eb-card">
+        <img src="https://quiz.editoraosagrado.com/upsell-brasil/assets/novena-nossa-senhora.webp" alt="Novena a Nuestra Señora" loading="lazy">
+        <div class="eb-info">
+          <strong>Novena a Nuestra Señora</strong>
+          <span>9 días de intercesión mariana para gracias especiales</span>
+          <div class="eb-price"><s>$7.91</s><br><span class="eb-badge">INCLUIDO</span></div>
+        </div>
+      </div>
+
+      <div class="eb-card">
+        <img src="https://quiz.editoraosagrado.com/upsell-brasil/assets/50-oracoes-marianas.webp" alt="50 Oraciones Marianas" loading="lazy">
+        <div class="eb-info">
+          <strong>50 Oraciones Marianas</strong>
+          <span>Las oraciones más poderosas a la Virgen María</span>
+          <div class="eb-price"><s>$7.91</s><br><span class="eb-badge">INCLUIDO</span></div>
+        </div>
+      </div>
+
+      <div class="eb-card">
+        <img src="https://quiz.editoraosagrado.com/upsell-brasil/assets/elevada-gloria.webp" alt="Elevada a la Gloria" loading="lazy">
+        <div class="eb-info">
+          <strong>Elevada a la Gloria</strong>
+          <span>Contemplación de la Asunción de Nuestra Señora (15 ago)</span>
+          <div class="eb-price"><s>$7.91</s><br><span class="eb-badge">INCLUIDO</span></div>
+        </div>
+      </div>
+
+      <div class="eb-card">
+        <img src="https://quiz.editoraosagrado.com/upsell-brasil/assets/vigiai-preparai.webp" alt="Velad y Preparaos" loading="lazy">
+        <div class="eb-info">
+          <strong>Velad y Preparaos</strong>
+          <span>Guía completa para vivir el Adviento con esperanza</span>
+          <div class="eb-price"><s>$7.91</s><br><span class="eb-badge">INCLUIDO</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Liturgical Timeline -->
+  <div class="timeline">
+    <h3>✝ Lo que vivirás mes a mes:</h3>
+    <div class="tl-item">
+      <div class="tl-month">Jul–Ago</div>
+      <div class="tl-text"><strong>Novena a Nuestra Señora</strong> — Prepárate para la Asunción (15 de agosto) con 9 días de intercesión mariana.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-month">Agosto</div>
+      <div class="tl-text"><strong>Elevada a la Gloria</strong> — Contempla el misterio de la Asunción y la gloria eterna de María.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-month">Octubre</div>
+      <div class="tl-text"><strong>50 Oraciones Marianas</strong> — El mes del Santo Rosario, con las oraciones más poderosas a la Virgen.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-month">Nov–Dic</div>
+      <div class="tl-text"><strong>Velad y Preparaos</strong> — Vive el Adviento con profundidad espiritual y prepara tu corazón para la Navidad.</div>
+    </div>
+  </div>
+
+  <!-- Price Section -->
+  <div class="price-section">
+    <p class="eyebrow">✝ Oferta Final — Último paso</p>
+    <h2>Kit <em style="color:var(--gold)">2° Semestre Litúrgico 2026</em><br>— solo las guías que necesitas ahora.</h2>
+
+    <div class="price-stack">
+      <p class="p-original">Valor normal: <s>$31.64 USD</s></p>
+      <p class="p-was">Oferta anterior: <s>$9.50 USD</s></p>
+      <p class="p-now">$7<span style="font-size:26px">.50</span></p>
+      <p class="p-desc">Pago único · Acceso inmediato por email</p>
+    </div>
+
+    <div class="discount-pill">🔥 76% de descuento — oferta final</div>
+
+    <div class="value-breakdown">
+      <div class="vb-row"><span>4 guías × $7.91 USD</span><span><s>$31.64 USD</s></span></div>
+      <div class="vb-row"><span>Descuento oferta final</span><span style="color:#e74c3c">− $24.14 USD</span></div>
+      <div class="vb-row"><span>Pagas hoy</span><span>$7.50 USD</span></div>
+    </div>
+
+    <!-- HOTMART - Sales Funnel Widget -->
+    <!--- sales funnel container --->
+    <div id="hotmart-sales-funnel"></div>
+    <!--- script load and setup --->
+    <script src="https://checkout.hotmart.com/lib/hotmart-checkout-elements.js"></script>
+    <script>
+    checkoutElements.init('salesFunnel').mount('#hotmart-sales-funnel')
+    </script>
+    <!-- HOTMART - Sales Funnel Widget -->
+
+    <p class="security">🔒 Pago 100% seguro · Garantía incondicional de 7 días</p>
+  </div>
+
+  <!-- Guarantee -->
+  <div class="guarantee">
+    <div class="g-seal">7<br>DÍAS</div>
+    <div class="g-text">
+      <h4>Garantía Incondicional</h4>
+      <p>Si en 7 días no estás satisfecho, te devolvemos el dinero íntegramente. Sin preguntas, sin burocracia.</p>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p>✝ Editora O Sagrado · Todos los derechos reservados<br>Contenido digital entregado por email tras confirmación del pago.</p>
+  </div>
+
+</div>
+
+<script>
+// Countdown — 10 minutos
+(function(){
+  var END = Date.now() + 10 * 60 * 1000;
+  function tick(){
+    var left = Math.max(0, END - Date.now());
+    var m = Math.floor(left / 60000);
+    var s = Math.floor((left % 60000) / 1000);
+    document.getElementById('ud-m').textContent = String(m).padStart(2,'0');
+    document.getElementById('ud-s').textContent = String(s).padStart(2,'0');
+    if(left > 0) setTimeout(tick, 1000);
+  }
+  tick();
+})();
+</script>
+
+<!-- Tracking: Clarity + Facebook Pixel (interaction-first) -->
+<script>
+function _loadThirdParty(){
+  (function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","ksoj7nifzg");
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init','745685381942209');
+  fbq('track','PageView');
+}
+var _tpLoaded=false;
+function _runOnce(){
+  if(_tpLoaded)return;_tpLoaded=true;
+  ['click','touchstart','scroll','keydown','mousemove'].forEach(function(ev){document.removeEventListener(ev,_runOnce,{passive:true,capture:true})});
+  if('requestIdleCallback' in window){requestIdleCallback(_loadThirdParty,{timeout:2000})}else{_loadThirdParty()}
+}
+['click','touchstart','scroll','keydown','mousemove'].forEach(function(ev){document.addEventListener(ev,_runOnce,{passive:true,capture:true,once:true})});
+setTimeout(_runOnce,5500);
+</script>
+
+</body>
+</html>
